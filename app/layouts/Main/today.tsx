@@ -46,7 +46,7 @@ const TodayContent = () => {
       </div>
 
       {/* Task Lists */}
-      <div className="flex flex-col justify-between max-h-screen w-full mt-2.5 items-center">
+      <div className="flex flex-col justify-between max-h-screen w-full mt-2.5 items-center px-1 tablet:px-0">
         <ScrollArea className="w-full">
           <div className="flex h-[31.5rem] flex-col gap-1.5 w-[98%]">
             {isLoading ? (

@@ -45,7 +45,7 @@ const TasksContent = () => {
       </div>
 
       {/* Tasks Lists */}
-      <div className="flex flex-col gap-1.5 mt-5">
+      <div className="flex flex-col mt-5 items-center px-1 tablet:px-0">
         <ScrollArea className="w-full">
           <div className="flex h-[34rem] flex-col gap-1.5 w-[98%]">
             {isLoading ? (

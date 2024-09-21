@@ -30,17 +30,17 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover py-2 px-5 rounded-lg">
+      <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
         <div className="flex justify-between items-center">
           {/* left side wrapper */}
-          <div className="flex gap-1.5 items-center">
+          <div className="flex gap-1 tablet:gap-1.5 items-center">
             <label
               className="flex items-start cursor-pointer relative"
               htmlFor={task.id}
             >
               <input
                 type="checkbox"
-                className="peer  h-4 w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 checked:bg-blue-400 checked:border-onhover rounded-full"
+                className="peer h-5 w-5   tablet:h-4 tablet:w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 checked:bg-blue-400 checked:border-onhover rounded-full"
                 id={task.id}
               />
               <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -77,10 +77,13 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
               {isImportant ? (
                 <FaStar
                   onClick={() => handleImportance(task.id, false)}
-                  className="fill-pink-300"
+                  className="fill-pink-300 tablet:w-4 tablet:h-4 w-5 h-5"
                 />
               ) : (
-                <FaRegStar onClick={() => handleImportance(task.id, true)} />
+                <FaRegStar
+                  onClick={() => handleImportance(task.id, true)}
+                  className="tablet:w-4 tablet:h-4 w-5 h-5"
+                />
               )}
             </button>
           </div>

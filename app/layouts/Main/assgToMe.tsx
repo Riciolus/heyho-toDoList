@@ -35,6 +35,7 @@ const AssignedToMeContent = () => {
       </div>
       {/* Tasks Lists */}
       underConstruction
+      {/* px-1 tablet:px-0 */}
       {/* <div className="flex flex-col gap-1.5 mt-5">
         {isLoading ? (
           <LoadingCard />

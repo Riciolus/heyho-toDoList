@@ -37,7 +37,7 @@ const TaskCardToday = ({
   };
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover py-2 px-5 rounded-lg">
+      <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover tablet:py-2 py-3.5 px-5 rounded-lg w-full">
         <div className="flex justify-between items-center">
           {/* left side wrapper */}
           <div className="flex gap-1.5 items-center">
@@ -84,10 +84,13 @@ const TaskCardToday = ({
               {isImportant ? (
                 <FaStar
                   onClick={() => handleImportance(task.id, false)}
-                  className="fill-pink-300"
+                  className="fill-pink-300 tablet:w-4 tablet:h-4 w-5 h-5"
                 />
               ) : (
-                <FaRegStar onClick={() => handleImportance(task.id, true)} />
+                <FaRegStar
+                  onClick={() => handleImportance(task.id, true)}
+                  className="tablet:w-4 tablet:h-4 w-5 h-5"
+                />
               )}
             </button>
           </div>

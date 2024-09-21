@@ -10,7 +10,7 @@ const AddTaskButton = ({ groupId, triggerRefetch }: Propstype) => {
   const groupColorTheme = groupChecker(groupId);
 
   return (
-    <div className="fixed noFit:w-[40%] laptop:w-[38%] desktop:w-[39.5%] w-[55%] bottom-10">
+    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%] desktop:w-[39.5%] w-[90%] bottom-10">
       <form
         onSubmit={(event) => handleAddTask({ event, groupId, triggerRefetch })}
         className="w-full flex items-center"

@@ -2,7 +2,7 @@ import { getDateFormattedLong, isTodayDate } from "../lib/datetime";
 
 const TodayBadge = ({ createdAt }: { createdAt: string }) => {
   return (
-    <div className="flex gap-3">
+    <div className="flex tablet:gap-3 gap-1.5">
       <p className="text-gray-300">
         {createdAt && getDateFormattedLong(createdAt)}
       </p>

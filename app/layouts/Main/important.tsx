@@ -44,7 +44,7 @@ const ImportantContent = () => {
         </div>
       </div>
       {/* Task Lists */}
-      <div className="relative flex flex-col justify-between h-fit mt-5 w-full items-center">
+      <div className="relative flex flex-col justify-between h-fit mt-5 w-full items-center px-1 tablet:px-0">
         <ScrollArea className="w-full">
           <div className="flex h-[34rem] flex-col gap-1.5 w-[98%]">
             {isLoading ? (

@@ -7,6 +7,7 @@ import LoadingCard from "@/app/components/loadingCard";
 import TaskCard from "@/app/components/taskCard";
 import AddTaskButton from "@/app/components/addTask";
 import { ScrollArea } from "@/app/components/shadcn/scroll-area";
+import { IoIosArrowDown } from "react-icons/io";
 
 const ImportantContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -26,6 +27,9 @@ const ImportantContent = () => {
       fecthTasksData();
     }
   }, [refetch]);
+
+  const completedTasks = taskData.filter((task) => task.completed);
+  const notCompletedTasks = taskData.filter((task) => !task.completed);
   return (
     <div className="text-base h-full">
       {/* Title Bar */}
@@ -50,7 +54,28 @@ const ImportantContent = () => {
             {isLoading ? (
               <LoadingCard />
             ) : (
-              taskData.map((task: Task) => {
+              notCompletedTasks.map((task: Task) => {
+                return (
+                  <TaskCard
+                    task={task}
+                    key={task.id}
+                    triggerRefetch={triggerRefetch}
+                  />
+                );
+              })
+            )}
+
+            {completedTasks.length > 0 && (
+              <h1 className="bg-neutral-800 flex items-center font-medium justify-center gap-1.5 w-fit px-2.5 text-sm mt-3 mb-0.5 text-pink-300 py-1.5 rounded-xl">
+                <IoIosArrowDown />
+                <p>Completed {`(${completedTasks.length})`}</p>
+              </h1>
+            )}
+
+            {isLoading && completedTasks.length > 0 ? (
+              <LoadingCard />
+            ) : (
+              completedTasks.map((task: Task) => {
                 return (
                   <TaskCard
                     task={task}

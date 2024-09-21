@@ -5,7 +5,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
-import { updateTaskImportance } from "../lib/api";
+import { updateCompleted, updateTaskImportance } from "../lib/api";
 
 type GroupNameMap = {
   [key: string]: string;
@@ -24,7 +24,8 @@ const TaskCardToday = ({
   task: Task;
   triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isImportant, setIsImportant] = useState(task.important);
+  const [isImportant, setIsImportant] = useState<boolean>(task.important);
+  const [isChecked, setChecked] = useState<boolean>(task.completed);
 
   const handleImportance = async (
     taskId: string,
@@ -33,6 +34,17 @@ const TaskCardToday = ({
     const data = { taskId, toImportantStatus };
     await updateTaskImportance(data).then((result) => {
       setIsImportant(result);
+    });
+  };
+
+  const handleCheckbox = async (status: boolean) => {
+    const data = {
+      taskId: task.id,
+      toCompletedStatus: status,
+    };
+    await updateCompleted(data).then((result) => {
+      setChecked(result.data.completed);
+      triggerRefetch(true);
     });
   };
   return (
@@ -46,6 +58,8 @@ const TaskCardToday = ({
               htmlFor={task.id}
             >
               <input
+                onChange={(e) => handleCheckbox(e.target.checked)}
+                checked={isChecked}
                 type="checkbox"
                 className="peer  h-4 w-4 cursor-pointer transition-all appearance-none rounded-full shadow hover:shadow-md border border-slate-400 checked:bg-orange-400 checked:border-onhover"
                 id={task.id}
@@ -72,24 +86,50 @@ const TaskCardToday = ({
               htmlFor="check-with-description"
             >
               <div>
-                <p className="font-normal">{task.task}</p>
-                <p className="text-gray-300">{groupNameMap[task.groupId]}</p>
+                <p
+                  className={`${
+                    isChecked && "text-neutral-400 line-through"
+                  } font-normal`}
+                >
+                  {task.task}
+                </p>
+                <p
+                  className={`${isChecked && "text-neutral-500"} text-gray-300`}
+                >
+                  {groupNameMap[task.groupId]}
+                </p>
               </div>
             </label>
           </div>
 
           {/* Right side wrapper */}
           <div>
-            <button className="active:animate-ping">
+            <button
+              className={`${
+                isChecked ? "cursor-not-allowed" : "active:animate-ping "
+              } `}
+            >
               {isImportant ? (
                 <FaStar
-                  onClick={() => handleImportance(task.id, false)}
-                  className="fill-pink-300 tablet:w-4 tablet:h-4 w-5 h-5"
+                  onClick={() => {
+                    if (!isChecked) {
+                      handleImportance(task.id, false);
+                    }
+                  }}
+                  className={`${
+                    isChecked ? "fill-neutral-400" : "fill-pink-300"
+                  }  tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               ) : (
                 <FaRegStar
-                  onClick={() => handleImportance(task.id, true)}
-                  className="tablet:w-4 tablet:h-4 w-5 h-5"
+                  onClick={() => {
+                    if (!isChecked) {
+                      handleImportance(task.id, true);
+                    }
+                  }}
+                  className={`${
+                    isChecked && "fill-neutral-400"
+                  } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               )}
             </button>

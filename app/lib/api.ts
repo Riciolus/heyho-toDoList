@@ -30,6 +30,15 @@ export const updateTaskImportance = async (data: object) => {
   return response.data.data.important;
 };
 
+export const updateCompleted = async (data: object) => {
+  const response = await axios.patch(
+    "http://192.168.1.7:4000/tasks/completed/set",
+    data
+  );
+
+  return response.data;
+};
+
 export const addNewTask = async (data: object) => {
   const response = await axios.post(
     `http://192.168.1.7:4000/tasks/create/${userId}`,

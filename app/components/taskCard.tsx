@@ -5,7 +5,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
-import { updateTaskImportance } from "../lib/api";
+import { updateCompleted, updateTaskImportance } from "../lib/api";
 
 type Propstype = {
   task: Task;
@@ -14,6 +14,7 @@ type Propstype = {
 
 const TaskCard = ({ task, triggerRefetch }: Propstype) => {
   const [isImportant, setIsImportant] = useState(task.important);
+  const [isChecked, setChecked] = useState<boolean>(task.completed);
 
   const handleImportance = async (
     taskId: string,
@@ -28,6 +29,17 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
     });
   };
 
+  const handleCheckbox = async (status: boolean) => {
+    const data = {
+      taskId: task.id,
+      toCompletedStatus: status,
+    };
+    await updateCompleted(data).then((result) => {
+      setChecked(result.data.completed);
+      triggerRefetch(true);
+    });
+  };
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
@@ -39,6 +51,8 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
               htmlFor={task.id}
             >
               <input
+                onChange={(e) => handleCheckbox(e.target.checked)}
+                checked={isChecked}
                 type="checkbox"
                 className="peer h-5 w-5   tablet:h-4 tablet:w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 checked:bg-blue-400 checked:border-onhover rounded-full"
                 id={task.id}
@@ -65,24 +79,46 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
               htmlFor="check-with-description"
             >
               <div>
-                <p className="font-medium">{task.task}</p>
-                <TodayBadge createdAt={task.created_at} />
+                <p
+                  className={`${
+                    isChecked && "text-neutral-400 line-through"
+                  } font-normal`}
+                >
+                  {task.task}
+                </p>
+                <TodayBadge createdAt={task.created_at} isChecked={isChecked} />
               </div>
             </label>
           </div>
 
           {/* Right side wrapper */}
           <div>
-            <button className="active:animate-ping">
+            <button
+              className={`${
+                isChecked ? "cursor-not-allowed" : "active:animate-ping "
+              } `}
+            >
               {isImportant ? (
                 <FaStar
-                  onClick={() => handleImportance(task.id, false)}
-                  className="fill-pink-300 tablet:w-4 tablet:h-4 w-5 h-5"
+                  onClick={() => {
+                    if (!isChecked) {
+                      handleImportance(task.id, false);
+                    }
+                  }}
+                  className={`${
+                    isChecked ? "fill-neutral-400" : "fill-pink-300"
+                  } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               ) : (
                 <FaRegStar
-                  onClick={() => handleImportance(task.id, true)}
-                  className="tablet:w-4 tablet:h-4 w-5 h-5"
+                  onClick={() => {
+                    if (!isChecked) {
+                      handleImportance(task.id, true);
+                    }
+                  }}
+                  className={`${
+                    isChecked && "fill-neutral-400"
+                  } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               )}
             </button>

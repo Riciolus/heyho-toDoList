@@ -38,6 +38,7 @@ const renderActivePage: ActivePageMap = {
 export default function MainPage() {
   const [activePage, setActivePage] = useState<ActivePageKey>("today");
   const [isSidebar, toggleSidebar] = useState<boolean>(false);
+
   useEffect(() => {
     const storedPage = localStorage.getItem("active-page") as ActivePageKey;
     if (storedPage) {
@@ -61,7 +62,6 @@ export default function MainPage() {
         </button>
       </div>
       {/* Left Side */}
-
       <div
         className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] ${
           isSidebar && "left-[0rem]"
@@ -75,12 +75,10 @@ export default function MainPage() {
             activePage={activePage}
           />
         </div>
+        {/* Main Content */}
       </div>
 
-      {/* Main Content */}
-      <div
-        className={`laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%]`}
-      >
+      <div className="laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%] ">
         {renderActivePage[activePage]}
       </div>
     </div>

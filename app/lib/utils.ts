@@ -65,15 +65,17 @@ export async function handleDeleteTask({
   });
 }
 
-export function groupChecker(groupId: number) {
+export function groupColorThemeChecker(groupId: number) {
   switch (groupId) {
     case 0:
-      return "-orange-300";
+      return "orange";
     case 1:
-      return "-pink-300";
+      return "pink";
     case 2:
-      return "-green-200";
+      return "green";
     case 3:
-      return "-blue-300";
+      return "blue";
   }
+
+  // 0 = today, 1 = important, 2 = green, 3 =
 }

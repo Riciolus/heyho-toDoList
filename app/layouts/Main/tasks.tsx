@@ -61,6 +61,7 @@ const TasksContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
+                    colorTheme="blue"
                   />
                 );
               })
@@ -79,6 +80,7 @@ const TasksContent = () => {
               completedTasks.map((task: Task) => {
                 return (
                   <TaskCard
+                    colorTheme="blue"
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
@@ -91,7 +93,11 @@ const TasksContent = () => {
       </div>
 
       {/* Add Task */}
-      <AddTaskButton groupId={3} triggerRefetch={triggerRefetch} />
+      <AddTaskButton
+        groupId={3}
+        triggerRefetch={triggerRefetch}
+        colorTheme="blue"
+      />
     </div>
   );
 };

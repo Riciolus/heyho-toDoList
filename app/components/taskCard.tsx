@@ -7,12 +7,25 @@ import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
 import { updateCompleted, updateTaskImportance } from "../lib/api";
 
+type ColorTheme = "blue" | "pink" | "green";
+
 type Propstype = {
   task: Task;
   triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  colorTheme: ColorTheme;
 };
 
-const TaskCard = ({ task, triggerRefetch }: Propstype) => {
+type ColorClasses = {
+  [key in ColorTheme]: string;
+};
+
+const colorClasses: ColorClasses = {
+  blue: "checked:bg-blue-400",
+  pink: "checked:bg-pink-300",
+  green: "checked:bg-green-400",
+};
+
+const TaskCard = ({ task, triggerRefetch, colorTheme }: Propstype) => {
   const [isImportant, setIsImportant] = useState(task.important);
   const [isChecked, setChecked] = useState<boolean>(task.completed);
 
@@ -20,22 +33,16 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
     taskId: string,
     toImportantStatus: boolean
   ) => {
-    const data = { taskId, toImportantStatus };
     setIsImportant(toImportantStatus);
-    await updateTaskImportance(data).then(() => {
-      if (triggerRefetch) {
-        triggerRefetch(true);
-      }
-    });
+    await updateTaskImportance({ taskId, toImportantStatus }).then(() =>
+      // Bisa di improve reduce refetching
+      triggerRefetch(true)
+    );
   };
 
-  const handleCheckbox = async (status: boolean) => {
-    const data = {
-      taskId: task.id,
-      toCompletedStatus: status,
-    };
-    await updateCompleted(data).then((result) => {
-      setChecked(result.data.completed);
+  const handleCheckbox = async (taskId: string, toCompletedStatus: boolean) => {
+    await updateCompleted({ taskId, toCompletedStatus }).then((result) => {
+      setChecked(result);
       triggerRefetch(true);
     });
   };
@@ -44,17 +51,17 @@ const TaskCard = ({ task, triggerRefetch }: Propstype) => {
     <ContextMenu>
       <ContextMenuTrigger className="bg-neutral-800 hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
         <div className="flex justify-between items-center">
-          {/* left side wrapper */}
+          {/* Left Side Wrapper */}
           <div className="flex gap-1 tablet:gap-1.5 items-center">
             <label
               className="flex items-start cursor-pointer relative"
               htmlFor={task.id}
             >
               <input
-                onChange={(e) => handleCheckbox(e.target.checked)}
+                onChange={(e) => handleCheckbox(task.id, e.target.checked)}
                 checked={isChecked}
                 type="checkbox"
-                className="peer h-5 w-5   tablet:h-4 tablet:w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 checked:bg-blue-400 checked:border-onhover rounded-full"
+                className={`peer h-5 w-5   tablet:h-4 tablet:w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 ${colorClasses[colorTheme]} checked:border-onhover rounded-full`}
                 id={task.id}
               />
               <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

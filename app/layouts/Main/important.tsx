@@ -60,6 +60,7 @@ const ImportantContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
+                    colorTheme="pink"
                   />
                 );
               })
@@ -81,6 +82,7 @@ const ImportantContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
+                    colorTheme="pink"
                   />
                 );
               })
@@ -90,7 +92,11 @@ const ImportantContent = () => {
       </div>
 
       {/* Add Task */}
-      <AddTaskButton groupId={1} triggerRefetch={triggerRefetch} />
+      <AddTaskButton
+        groupId={1}
+        triggerRefetch={triggerRefetch}
+        colorTheme="pink"
+      />
     </div>
   );
 };

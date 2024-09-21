@@ -27,16 +27,23 @@ export const updateTaskImportance = async (data: object) => {
     `http://192.168.1.7:4000/tasks/important/set`,
     data
   );
+
   return response.data.data.important;
 };
 
-export const updateCompleted = async (data: object) => {
+export const updateCompleted = async ({
+  taskId,
+  toCompletedStatus,
+}: {
+  taskId: string;
+  toCompletedStatus: boolean;
+}) => {
   const response = await axios.patch(
-    "http://192.168.1.7:4000/tasks/completed/set",
-    data
+    `http://192.168.1.7:4000/tasks/completed/set/${taskId}`,
+    { toCompletedStatus }
   );
 
-  return response.data;
+  return response.data.data.completed;
 };
 
 export const addNewTask = async (data: object) => {

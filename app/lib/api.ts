@@ -1,11 +1,11 @@
 import axios from "axios";
-const userId = "cm0w6tuj3000010i7z2ppri91";
+const userId = "ella";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getTodayTasks = () => {
   const response = axios.get(`${BASE_URL}/tasks/today/${userId}`);
-  console.log(BASE_URL);
+
   return response;
 };
 
@@ -27,10 +27,9 @@ export const updateTaskImportance = async ({
   taskId: string;
   toImportantStatus: boolean;
 }) => {
-  const response = await axios.patch(
-    `${BASE_URL}/tasks/important/set/${taskId}`,
-    { toImportantStatus }
-  );
+  const response = await axios.patch(`${BASE_URL}/tasks/important/${taskId}`, {
+    toImportantStatus,
+  });
 
   return response.data.data.important;
 };
@@ -42,10 +41,9 @@ export const updateCompleted = async ({
   taskId: string;
   toCompletedStatus: boolean;
 }) => {
-  const response = await axios.patch(
-    `${BASE_URL}/tasks/completed/set/${taskId}`,
-    { toCompletedStatus }
-  );
+  const response = await axios.patch(`${BASE_URL}/tasks/complete/${taskId}`, {
+    toCompletedStatus,
+  });
 
   return response.data.data.completed;
 };

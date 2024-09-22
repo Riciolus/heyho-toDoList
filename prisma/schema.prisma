@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Users {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  tasks      Tasks[]
+}
+
+model Tasks {
+  id         String        @id @default(cuid())
+  user       Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  task       String
+  important  Boolean       @default(false)
+  completed  Boolean       @default(false)
+  created_at DateTime      @default(now())
+  groups Groups @relation(fields: [groupId], references: [id])
+  groupId String
+}
+
+model Groups {
+  id         String        @id
+  name       String        @unique
+  task Tasks[]
+}
+

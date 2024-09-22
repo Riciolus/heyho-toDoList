@@ -43,7 +43,7 @@ const TaskCardToday = ({
       toCompletedStatus: status,
     };
     await updateCompleted(data).then((result) => {
-      setChecked(result.data.completed);
+      setChecked(result);
       triggerRefetch(true);
     });
   };

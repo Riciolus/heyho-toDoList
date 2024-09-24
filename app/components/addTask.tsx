@@ -1,19 +1,49 @@
 import { FiPlus } from "react-icons/fi";
-import { handleAddTask } from "../lib/utils";
+import { addNewTask } from "../lib/api";
+import { addImportantTask } from "../lib/utils";
+import { Task } from "../page";
 
 export interface Propstype {
   groupId: number;
   colorTheme: string;
-  triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-const AddTaskButton = ({ groupId, triggerRefetch, colorTheme }: Propstype) => {
-  // const groupColorTheme = groupColorThemeChecker(groupId);
+const AddTaskButton = ({ groupId, colorTheme, setTaskData }: Propstype) => {
+  const handleAddTask = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const inputValue = form.inputTask.value;
+
+    if (inputValue.length === 0) {
+      return null;
+    }
+
+    const data = {
+      task: inputValue,
+      groupId: "tasks",
+      important: addImportantTask(groupId),
+    };
+
+    await addNewTask(data).then((result) => {
+      setTaskData((prevData) => [...prevData, result]);
+    });
+
+    // .then((status) => {
+    //   if (status) {
+    //     triggerRefetch(true);
+    //   }
+    // });
+    // triggerRefetch(true);
+
+    form.inputTask.value = "";
+  };
 
   return (
     <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%] desktop:w-[39.5%] w-[90%] bottom-10">
       <form
-        onSubmit={(event) => handleAddTask({ event, groupId, triggerRefetch })}
+        onSubmit={(event) => handleAddTask(event)}
         className="w-full flex items-center"
       >
         <button type="submit" className="absolute ml-2">

@@ -93,11 +93,7 @@ const TasksContent = () => {
       </div>
 
       {/* Add Task */}
-      <AddTaskButton
-        groupId={3}
-        triggerRefetch={triggerRefetch}
-        colorTheme="blue"
-      />
+      <AddTaskButton groupId={3} colorTheme="blue" setTaskData={setTaskData} />
     </div>
   );
 };

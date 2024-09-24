@@ -93,8 +93,8 @@ const TodayContent = () => {
       {/* Add Task */}
       <AddTaskButton
         groupId={0}
-        triggerRefetch={triggerRefetch}
         colorTheme="orange"
+        setTaskData={setTaskData}
       />
     </div>
   );

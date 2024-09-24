@@ -92,11 +92,7 @@ const ImportantContent = () => {
       </div>
 
       {/* Add Task */}
-      <AddTaskButton
-        groupId={1}
-        triggerRefetch={triggerRefetch}
-        colorTheme="pink"
-      />
+      <AddTaskButton groupId={1} colorTheme="pink" setTaskData={setTaskData} />
     </div>
   );
 };

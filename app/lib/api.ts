@@ -51,7 +51,7 @@ export const updateCompleted = async ({
 export const addNewTask = async (data: object) => {
   const response = await axios.post(`${BASE_URL}/tasks/create/${userId}`, data);
 
-  return response.data.status;
+  return response.data.data;
 };
 
 export const deleteTask = async (taskId: string) => {

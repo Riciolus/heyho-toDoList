@@ -30,13 +30,6 @@ const AddTaskButton = ({ groupId, colorTheme, setTaskData }: Propstype) => {
       setTaskData((prevData) => [...prevData, result]);
     });
 
-    // .then((status) => {
-    //   if (status) {
-    //     triggerRefetch(true);
-    //   }
-    // });
-    // triggerRefetch(true);
-
     form.inputTask.value = "";
   };
 

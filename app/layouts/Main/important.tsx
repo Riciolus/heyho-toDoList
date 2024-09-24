@@ -61,6 +61,7 @@ const ImportantContent = () => {
                     key={task.id}
                     triggerRefetch={triggerRefetch}
                     colorTheme="pink"
+                    setTaskData={setTaskData}
                   />
                 );
               })
@@ -83,6 +84,7 @@ const ImportantContent = () => {
                     key={task.id}
                     triggerRefetch={triggerRefetch}
                     colorTheme="pink"
+                    setTaskData={setTaskData}
                   />
                 );
               })

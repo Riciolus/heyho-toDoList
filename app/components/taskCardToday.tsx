@@ -32,9 +32,9 @@ const TaskCardToday = ({
     toImportantStatus: boolean
   ) => {
     const data = { taskId, toImportantStatus };
-    await updateTaskImportance(data).then((result) => {
-      setIsImportant(result);
-    });
+    await updateTaskImportance(data);
+
+    setIsImportant(toImportantStatus);
   };
 
   const handleCheckbox = async (status: boolean) => {

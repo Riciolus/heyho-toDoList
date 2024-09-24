@@ -12,6 +12,7 @@ type ColorTheme = "blue" | "pink" | "green";
 type Propstype = {
   task: Task;
   triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>> | false;
   colorTheme: ColorTheme;
 };
 
@@ -25,7 +26,12 @@ const colorClasses: ColorClasses = {
   green: "checked:bg-green-400",
 };
 
-const TaskCard = ({ task, triggerRefetch, colorTheme }: Propstype) => {
+const TaskCard = ({
+  task,
+  triggerRefetch,
+  colorTheme,
+  setTaskData,
+}: Propstype) => {
   const [isImportant, setIsImportant] = useState(task.important);
   const [isChecked, setChecked] = useState<boolean>(task.completed);
 
@@ -34,10 +40,12 @@ const TaskCard = ({ task, triggerRefetch, colorTheme }: Propstype) => {
     toImportantStatus: boolean
   ) => {
     setIsImportant(toImportantStatus);
-    await updateTaskImportance({ taskId, toImportantStatus }).then(() =>
-      // Bisa di improve reduce refetching
-      triggerRefetch(true)
-    );
+
+    // Set task data can is false when not in important content
+    if (setTaskData) {
+      setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
+    }
+    await updateTaskImportance({ taskId, toImportantStatus });
   };
 
   const handleCheckbox = async (taskId: string, toCompletedStatus: boolean) => {

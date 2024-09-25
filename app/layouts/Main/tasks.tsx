@@ -62,7 +62,7 @@ const TasksContent = () => {
                     key={task.id}
                     triggerRefetch={triggerRefetch}
                     colorTheme="blue"
-                    setTaskData={false}
+                    setTaskData={setTaskData}
                   />
                 );
               })
@@ -85,7 +85,7 @@ const TasksContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
-                    setTaskData={false}
+                    setTaskData={setTaskData}
                   />
                 );
               })

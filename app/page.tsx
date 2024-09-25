@@ -8,6 +8,7 @@ import TodayContent from "./layouts/Main/today";
 import Sidebar from "./layouts/Sidebar";
 import Title from "./components/title";
 import NavigationBar from "./components/navbar";
+import LoadingPage from "./layouts/Main/loading";
 
 export type Task = {
   id: string;
@@ -40,6 +41,7 @@ const renderActivePage: ActivePageMap = {
 export default function MainPage() {
   const [activePage, setActivePage] = useState<ActivePageKey>("today"); // To store user current active page
   const [isSidebar, toggleSidebar] = useState<boolean>(false); // To store status of Sidebar (is opened or not)
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   // Get user last visited content in the first load or when refresh the page
   useEffect(() => {
@@ -49,6 +51,7 @@ export default function MainPage() {
     } else {
       localStorage.setItem("active-page", "today");
     }
+    setLoading(false);
   }, []);
 
   // Change content
@@ -86,7 +89,9 @@ export default function MainPage() {
 
       <div className="laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%] ">
         {/* Render Page Dynamicly */}
-        {renderActivePage[activePage]}
+        {isLoading ? <LoadingPage /> : renderActivePage[activePage]}
+
+        {/* <LoadingPage /> */}
       </div>
     </div>
   );

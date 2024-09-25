@@ -61,6 +61,7 @@ const TodayContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
+                    setTaskData={setTaskData}
                   />
                 );
               })
@@ -82,6 +83,7 @@ const TodayContent = () => {
                     task={task}
                     key={task.id}
                     triggerRefetch={triggerRefetch}
+                    setTaskData={setTaskData}
                   />
                 );
               })

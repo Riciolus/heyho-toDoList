@@ -44,7 +44,7 @@ export const updateCompleted = async ({
   const response = await axios.patch(`${BASE_URL}/tasks/complete/${taskId}`, {
     toCompletedStatus,
   });
-
+  console.log(response.data.data);
   return response.data.data.completed;
 };
 

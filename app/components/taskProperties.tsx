@@ -1,20 +1,22 @@
-import { handleDeleteTask } from "../lib/utils";
+import { deleteTask } from "../lib/api";
+import { Task } from "../page";
 import { ContextMenuContent, ContextMenuItem } from "./shadcn/context-menu";
 
 type Propstype = {
   taskId: string;
-  triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 };
 
-const TaskProperties = ({ triggerRefetch, taskId }: Propstype) => {
+const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
+  const handleDeleteTask = async () => {
+    await deleteTask(taskId);
+    setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
+  };
+
   return (
     <ContextMenuContent>
       <ContextMenuItem>Edit</ContextMenuItem>
-      <ContextMenuItem
-        onClick={() => handleDeleteTask({ taskId, triggerRefetch })}
-      >
-        Delete
-      </ContextMenuItem>
+      <ContextMenuItem onClick={handleDeleteTask}>Delete</ContextMenuItem>
       <ContextMenuItem>Change Date</ContextMenuItem>
     </ContextMenuContent>
   );

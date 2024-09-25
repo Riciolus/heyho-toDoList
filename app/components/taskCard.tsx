@@ -12,7 +12,7 @@ type ColorTheme = "blue" | "pink" | "green";
 type Propstype = {
   task: Task;
   triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
-  setTaskData: React.Dispatch<React.SetStateAction<Task[]>> | false;
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
 };
 
@@ -41,8 +41,7 @@ const TaskCard = ({
   ) => {
     setIsImportant(toImportantStatus);
 
-    // Set task data can is false when not in important content
-    if (setTaskData) {
+    if (colorTheme === "pink") {
       setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
     }
     await updateTaskImportance({ taskId, toImportantStatus });
@@ -140,7 +139,7 @@ const TaskCard = ({
           </div>
         </div>
       </ContextMenuTrigger>
-      <TaskProperties triggerRefetch={triggerRefetch} taskId={task.id} />
+      <TaskProperties setTaskData={setTaskData} taskId={task.id} />
     </ContextMenu>
   );
 };

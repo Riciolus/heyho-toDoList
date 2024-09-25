@@ -20,9 +20,11 @@ const groupNameMap: GroupNameMap = {
 const TaskCardToday = ({
   task,
   triggerRefetch,
+  setTaskData,
 }: {
   task: Task;
   triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 }) => {
   const [isImportant, setIsImportant] = useState<boolean>(task.important);
   const [isChecked, setChecked] = useState<boolean>(task.completed);
@@ -136,7 +138,7 @@ const TaskCardToday = ({
           </div>
         </div>
       </ContextMenuTrigger>
-      <TaskProperties taskId={task.id} triggerRefetch={triggerRefetch} />
+      <TaskProperties taskId={task.id} setTaskData={setTaskData} />
     </ContextMenu>
   );
 };

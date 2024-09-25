@@ -1,8 +1,6 @@
 import { Task } from "@/app/page";
-
 import { useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
-
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
 import { updateCompleted, updateTaskImportance } from "../lib/api";
@@ -19,35 +17,33 @@ const groupNameMap: GroupNameMap = {
 
 const TaskCardToday = ({
   task,
-  triggerRefetch,
   setTaskData,
 }: {
   task: Task;
-  triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 }) => {
   const [isImportant, setIsImportant] = useState<boolean>(task.important);
-  const [isChecked, setChecked] = useState<boolean>(task.completed);
 
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
   ) => {
+    setIsImportant(toImportantStatus);
     const data = { taskId, toImportantStatus };
     await updateTaskImportance(data);
-
-    setIsImportant(toImportantStatus);
   };
 
   const handleCheckbox = async (status: boolean) => {
+    setTaskData((prevData) =>
+      prevData.map((oldTask) =>
+        oldTask.id === task.id ? { ...oldTask, completed: status } : oldTask
+      )
+    );
     const data = {
       taskId: task.id,
       toCompletedStatus: status,
     };
-    await updateCompleted(data).then((result) => {
-      setChecked(result);
-      triggerRefetch(true);
-    });
+    await updateCompleted(data);
   };
   return (
     <ContextMenu>
@@ -61,7 +57,7 @@ const TaskCardToday = ({
             >
               <input
                 onChange={(e) => handleCheckbox(e.target.checked)}
-                checked={isChecked}
+                checked={task.completed}
                 type="checkbox"
                 className="peer  h-4 w-4 cursor-pointer transition-all appearance-none rounded-full shadow hover:shadow-md border border-slate-400 checked:bg-orange-400 checked:border-onhover"
                 id={task.id}
@@ -90,13 +86,15 @@ const TaskCardToday = ({
               <div>
                 <p
                   className={`${
-                    isChecked && "text-neutral-400 line-through"
+                    task.completed && "text-neutral-400 line-through"
                   } font-normal`}
                 >
                   {task.task}
                 </p>
                 <p
-                  className={`${isChecked && "text-neutral-500"} text-gray-300`}
+                  className={`${
+                    task.completed && "text-neutral-500"
+                  } text-gray-300`}
                 >
                   {groupNameMap[task.groupId]}
                 </p>
@@ -108,29 +106,29 @@ const TaskCardToday = ({
           <div>
             <button
               className={`${
-                isChecked ? "cursor-not-allowed" : "active:animate-ping "
+                task.completed ? "cursor-not-allowed" : "active:animate-ping "
               } `}
             >
               {isImportant ? (
                 <FaStar
                   onClick={() => {
-                    if (!isChecked) {
+                    if (!task.completed) {
                       handleImportance(task.id, false);
                     }
                   }}
                   className={`${
-                    isChecked ? "fill-neutral-400" : "fill-pink-300"
+                    task.completed ? "fill-neutral-400" : "fill-pink-300"
                   }  tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               ) : (
                 <FaRegStar
                   onClick={() => {
-                    if (!isChecked) {
+                    if (!task.completed) {
                       handleImportance(task.id, true);
                     }
                   }}
                   className={`${
-                    isChecked && "fill-neutral-400"
+                    task.completed && "fill-neutral-400"
                   } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               )}

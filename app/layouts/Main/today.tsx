@@ -60,7 +60,6 @@ const TodayContent = () => {
                   <TaskCardToday
                     task={task}
                     key={task.id}
-                    triggerRefetch={triggerRefetch}
                     setTaskData={setTaskData}
                   />
                 );
@@ -82,7 +81,6 @@ const TodayContent = () => {
                   <TaskCardToday
                     task={task}
                     key={task.id}
-                    triggerRefetch={triggerRefetch}
                     setTaskData={setTaskData}
                   />
                 );

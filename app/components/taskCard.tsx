@@ -2,7 +2,6 @@ import { useState } from "react";
 import TodayBadge from "./todayBadge";
 import { Task } from "@/app/page";
 import { FaRegStar, FaStar } from "react-icons/fa";
-
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
 import { updateCompleted, updateTaskImportance } from "../lib/api";
@@ -11,7 +10,6 @@ type ColorTheme = "blue" | "pink" | "green";
 
 type Propstype = {
   task: Task;
-  triggerRefetch: React.Dispatch<React.SetStateAction<boolean>>;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
 };
@@ -26,14 +24,8 @@ const colorClasses: ColorClasses = {
   green: "checked:bg-green-400",
 };
 
-const TaskCard = ({
-  task,
-  triggerRefetch,
-  colorTheme,
-  setTaskData,
-}: Propstype) => {
+const TaskCard = ({ task, colorTheme, setTaskData }: Propstype) => {
   const [isImportant, setIsImportant] = useState(task.important);
-  const [isChecked, setChecked] = useState<boolean>(task.completed);
 
   const handleImportance = async (
     taskId: string,
@@ -47,11 +39,17 @@ const TaskCard = ({
     await updateTaskImportance({ taskId, toImportantStatus });
   };
 
-  const handleCheckbox = async (taskId: string, toCompletedStatus: boolean) => {
-    await updateCompleted({ taskId, toCompletedStatus }).then((result) => {
-      setChecked(result);
-      triggerRefetch(true);
-    });
+  const handleCheckbox = async (status: boolean) => {
+    setTaskData((prevData) =>
+      prevData.map((oldTask) =>
+        oldTask.id === task.id ? { ...oldTask, completed: status } : oldTask
+      )
+    );
+    const data = {
+      taskId: task.id,
+      toCompletedStatus: status,
+    };
+    await updateCompleted(data);
   };
 
   return (
@@ -65,8 +63,8 @@ const TaskCard = ({
               htmlFor={task.id}
             >
               <input
-                onChange={(e) => handleCheckbox(task.id, e.target.checked)}
-                checked={isChecked}
+                onChange={(e) => handleCheckbox(e.target.checked)}
+                checked={task.completed}
                 type="checkbox"
                 className={`peer h-5 w-5   tablet:h-4 tablet:w-4 cursor-pointer transition-all appearance-none shadow hover:shadow-md border border-slate-400 ${colorClasses[colorTheme]} checked:border-onhover rounded-full`}
                 id={task.id}
@@ -95,12 +93,15 @@ const TaskCard = ({
               <div>
                 <p
                   className={`${
-                    isChecked && "text-neutral-400 line-through"
+                    task.completed && "text-neutral-400 line-through"
                   } font-normal`}
                 >
                   {task.task}
                 </p>
-                <TodayBadge createdAt={task.created_at} isChecked={isChecked} />
+                <TodayBadge
+                  createdAt={task.created_at}
+                  isCompleted={task.completed}
+                />
               </div>
             </label>
           </div>
@@ -109,29 +110,29 @@ const TaskCard = ({
           <div>
             <button
               className={`${
-                isChecked ? "cursor-not-allowed" : "active:animate-ping "
+                task.completed ? "cursor-not-allowed" : "active:animate-ping "
               } `}
             >
               {isImportant ? (
                 <FaStar
                   onClick={() => {
-                    if (!isChecked) {
+                    if (!task.completed) {
                       handleImportance(task.id, false);
                     }
                   }}
                   className={`${
-                    isChecked ? "fill-neutral-400" : "fill-pink-300"
+                    task.completed ? "fill-neutral-400" : "fill-pink-300"
                   } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               ) : (
                 <FaRegStar
                   onClick={() => {
-                    if (!isChecked) {
+                    if (!task.completed) {
                       handleImportance(task.id, true);
                     }
                   }}
                   className={`${
-                    isChecked && "fill-neutral-400"
+                    task.completed && "fill-neutral-400"
                   } tablet:w-4 tablet:h-4 w-5 h-5`}
                 />
               )}

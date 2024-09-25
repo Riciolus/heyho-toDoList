@@ -27,11 +27,9 @@ export const updateTaskImportance = async ({
   taskId: string;
   toImportantStatus: boolean;
 }) => {
-  const response = await axios.patch(`${BASE_URL}/tasks/important/${taskId}`, {
+  await axios.patch(`${BASE_URL}/tasks/important/${taskId}`, {
     toImportantStatus,
   });
-
-  return response.data.data.important;
 };
 
 export const updateCompleted = async ({

@@ -60,7 +60,6 @@ const TasksContent = () => {
                   <TaskCard
                     task={task}
                     key={task.id}
-                    triggerRefetch={triggerRefetch}
                     colorTheme="blue"
                     setTaskData={setTaskData}
                   />
@@ -84,7 +83,6 @@ const TasksContent = () => {
                     colorTheme="blue"
                     task={task}
                     key={task.id}
-                    triggerRefetch={triggerRefetch}
                     setTaskData={setTaskData}
                   />
                 );

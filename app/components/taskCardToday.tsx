@@ -1,5 +1,4 @@
 import { Task } from "@/app/page";
-import { useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
@@ -22,13 +21,15 @@ const TaskCardToday = ({
   task: Task;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 }) => {
-  const [isImportant, setIsImportant] = useState<boolean>(task.important);
-
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
   ) => {
-    setIsImportant(toImportantStatus);
+    setTaskData((prevData) =>
+      prevData.map((task) =>
+        task.id === taskId ? { ...task, important: toImportantStatus } : task
+      )
+    );
     const data = { taskId, toImportantStatus };
     await updateTaskImportance(data);
   };
@@ -109,7 +110,7 @@ const TaskCardToday = ({
                 task.completed ? "cursor-not-allowed" : "active:animate-ping "
               } `}
             >
-              {isImportant ? (
+              {task.important ? (
                 <FaStar
                   onClick={() => {
                     if (!task.completed) {

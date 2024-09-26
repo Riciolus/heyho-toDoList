@@ -7,26 +7,23 @@ import LoadingCard from "@/app/components/loadingCard";
 import TaskCard from "@/app/components/taskCard";
 import AddTaskButton from "@/app/components/addTask";
 import { ScrollArea } from "@/app/components/shadcn/scroll-area";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const ImportantContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [refetch, triggerRefetch] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(true);
 
   useEffect(() => {
     const fecthTasksData = async () => {
       await getImportantTasks().then((result) => {
         setTaskData(result.data.data);
         setIsLoading(false);
-        triggerRefetch(false);
       });
     };
 
-    if (refetch) {
-      fecthTasksData();
-    }
-  }, [refetch]);
+    fecthTasksData();
+  }, []);
 
   const completedTasks = taskData.filter((task) => task.completed);
   const notCompletedTasks = taskData.filter((task) => !task.completed);
@@ -67,15 +64,19 @@ const ImportantContent = () => {
             )}
 
             {completedTasks.length > 0 && (
-              <h1 className="bg-neutral-800 flex items-center font-medium justify-center gap-1.5 w-fit px-2.5 text-sm mt-3 mb-0.5 text-pink-300 py-1.5 rounded-xl">
-                <IoIosArrowDown />
+              <button
+                onClick={() => setShowCompleted((prev) => !prev)}
+                className="bg-neutral-800 flex items-center font-medium justify-center gap-1.5 w-fit px-2.5 text-sm mt-3 mb-0.5 text-pink-300 py-1.5 rounded-xl"
+              >
+                {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
                 <p>Completed {`(${completedTasks.length})`}</p>
-              </h1>
+              </button>
             )}
 
-            {isLoading && completedTasks.length > 0 ? (
+            {isLoading ? (
               <LoadingCard />
             ) : (
+              showCompleted &&
               completedTasks.map((task: Task) => {
                 return (
                   <TaskCard

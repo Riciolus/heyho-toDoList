@@ -14,6 +14,21 @@ interface SidebarProps {
   activePage: string;
 }
 
+const sidebarData = [
+  {
+    title: "Getting Started",
+    icon: <FaHandSparkles size={24} className="fill-yellow-500" />,
+  },
+  {
+    title: "Web Dev Tasks",
+    icon: <BsList size={24} />,
+  },
+  {
+    title: "Groceries",
+    icon: <BsCart4 size={24} />,
+  },
+];
+
 const styles = {
   button:
     "flex items-center hover:bg-onhover py-1 ps-2 rounded-lg transition-colors gap-3 cursor-pointer w-[90%] laptop:w-[62%]",
@@ -97,7 +112,7 @@ const Sidebar = ({ handleChangeContent, activePage }: SidebarProps) => {
 
           {/* FOLDER SECTION */}
           <div className="flex flex-col gap-1">
-            <div className={styles.button}>
+            {/* <div className={styles.button}>
               <FaHandSparkles size={24} className="fill-yellow-500" />
               <span>Getting Started</span>
             </div>
@@ -108,7 +123,15 @@ const Sidebar = ({ handleChangeContent, activePage }: SidebarProps) => {
             <div className={styles.button}>
               <BsCart4 size={24} className="" />
               <span>Groceries</span>
-            </div>
+            </div> */}
+            {sidebarData.map((menu) => {
+              return (
+                <div key={menu.title} className={styles.button}>
+                  {menu.icon}
+                  <span> {menu.title}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

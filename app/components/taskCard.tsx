@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TodayBadge from "./todayBadge";
 import { Task } from "@/app/page";
 import { FaRegStar, FaStar } from "react-icons/fa";
@@ -25,16 +24,18 @@ const colorClasses: ColorClasses = {
 };
 
 const TaskCard = ({ task, colorTheme, setTaskData }: Propstype) => {
-  const [isImportant, setIsImportant] = useState(task.important);
-
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
   ) => {
-    setIsImportant(toImportantStatus);
-
     if (colorTheme === "pink") {
       setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
+    } else {
+      setTaskData((prevData) =>
+        prevData.map((task) =>
+          task.id === taskId ? { ...task, important: toImportantStatus } : task
+        )
+      );
     }
     await updateTaskImportance({ taskId, toImportantStatus });
   };
@@ -113,7 +114,7 @@ const TaskCard = ({ task, colorTheme, setTaskData }: Propstype) => {
                 task.completed ? "cursor-not-allowed" : "active:animate-ping "
               } `}
             >
-              {isImportant ? (
+              {task.important ? (
                 <FaStar
                   onClick={() => {
                     if (!task.completed) {

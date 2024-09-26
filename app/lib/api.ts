@@ -39,11 +39,9 @@ export const updateCompleted = async ({
   taskId: string;
   toCompletedStatus: boolean;
 }) => {
-  const response = await axios.patch(`${BASE_URL}/tasks/complete/${taskId}`, {
+  await axios.patch(`${BASE_URL}/tasks/complete/${taskId}`, {
     toCompletedStatus,
   });
-  console.log(response.data.data);
-  return response.data.data.completed;
 };
 
 export const addNewTask = async (data: object) => {

@@ -3,16 +3,13 @@ import { GoKebabHorizontal } from "react-icons/go";
 import { Task } from "@/app/page";
 import { getDateFormattedLong } from "@/app/lib/datetime";
 import { getTodayTasks } from "@/app/lib/api";
-import LoadingCard from "@/app/components/loadingCard";
-import TaskCardToday from "@/app/components/taskCardToday";
 import AddTaskButton from "@/app/components/addTask";
-import { ScrollArea } from "@/app/components/shadcn/scroll-area";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import TaskList from "../TaskList";
+// import Image from "next/image";
 
 const TodayContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showCompleted, setShowCompleted] = useState(true);
   const date = getDateFormattedLong();
 
   useEffect(() => {
@@ -25,12 +22,10 @@ const TodayContent = () => {
     fecthTasksData();
   }, []);
 
-  const completedTasks = taskData.filter((task) => task.completed);
-  const notCompletedTasks = taskData.filter((task) => !task.completed);
   return (
     <div className=" text-base h-full">
       {/* Title Bar */}
-      <div className="h-20 flex justify-between items-center ">
+      <div className="h-20 flex justify-between items-center mb-2.5">
         <div className="text-orange-300">
           <h1 className="text-3xl font-semibold mb-1 underline underline-offset-4 ">
             Today
@@ -44,53 +39,28 @@ const TodayContent = () => {
           <GoKebabHorizontal />
         </div>
       </div>
-
       {/* Task Lists */}
-      <div className="flex flex-col justify-between max-h-screen w-full mt-2.5 items-center px-1 tablet:px-0">
-        <ScrollArea className="w-full">
-          <div className="flex h-[31.5rem] flex-col gap-1.5 w-[98%]">
-            {isLoading ? (
-              <LoadingCard />
-            ) : (
-              notCompletedTasks.map((task: Task) => {
-                return (
-                  <TaskCardToday
-                    task={task}
-                    key={task.id}
-                    setTaskData={setTaskData}
-                  />
-                );
-              })
-            )}
+      <TaskList
+        colorTheme="orange"
+        isLoading={isLoading}
+        taskData={taskData}
+        cardType="today"
+        setTaskData={setTaskData}
+      />
 
-            {completedTasks.length > 0 && (
-              <button
-                onClick={() => setShowCompleted((prev) => !prev)}
-                className="bg-neutral-800 flex font-medium items-center justify-center gap-1.5 w-fit px-2.5 text-sm mt-3 mb-0.5 text-orange-300 py-1.5 rounded-xl"
-              >
-                {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                <span>Completed {`(${completedTasks.length})`}</span>
-              </button>
-            )}
-
-            {isLoading ? (
-              <LoadingCard />
-            ) : (
-              showCompleted &&
-              completedTasks.map((task: Task) => {
-                return (
-                  <TaskCardToday
-                    task={task}
-                    key={task.id}
-                    setTaskData={setTaskData}
-                  />
-                );
-              })
-            )}
-          </div>
-        </ScrollArea>
-      </div>
-
+      {/* <div className="w-full h-[70%] text-sm flex flex-col items-center justify-center">
+        <Image
+          src="/assets/bear_3d.png"
+          alt="Image not found"
+          width={100}
+          height={100}
+          className="w-28 opacity-90"
+        ></Image>
+        <h1 className="font-bold">Focus On Your Day</h1>
+        <p className="w-56 text-center mt-2">
+          Get things done with My Day, a list that refreshes every day
+        </p>
+      </div> */}
       {/* Add Task */}
       <AddTaskButton
         groupId={0}

@@ -2,10 +2,11 @@ import { FiPlus } from "react-icons/fi";
 import { addNewTask } from "../lib/api";
 import { addImportantTask } from "../lib/utils";
 import { Task } from "../page";
+import { ColorTheme } from "./taskCard";
 
 export interface Propstype {
   groupId: number;
-  colorTheme: string;
+  colorTheme: ColorTheme;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 

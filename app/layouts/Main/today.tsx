@@ -63,7 +63,8 @@ const TodayContent = () => {
       </div> */}
       {/* Add Task */}
       <AddTaskButton
-        groupId={0}
+        groupId="tasks"
+        cardType="today"
         colorTheme="orange"
         setTaskData={setTaskData}
       />

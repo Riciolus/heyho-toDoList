@@ -1014,10 +1014,12 @@ export namespace Prisma {
 
   export type UsersCountOutputType = {
     tasks: number
+    groups: number
   }
 
   export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | UsersCountOutputTypeCountTasksArgs
+    groups?: boolean | UsersCountOutputTypeCountGroupsArgs
   }
 
   // Custom InputTypes
@@ -1038,17 +1040,24 @@ export namespace Prisma {
     where?: TasksWhereInput
   }
 
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupsWhereInput
+  }
+
 
   /**
    * Count Type GroupsCountOutputType
    */
 
   export type GroupsCountOutputType = {
-    task: number
+    tasks: number
   }
 
   export type GroupsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    task?: boolean | GroupsCountOutputTypeCountTaskArgs
+    tasks?: boolean | GroupsCountOutputTypeCountTasksArgs
   }
 
   // Custom InputTypes
@@ -1065,7 +1074,7 @@ export namespace Prisma {
   /**
    * GroupsCountOutputType without action
    */
-  export type GroupsCountOutputTypeCountTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GroupsCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TasksWhereInput
   }
 
@@ -1239,6 +1248,7 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     tasks?: boolean | Users$tasksArgs<ExtArgs>
+    groups?: boolean | Users$groupsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -1260,6 +1270,7 @@ export namespace Prisma {
 
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | Users$tasksArgs<ExtArgs>
+    groups?: boolean | Users$groupsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1268,6 +1279,7 @@ export namespace Prisma {
     name: "Users"
     objects: {
       tasks: Prisma.$TasksPayload<ExtArgs>[]
+      groups: Prisma.$GroupsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1640,6 +1652,7 @@ export namespace Prisma {
   export interface Prisma__UsersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     tasks<T extends Users$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Users$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TasksPayload<ExtArgs>, T, "findMany"> | Null>
+    groups<T extends Users$groupsArgs<ExtArgs> = {}>(args?: Subset<T, Users$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupsPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2005,6 +2018,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TasksScalarFieldEnum | TasksScalarFieldEnum[]
+  }
+
+  /**
+   * Users.groups
+   */
+  export type Users$groupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Groups
+     */
+    select?: GroupsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupsInclude<ExtArgs> | null
+    where?: GroupsWhereInput
+    orderBy?: GroupsOrderByWithRelationInput | GroupsOrderByWithRelationInput[]
+    cursor?: GroupsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupsScalarFieldEnum | GroupsScalarFieldEnum[]
   }
 
   /**
@@ -2998,16 +3031,22 @@ export namespace Prisma {
   export type GroupsMinAggregateOutputType = {
     id: string | null
     name: string | null
+    icon: string | null
+    userId: string | null
   }
 
   export type GroupsMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    icon: string | null
+    userId: string | null
   }
 
   export type GroupsCountAggregateOutputType = {
     id: number
     name: number
+    icon: number
+    userId: number
     _all: number
   }
 
@@ -3015,16 +3054,22 @@ export namespace Prisma {
   export type GroupsMinAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
+    userId?: true
   }
 
   export type GroupsMaxAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
+    userId?: true
   }
 
   export type GroupsCountAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
+    userId?: true
     _all?: true
   }
 
@@ -3103,6 +3148,8 @@ export namespace Prisma {
   export type GroupsGroupByOutputType = {
     id: string
     name: string
+    icon: string
+    userId: string
     _count: GroupsCountAggregateOutputType | null
     _min: GroupsMinAggregateOutputType | null
     _max: GroupsMaxAggregateOutputType | null
@@ -3125,34 +3172,48 @@ export namespace Prisma {
   export type GroupsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    task?: boolean | Groups$taskArgs<ExtArgs>
+    icon?: boolean
+    userId?: boolean
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+    tasks?: boolean | Groups$tasksArgs<ExtArgs>
     _count?: boolean | GroupsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["groups"]>
 
   export type GroupsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    icon?: boolean
+    userId?: boolean
+    user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["groups"]>
 
   export type GroupsSelectScalar = {
     id?: boolean
     name?: boolean
+    icon?: boolean
+    userId?: boolean
   }
 
   export type GroupsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    task?: boolean | Groups$taskArgs<ExtArgs>
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+    tasks?: boolean | Groups$tasksArgs<ExtArgs>
     _count?: boolean | GroupsCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type GroupsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type GroupsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }
 
   export type $GroupsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Groups"
     objects: {
-      task: Prisma.$TasksPayload<ExtArgs>[]
+      user: Prisma.$UsersPayload<ExtArgs>
+      tasks: Prisma.$TasksPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      icon: string
+      userId: string
     }, ExtArgs["result"]["groups"]>
     composites: {}
   }
@@ -3517,7 +3578,8 @@ export namespace Prisma {
    */
   export interface Prisma__GroupsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    task<T extends Groups$taskArgs<ExtArgs> = {}>(args?: Subset<T, Groups$taskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TasksPayload<ExtArgs>, T, "findMany"> | Null>
+    user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tasks<T extends Groups$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Groups$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TasksPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3549,6 +3611,8 @@ export namespace Prisma {
   interface GroupsFieldRefs {
     readonly id: FieldRef<"Groups", 'String'>
     readonly name: FieldRef<"Groups", 'String'>
+    readonly icon: FieldRef<"Groups", 'String'>
+    readonly userId: FieldRef<"Groups", 'String'>
   }
     
 
@@ -3770,6 +3834,10 @@ export namespace Prisma {
      */
     data: GroupsCreateManyInput | GroupsCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3863,9 +3931,9 @@ export namespace Prisma {
   }
 
   /**
-   * Groups.task
+   * Groups.tasks
    */
-  export type Groups$taskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Groups$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Tasks
      */
@@ -3937,7 +4005,9 @@ export namespace Prisma {
 
   export const GroupsScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    icon: 'icon',
+    userId: 'userId'
   };
 
   export type GroupsScalarFieldEnum = (typeof GroupsScalarFieldEnum)[keyof typeof GroupsScalarFieldEnum]
@@ -4026,6 +4096,7 @@ export namespace Prisma {
     password?: StringFilter<"Users"> | string
     created_at?: DateTimeFilter<"Users"> | Date | string
     tasks?: TasksListRelationFilter
+    groups?: GroupsListRelationFilter
   }
 
   export type UsersOrderByWithRelationInput = {
@@ -4035,6 +4106,7 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     tasks?: TasksOrderByRelationAggregateInput
+    groups?: GroupsOrderByRelationAggregateInput
   }
 
   export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -4047,6 +4119,7 @@ export namespace Prisma {
     password?: StringFilter<"Users"> | string
     created_at?: DateTimeFilter<"Users"> | Date | string
     tasks?: TasksListRelationFilter
+    groups?: GroupsListRelationFilter
   }, "id" | "email">
 
   export type UsersOrderByWithAggregationInput = {
@@ -4145,27 +4218,39 @@ export namespace Prisma {
     NOT?: GroupsWhereInput | GroupsWhereInput[]
     id?: StringFilter<"Groups"> | string
     name?: StringFilter<"Groups"> | string
-    task?: TasksListRelationFilter
+    icon?: StringFilter<"Groups"> | string
+    userId?: StringFilter<"Groups"> | string
+    user?: XOR<UsersRelationFilter, UsersWhereInput>
+    tasks?: TasksListRelationFilter
   }
 
   export type GroupsOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    task?: TasksOrderByRelationAggregateInput
+    icon?: SortOrder
+    userId?: SortOrder
+    user?: UsersOrderByWithRelationInput
+    tasks?: TasksOrderByRelationAggregateInput
   }
 
   export type GroupsWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    name?: string
+    userId_name?: GroupsUserIdNameCompoundUniqueInput
     AND?: GroupsWhereInput | GroupsWhereInput[]
     OR?: GroupsWhereInput[]
     NOT?: GroupsWhereInput | GroupsWhereInput[]
-    task?: TasksListRelationFilter
-  }, "id" | "name">
+    name?: StringFilter<"Groups"> | string
+    icon?: StringFilter<"Groups"> | string
+    userId?: StringFilter<"Groups"> | string
+    user?: XOR<UsersRelationFilter, UsersWhereInput>
+    tasks?: TasksListRelationFilter
+  }, "id" | "userId_name">
 
   export type GroupsOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
+    userId?: SortOrder
     _count?: GroupsCountOrderByAggregateInput
     _max?: GroupsMaxOrderByAggregateInput
     _min?: GroupsMinOrderByAggregateInput
@@ -4177,6 +4262,8 @@ export namespace Prisma {
     NOT?: GroupsScalarWhereWithAggregatesInput | GroupsScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Groups"> | string
     name?: StringWithAggregatesFilter<"Groups"> | string
+    icon?: StringWithAggregatesFilter<"Groups"> | string
+    userId?: StringWithAggregatesFilter<"Groups"> | string
   }
 
   export type UsersCreateInput = {
@@ -4186,6 +4273,7 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     tasks?: TasksCreateNestedManyWithoutUserInput
+    groups?: GroupsCreateNestedManyWithoutUserInput
   }
 
   export type UsersUncheckedCreateInput = {
@@ -4195,6 +4283,7 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     tasks?: TasksUncheckedCreateNestedManyWithoutUserInput
+    groups?: GroupsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UsersUpdateInput = {
@@ -4204,6 +4293,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TasksUpdateManyWithoutUserNestedInput
+    groups?: GroupsUpdateManyWithoutUserNestedInput
   }
 
   export type UsersUncheckedUpdateInput = {
@@ -4213,6 +4303,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TasksUncheckedUpdateManyWithoutUserNestedInput
+    groups?: GroupsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UsersCreateManyInput = {
@@ -4246,7 +4337,7 @@ export namespace Prisma {
     completed?: boolean
     created_at?: Date | string
     user: UsersCreateNestedOneWithoutTasksInput
-    groups: GroupsCreateNestedOneWithoutTaskInput
+    groups: GroupsCreateNestedOneWithoutTasksInput
   }
 
   export type TasksUncheckedCreateInput = {
@@ -4266,7 +4357,7 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UsersUpdateOneRequiredWithoutTasksNestedInput
-    groups?: GroupsUpdateOneRequiredWithoutTaskNestedInput
+    groups?: GroupsUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TasksUncheckedUpdateInput = {
@@ -4308,42 +4399,55 @@ export namespace Prisma {
   }
 
   export type GroupsCreateInput = {
-    id: string
+    id?: string
     name: string
-    task?: TasksCreateNestedManyWithoutGroupsInput
+    icon?: string
+    user: UsersCreateNestedOneWithoutGroupsInput
+    tasks?: TasksCreateNestedManyWithoutGroupsInput
   }
 
   export type GroupsUncheckedCreateInput = {
-    id: string
+    id?: string
     name: string
-    task?: TasksUncheckedCreateNestedManyWithoutGroupsInput
+    icon?: string
+    userId: string
+    tasks?: TasksUncheckedCreateNestedManyWithoutGroupsInput
   }
 
   export type GroupsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    task?: TasksUpdateManyWithoutGroupsNestedInput
+    icon?: StringFieldUpdateOperationsInput | string
+    user?: UsersUpdateOneRequiredWithoutGroupsNestedInput
+    tasks?: TasksUpdateManyWithoutGroupsNestedInput
   }
 
   export type GroupsUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    task?: TasksUncheckedUpdateManyWithoutGroupsNestedInput
+    icon?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tasks?: TasksUncheckedUpdateManyWithoutGroupsNestedInput
   }
 
   export type GroupsCreateManyInput = {
-    id: string
+    id?: string
     name: string
+    icon?: string
+    userId: string
   }
 
   export type GroupsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
   }
 
   export type GroupsUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4378,7 +4482,17 @@ export namespace Prisma {
     none?: TasksWhereInput
   }
 
+  export type GroupsListRelationFilter = {
+    every?: GroupsWhereInput
+    some?: GroupsWhereInput
+    none?: GroupsWhereInput
+  }
+
   export type TasksOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4491,19 +4605,30 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type GroupsUserIdNameCompoundUniqueInput = {
+    userId: string
+    name: string
+  }
+
   export type GroupsCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
+    userId?: SortOrder
   }
 
   export type GroupsMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
+    userId?: SortOrder
   }
 
   export type GroupsMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
+    userId?: SortOrder
   }
 
   export type TasksCreateNestedManyWithoutUserInput = {
@@ -4513,11 +4638,25 @@ export namespace Prisma {
     connect?: TasksWhereUniqueInput | TasksWhereUniqueInput[]
   }
 
+  export type GroupsCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput> | GroupsCreateWithoutUserInput[] | GroupsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupsCreateOrConnectWithoutUserInput | GroupsCreateOrConnectWithoutUserInput[]
+    createMany?: GroupsCreateManyUserInputEnvelope
+    connect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+  }
+
   export type TasksUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<TasksCreateWithoutUserInput, TasksUncheckedCreateWithoutUserInput> | TasksCreateWithoutUserInput[] | TasksUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TasksCreateOrConnectWithoutUserInput | TasksCreateOrConnectWithoutUserInput[]
     createMany?: TasksCreateManyUserInputEnvelope
     connect?: TasksWhereUniqueInput | TasksWhereUniqueInput[]
+  }
+
+  export type GroupsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput> | GroupsCreateWithoutUserInput[] | GroupsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupsCreateOrConnectWithoutUserInput | GroupsCreateOrConnectWithoutUserInput[]
+    createMany?: GroupsCreateManyUserInputEnvelope
+    connect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4542,6 +4681,20 @@ export namespace Prisma {
     deleteMany?: TasksScalarWhereInput | TasksScalarWhereInput[]
   }
 
+  export type GroupsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput> | GroupsCreateWithoutUserInput[] | GroupsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupsCreateOrConnectWithoutUserInput | GroupsCreateOrConnectWithoutUserInput[]
+    upsert?: GroupsUpsertWithWhereUniqueWithoutUserInput | GroupsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupsCreateManyUserInputEnvelope
+    set?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    disconnect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    delete?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    connect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    update?: GroupsUpdateWithWhereUniqueWithoutUserInput | GroupsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupsUpdateManyWithWhereWithoutUserInput | GroupsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupsScalarWhereInput | GroupsScalarWhereInput[]
+  }
+
   export type TasksUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TasksCreateWithoutUserInput, TasksUncheckedCreateWithoutUserInput> | TasksCreateWithoutUserInput[] | TasksUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TasksCreateOrConnectWithoutUserInput | TasksCreateOrConnectWithoutUserInput[]
@@ -4556,15 +4709,29 @@ export namespace Prisma {
     deleteMany?: TasksScalarWhereInput | TasksScalarWhereInput[]
   }
 
+  export type GroupsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput> | GroupsCreateWithoutUserInput[] | GroupsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupsCreateOrConnectWithoutUserInput | GroupsCreateOrConnectWithoutUserInput[]
+    upsert?: GroupsUpsertWithWhereUniqueWithoutUserInput | GroupsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupsCreateManyUserInputEnvelope
+    set?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    disconnect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    delete?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    connect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
+    update?: GroupsUpdateWithWhereUniqueWithoutUserInput | GroupsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupsUpdateManyWithWhereWithoutUserInput | GroupsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupsScalarWhereInput | GroupsScalarWhereInput[]
+  }
+
   export type UsersCreateNestedOneWithoutTasksInput = {
     create?: XOR<UsersCreateWithoutTasksInput, UsersUncheckedCreateWithoutTasksInput>
     connectOrCreate?: UsersCreateOrConnectWithoutTasksInput
     connect?: UsersWhereUniqueInput
   }
 
-  export type GroupsCreateNestedOneWithoutTaskInput = {
-    create?: XOR<GroupsCreateWithoutTaskInput, GroupsUncheckedCreateWithoutTaskInput>
-    connectOrCreate?: GroupsCreateOrConnectWithoutTaskInput
+  export type GroupsCreateNestedOneWithoutTasksInput = {
+    create?: XOR<GroupsCreateWithoutTasksInput, GroupsUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: GroupsCreateOrConnectWithoutTasksInput
     connect?: GroupsWhereUniqueInput
   }
 
@@ -4580,12 +4747,18 @@ export namespace Prisma {
     update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutTasksInput, UsersUpdateWithoutTasksInput>, UsersUncheckedUpdateWithoutTasksInput>
   }
 
-  export type GroupsUpdateOneRequiredWithoutTaskNestedInput = {
-    create?: XOR<GroupsCreateWithoutTaskInput, GroupsUncheckedCreateWithoutTaskInput>
-    connectOrCreate?: GroupsCreateOrConnectWithoutTaskInput
-    upsert?: GroupsUpsertWithoutTaskInput
+  export type GroupsUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: XOR<GroupsCreateWithoutTasksInput, GroupsUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: GroupsCreateOrConnectWithoutTasksInput
+    upsert?: GroupsUpsertWithoutTasksInput
     connect?: GroupsWhereUniqueInput
-    update?: XOR<XOR<GroupsUpdateToOneWithWhereWithoutTaskInput, GroupsUpdateWithoutTaskInput>, GroupsUncheckedUpdateWithoutTaskInput>
+    update?: XOR<XOR<GroupsUpdateToOneWithWhereWithoutTasksInput, GroupsUpdateWithoutTasksInput>, GroupsUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type UsersCreateNestedOneWithoutGroupsInput = {
+    create?: XOR<UsersCreateWithoutGroupsInput, UsersUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutGroupsInput
+    connect?: UsersWhereUniqueInput
   }
 
   export type TasksCreateNestedManyWithoutGroupsInput = {
@@ -4600,6 +4773,14 @@ export namespace Prisma {
     connectOrCreate?: TasksCreateOrConnectWithoutGroupsInput | TasksCreateOrConnectWithoutGroupsInput[]
     createMany?: TasksCreateManyGroupsInputEnvelope
     connect?: TasksWhereUniqueInput | TasksWhereUniqueInput[]
+  }
+
+  export type UsersUpdateOneRequiredWithoutGroupsNestedInput = {
+    create?: XOR<UsersCreateWithoutGroupsInput, UsersUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutGroupsInput
+    upsert?: UsersUpsertWithoutGroupsInput
+    connect?: UsersWhereUniqueInput
+    update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutGroupsInput, UsersUpdateWithoutGroupsInput>, UsersUncheckedUpdateWithoutGroupsInput>
   }
 
   export type TasksUpdateManyWithoutGroupsNestedInput = {
@@ -4716,7 +4897,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
-    groups: GroupsCreateNestedOneWithoutTaskInput
+    groups: GroupsCreateNestedOneWithoutTasksInput
   }
 
   export type TasksUncheckedCreateWithoutUserInput = {
@@ -4735,6 +4916,30 @@ export namespace Prisma {
 
   export type TasksCreateManyUserInputEnvelope = {
     data: TasksCreateManyUserInput | TasksCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupsCreateWithoutUserInput = {
+    id?: string
+    name: string
+    icon?: string
+    tasks?: TasksCreateNestedManyWithoutGroupsInput
+  }
+
+  export type GroupsUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    icon?: string
+    tasks?: TasksUncheckedCreateNestedManyWithoutGroupsInput
+  }
+
+  export type GroupsCreateOrConnectWithoutUserInput = {
+    where: GroupsWhereUniqueInput
+    create: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupsCreateManyUserInputEnvelope = {
+    data: GroupsCreateManyUserInput | GroupsCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -4767,12 +4972,39 @@ export namespace Prisma {
     groupId?: StringFilter<"Tasks"> | string
   }
 
+  export type GroupsUpsertWithWhereUniqueWithoutUserInput = {
+    where: GroupsWhereUniqueInput
+    update: XOR<GroupsUpdateWithoutUserInput, GroupsUncheckedUpdateWithoutUserInput>
+    create: XOR<GroupsCreateWithoutUserInput, GroupsUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupsUpdateWithWhereUniqueWithoutUserInput = {
+    where: GroupsWhereUniqueInput
+    data: XOR<GroupsUpdateWithoutUserInput, GroupsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GroupsUpdateManyWithWhereWithoutUserInput = {
+    where: GroupsScalarWhereInput
+    data: XOR<GroupsUpdateManyMutationInput, GroupsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GroupsScalarWhereInput = {
+    AND?: GroupsScalarWhereInput | GroupsScalarWhereInput[]
+    OR?: GroupsScalarWhereInput[]
+    NOT?: GroupsScalarWhereInput | GroupsScalarWhereInput[]
+    id?: StringFilter<"Groups"> | string
+    name?: StringFilter<"Groups"> | string
+    icon?: StringFilter<"Groups"> | string
+    userId?: StringFilter<"Groups"> | string
+  }
+
   export type UsersCreateWithoutTasksInput = {
     id?: string
     name: string
     email: string
     password: string
     created_at?: Date | string
+    groups?: GroupsCreateNestedManyWithoutUserInput
   }
 
   export type UsersUncheckedCreateWithoutTasksInput = {
@@ -4781,6 +5013,7 @@ export namespace Prisma {
     email: string
     password: string
     created_at?: Date | string
+    groups?: GroupsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UsersCreateOrConnectWithoutTasksInput = {
@@ -4788,19 +5021,23 @@ export namespace Prisma {
     create: XOR<UsersCreateWithoutTasksInput, UsersUncheckedCreateWithoutTasksInput>
   }
 
-  export type GroupsCreateWithoutTaskInput = {
-    id: string
+  export type GroupsCreateWithoutTasksInput = {
+    id?: string
     name: string
+    icon?: string
+    user: UsersCreateNestedOneWithoutGroupsInput
   }
 
-  export type GroupsUncheckedCreateWithoutTaskInput = {
-    id: string
+  export type GroupsUncheckedCreateWithoutTasksInput = {
+    id?: string
     name: string
+    icon?: string
+    userId: string
   }
 
-  export type GroupsCreateOrConnectWithoutTaskInput = {
+  export type GroupsCreateOrConnectWithoutTasksInput = {
     where: GroupsWhereUniqueInput
-    create: XOR<GroupsCreateWithoutTaskInput, GroupsUncheckedCreateWithoutTaskInput>
+    create: XOR<GroupsCreateWithoutTasksInput, GroupsUncheckedCreateWithoutTasksInput>
   }
 
   export type UsersUpsertWithoutTasksInput = {
@@ -4820,6 +5057,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupsUpdateManyWithoutUserNestedInput
   }
 
   export type UsersUncheckedUpdateWithoutTasksInput = {
@@ -4828,27 +5066,55 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupsUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type GroupsUpsertWithoutTaskInput = {
-    update: XOR<GroupsUpdateWithoutTaskInput, GroupsUncheckedUpdateWithoutTaskInput>
-    create: XOR<GroupsCreateWithoutTaskInput, GroupsUncheckedCreateWithoutTaskInput>
+  export type GroupsUpsertWithoutTasksInput = {
+    update: XOR<GroupsUpdateWithoutTasksInput, GroupsUncheckedUpdateWithoutTasksInput>
+    create: XOR<GroupsCreateWithoutTasksInput, GroupsUncheckedCreateWithoutTasksInput>
     where?: GroupsWhereInput
   }
 
-  export type GroupsUpdateToOneWithWhereWithoutTaskInput = {
+  export type GroupsUpdateToOneWithWhereWithoutTasksInput = {
     where?: GroupsWhereInput
-    data: XOR<GroupsUpdateWithoutTaskInput, GroupsUncheckedUpdateWithoutTaskInput>
+    data: XOR<GroupsUpdateWithoutTasksInput, GroupsUncheckedUpdateWithoutTasksInput>
   }
 
-  export type GroupsUpdateWithoutTaskInput = {
+  export type GroupsUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    user?: UsersUpdateOneRequiredWithoutGroupsNestedInput
   }
 
-  export type GroupsUncheckedUpdateWithoutTaskInput = {
+  export type GroupsUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsersCreateWithoutGroupsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    created_at?: Date | string
+    tasks?: TasksCreateNestedManyWithoutUserInput
+  }
+
+  export type UsersUncheckedCreateWithoutGroupsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    created_at?: Date | string
+    tasks?: TasksUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UsersCreateOrConnectWithoutGroupsInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutGroupsInput, UsersUncheckedCreateWithoutGroupsInput>
   }
 
   export type TasksCreateWithoutGroupsInput = {
@@ -4879,6 +5145,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UsersUpsertWithoutGroupsInput = {
+    update: XOR<UsersUpdateWithoutGroupsInput, UsersUncheckedUpdateWithoutGroupsInput>
+    create: XOR<UsersCreateWithoutGroupsInput, UsersUncheckedCreateWithoutGroupsInput>
+    where?: UsersWhereInput
+  }
+
+  export type UsersUpdateToOneWithWhereWithoutGroupsInput = {
+    where?: UsersWhereInput
+    data: XOR<UsersUpdateWithoutGroupsInput, UsersUncheckedUpdateWithoutGroupsInput>
+  }
+
+  export type UsersUpdateWithoutGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: TasksUpdateManyWithoutUserNestedInput
+  }
+
+  export type UsersUncheckedUpdateWithoutGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: TasksUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type TasksUpsertWithWhereUniqueWithoutGroupsInput = {
     where: TasksWhereUniqueInput
     update: XOR<TasksUpdateWithoutGroupsInput, TasksUncheckedUpdateWithoutGroupsInput>
@@ -4904,13 +5199,19 @@ export namespace Prisma {
     groupId: string
   }
 
+  export type GroupsCreateManyUserInput = {
+    id?: string
+    name: string
+    icon?: string
+  }
+
   export type TasksUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     task?: StringFieldUpdateOperationsInput | string
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    groups?: GroupsUpdateOneRequiredWithoutTaskNestedInput
+    groups?: GroupsUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TasksUncheckedUpdateWithoutUserInput = {
@@ -4929,6 +5230,26 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GroupsUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    tasks?: TasksUpdateManyWithoutGroupsNestedInput
+  }
+
+  export type GroupsUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    tasks?: TasksUncheckedUpdateManyWithoutGroupsNestedInput
+  }
+
+  export type GroupsUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
   }
 
   export type TasksCreateManyGroupsInput = {

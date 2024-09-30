@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-export type CardType = "today" | "default";
+export type CardType = "today" | "default" | "important";
 
 const TaskList = ({
   isLoading,
@@ -23,8 +23,8 @@ const TaskList = ({
 }) => {
   const [showCompleted, setShowCompleted] = useState(true);
 
-  const completedTasks = taskData.filter((task) => task.completed);
   const notCompletedTasks = taskData.filter((task) => !task.completed);
+  const completedTasks = taskData.filter((task) => task.completed);
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">
       <ScrollArea className="w-full">
@@ -83,5 +83,3 @@ const TaskList = ({
 };
 
 export default TaskList;
-
-// flex flex-col justify-between h-fit mt-5 w-full items-center px-1 tablet:px-0

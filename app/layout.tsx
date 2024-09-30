@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 
 import "./globals.css";
+import { Toaster } from "./components/shadcn/sonner";
 
 // Metadata for SEO
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className="bg-neutral-950 text-neutral-50 text-sm font-sans">
         {/* Main content area */}
         <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );

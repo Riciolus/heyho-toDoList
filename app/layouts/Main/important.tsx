@@ -43,12 +43,17 @@ const ImportantContent = () => {
         colorTheme="pink"
         isLoading={isLoading}
         taskData={taskData}
-        cardType="default"
+        cardType="important"
         setTaskData={setTaskData}
       />
 
       {/* Add Task */}
-      <AddTaskButton groupId={1} colorTheme="pink" setTaskData={setTaskData} />
+      <AddTaskButton
+        groupId="tasks"
+        cardType="important"
+        colorTheme="pink"
+        setTaskData={setTaskData}
+      />
     </div>
   );
 };

@@ -3,14 +3,22 @@ import { addNewTask } from "../lib/api";
 import { addImportantTask } from "../lib/utils";
 import { Task } from "../page";
 import { ColorTheme } from "./taskCard";
+import { CardType } from "../layouts/TaskList";
+import { toast } from "sonner";
 
 export interface Propstype {
-  groupId: number;
+  groupId: string;
   colorTheme: ColorTheme;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
+  cardType: CardType;
 }
 
-const AddTaskButton = ({ groupId, colorTheme, setTaskData }: Propstype) => {
+const AddTaskButton = ({
+  groupId,
+  cardType = "default",
+  colorTheme,
+  setTaskData,
+}: Propstype) => {
   const handleAddTask = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -23,12 +31,14 @@ const AddTaskButton = ({ groupId, colorTheme, setTaskData }: Propstype) => {
 
     const data = {
       task: inputValue,
-      groupId: "tasks",
-      important: addImportantTask(groupId),
+      groupId,
+      important: addImportantTask(cardType),
     };
 
     await addNewTask(data).then((result) => {
+      console.log(result);
       setTaskData((prevData) => [...prevData, result]);
+      toast("New task added successfully!");
     });
 
     form.inputTask.value = "";

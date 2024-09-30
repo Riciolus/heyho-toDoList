@@ -16,10 +16,6 @@ type Propstype = {
   cardType: CardType;
 };
 
-type GroupNameMap = {
-  [key: string]: string;
-};
-
 export type ColorClasses = {
   [key in ColorTheme]: string;
 };
@@ -31,17 +27,12 @@ export const colorClasses: ColorClasses = {
   orange: "checked:bg-orange-400",
 };
 
-const groupNameMap: GroupNameMap = {
-  tasks: "Tasks",
-  assgn: "Assigned To Me",
-};
-
 const TaskCard = ({ task, colorTheme, setTaskData, cardType }: Propstype) => {
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
   ) => {
-    if (colorTheme === "pink") {
+    if (cardType === "important") {
       setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
     } else {
       setTaskData((prevData) =>
@@ -95,7 +86,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, cardType }: Propstype) => {
                       task.completed ? "text-neutral-500" : "text-gray-300"
                     }`}
                   >
-                    {groupNameMap[task.groupId]}
+                    {task.groups.name}
                   </p>
                 ) : (
                   <TodayBadge

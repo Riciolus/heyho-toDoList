@@ -19,6 +19,13 @@ export async function POST(
         groupId,
         important,
       },
+      include: {
+        groups: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json({ status: true, data: createdTasks });

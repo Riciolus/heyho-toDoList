@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Groups" ALTER COLUMN "userId" DROP DEFAULT;

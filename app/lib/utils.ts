@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Check if users make a task in important page. it's automatically make the new task to important
-export function addImportantTask(groupId: number) {
-  if (groupId === 1) {
+export function addImportantTask(isImportantCardType: string) {
+  if (isImportantCardType === "important") {
     return true;
   } else {
     return false;

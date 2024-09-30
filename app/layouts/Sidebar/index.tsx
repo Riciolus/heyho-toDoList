@@ -3,42 +3,65 @@
 import Image from "next/image";
 import { BiSearchAlt } from "react-icons/bi";
 import { TiWeatherSunny } from "react-icons/ti";
-import { FaHandSparkles, FaRegStar, FaUserAstronaut } from "react-icons/fa";
+import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
-import { BsCart4, BsList } from "react-icons/bs";
-import { ActivePageMap } from "@/app/page";
-import { MdFolderCopy } from "react-icons/md";
+import { Group } from "@/app/page";
+import { LuFolders } from "react-icons/lu";
+import { useEffect } from "react";
+import { createNewGroup, getGroupById } from "@/app/lib/api";
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+} from "@/app/components/shadcn/context-menu";
+import GroupProperties from "./groupProperties";
 
 interface SidebarProps {
-  handleChangeContent: (page: keyof ActivePageMap) => void; // Type the prop as a function
+  handleChangeContent: (page: string) => void; // Type the prop as a function
   activePage: string;
+  setSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
+  sidebarGroup: Group[];
+  iconData: object;
 }
-
-const sidebarData = [
-  {
-    title: "Getting Started",
-    icon: <FaHandSparkles size={24} className="fill-yellow-500" />,
-  },
-  {
-    title: "Web Dev Tasks",
-    icon: <BsList size={24} />,
-  },
-  {
-    title: "Groceries",
-    icon: <BsCart4 size={24} />,
-  },
-];
 
 const styles = {
   button:
     "flex items-center hover:bg-onhover py-1 ps-2 rounded-lg transition-colors gap-3 cursor-pointer w-[90%] laptop:w-[62%]",
 };
 
-const Sidebar = ({ handleChangeContent, activePage }: SidebarProps) => {
+const Sidebar = ({
+  handleChangeContent,
+  activePage,
+  setSidebarGroup,
+  sidebarGroup,
+  iconData,
+}: SidebarProps) => {
+  useEffect(() => {
+    async function getTask() {
+      const result = await getGroupById();
+      localStorage.setItem("group", JSON.stringify(result));
+      setSidebarGroup(result);
+    }
+
+    getTask();
+  }, [setSidebarGroup]);
+
   const buttonColorActive = (lists: string) => {
     if (activePage === lists) {
       return "bg-onhover";
     }
+  };
+
+  const handleNewGroup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const inputValue = form.inputGroup.value;
+
+    await createNewGroup(inputValue).then((newGroupData: Group) =>
+      setSidebarGroup([...sidebarGroup, newGroupData])
+    );
+
+    form.inputGroup.value = "";
   };
 
   return (
@@ -112,34 +135,47 @@ const Sidebar = ({ handleChangeContent, activePage }: SidebarProps) => {
 
           {/* FOLDER SECTION */}
           <div className="flex flex-col gap-1">
-            {/* <div className={styles.button}>
-              <FaHandSparkles size={24} className="fill-yellow-500" />
-              <span>Getting Started</span>
-            </div>
-            <div className={styles.button}>
-              <BsList size={24} />
-              <span>Web Dev Tasks</span>
-            </div>
-            <div className={styles.button}>
-              <BsCart4 size={24} className="" />
-              <span>Groceries</span>
-            </div> */}
-            {sidebarData.map((menu) => {
-              return (
-                <div key={menu.title} className={styles.button}>
-                  {menu.icon}
-                  <span> {menu.title}</span>
-                </div>
-              );
-            })}
+            {sidebarGroup &&
+              sidebarGroup.map(
+                (group: { id: string; name: string; icon: string }) => {
+                  return (
+                    <ContextMenu key={group.id}>
+                      <ContextMenuTrigger>
+                        <div
+                          onClick={() => handleChangeContent(group.id)}
+                          className={`${styles.button} ${buttonColorActive(
+                            group.id
+                          )} `}
+                        >
+                          {iconData[group.icon as keyof object]}
+                          <span> {group.name}</span>
+                        </div>
+                      </ContextMenuTrigger>
+                      <GroupProperties
+                        groupId={group.id}
+                        setSidebarGroup={setSidebarGroup}
+                      />
+                    </ContextMenu>
+                  );
+                }
+              )}
           </div>
         </div>
       </div>
 
-      <button className="flex items-center gap-2 hover:bg-onhover px-1.5 hover:px-3 py-2 mr-3 rounded-lg hover:scale-[1.03] transition-all">
-        <MdFolderCopy size={23} />
-        <span>New List</span>
-      </button>
+      <form
+        onSubmit={handleNewGroup}
+        className="flex relative items-center gap-2       "
+      >
+        <button type="submit" className="absolute">
+          <LuFolders size={23} />
+        </button>
+        <input
+          id="inputGroup"
+          placeholder="New List"
+          className="bg-transparent w-full px-1.5 hover:px-3 hover:bg-onhover pl-8  h-10  mr-3 hover:scale-[1.03] transition-all rounded-lg placeholder-neutral-50 outline-none font-medium text-base"
+        ></input>
+      </form>
     </div>
   );
 };

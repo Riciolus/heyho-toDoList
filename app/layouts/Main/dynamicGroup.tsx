@@ -1,36 +1,37 @@
+import AddTaskButton from "@/app/components/addTask";
+import { getTasksByGroup } from "@/app/lib/api";
 import { useEffect, useState } from "react";
 import { GoKebabHorizontal } from "react-icons/go";
-import { TbSubtask } from "react-icons/tb";
-import { Task } from "@/app/page";
-import { getTasksByGroup } from "@/app/lib/api";
-import AddTaskButton from "@/app/components/addTask";
 import TaskList from "../TaskList";
+import { Task } from "@/app/page";
 
-const TasksContent = () => {
+const DynamicGroupContent = ({
+  data,
+  iconData,
+}: {
+  data: { id: string; name: string; icon: string };
+  iconData: object;
+}) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const groupId = "tasks";
+    setIsLoading(true);
 
-    const fecthTasksData = async () => {
-      await getTasksByGroup(groupId).then((result) => {
-        setTaskData(result.data.data);
-        setIsLoading(false);
-      });
-    };
-
-    fecthTasksData();
-  }, []);
+    getTasksByGroup(data.id).then((result) => {
+      setTaskData(result.data.data);
+      setIsLoading(false);
+    });
+  }, [data.id]);
 
   return (
     <div className="text-base h-full">
       {/* Title Bar */}
       <div className="flex justify-between items-center mb-5">
-        <div className="text-blue-300">
-          <h1 className="flex gap-2 items-center text-3xl font-semibold underline underline-offset-4 ">
-            <TbSubtask />
-            <span>Tasks</span>
+        <div>
+          <h1 className="flex  gap-2 items-center text-3xl font-semibold underline underline-offset-4 text-neutral-300 ">
+            {iconData[data.icon as keyof object]}
+            <span>{data.name}</span>
           </h1>
         </div>
         <div
@@ -40,8 +41,7 @@ const TasksContent = () => {
           <GoKebabHorizontal />
         </div>
       </div>
-
-      {/* Tasks Lists */}
+      {/* Task Lists */}
       <TaskList
         colorTheme="blue"
         isLoading={isLoading}
@@ -49,10 +49,11 @@ const TasksContent = () => {
         cardType="default"
         setTaskData={setTaskData}
       />
+
       {/* Add Task */}
       <AddTaskButton
-        groupId="tasks"
-        colorTheme="blue"
+        groupId={data.id}
+        colorTheme="green"
         setTaskData={setTaskData}
         cardType="default"
       />
@@ -60,4 +61,4 @@ const TasksContent = () => {
   );
 };
 
-export default TasksContent;
+export default DynamicGroupContent;

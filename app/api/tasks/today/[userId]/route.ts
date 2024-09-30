@@ -17,7 +17,11 @@ export async function GET(
       completed: true,
       important: true,
       created_at: true,
-      groupId: true,
+      groups: {
+        select: {
+          name: true,
+        },
+      },
     },
     where: {
       AND: [

@@ -36,7 +36,6 @@ const AddTaskButton = ({
     };
 
     await addNewTask(data).then((result) => {
-      console.log(result);
       setTaskData((prevData) => [...prevData, result]);
       toast("New task added successfully!");
     });

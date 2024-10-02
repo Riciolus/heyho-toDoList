@@ -12,6 +12,7 @@ import LoadingPage from "./layouts/Main/loading";
 import DynamicGroupContent from "./layouts/Main/dynamicGroup";
 import { FaHandSparkles } from "react-icons/fa";
 import { BsCart4, BsList } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 export type Group = {
   id: string;
@@ -81,7 +82,7 @@ export default function MainPage() {
       return <DynamicGroupContent data={dynamicContent} iconData={iconData} />;
     }
 
-    return staticContent[activePage as keyof StaticContent]; // Type assertion
+    return staticContent[activePage as keyof StaticContent];
   };
 
   // Change content
@@ -91,42 +92,48 @@ export default function MainPage() {
   };
 
   return (
-    <div className="noFit:mx-[13vw] h-screen flex flex-col tablet:flex-row">
-      {/* Navigation Bar */}
-      {/* Navbar only visible when on mobile devices */}
-      <NavigationBar toggleSidebar={toggleSidebar} />
+    <motion.div
+      initial={{ x: 20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 0.3 }}
+    >
+      <div className="noFit:mx-[13vw] h-screen flex flex-col tablet:flex-row">
+        {/* Navigation Bar */}
+        {/* Navbar only visible when on mobile devices */}
+        <NavigationBar toggleSidebar={toggleSidebar} />
 
-      {/* Left Side  Content*/}
-      {/* Exsist : Title and Sidebar */}
-      <div
-        className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] ${
-          isSidebar && "left-[0rem]"
-        }`}
-      >
-        {/*          Title */}
-        <Title />
+        {/* Left Side  Content*/}
+        {/* Exsist : Title and Sidebar */}
+        <div
+          className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] ${
+            isSidebar && "left-[0rem]"
+          }`}
+        >
+          {/*          Title */}
+          <Title />
 
-        {/*          Sidebar */}
-        <div className="h-full ">
-          <Sidebar
-            setSidebarGroup={setSidebarGroup}
-            handleChangeContent={handleChangeContent}
-            setActivePage={setActivePage}
-            sidebarGroup={sidebarGroup}
-            activePage={activePage}
-            iconData={iconData}
-          />
+          {/*          Sidebar */}
+          <div className="h-full ">
+            <Sidebar
+              setSidebarGroup={setSidebarGroup}
+              handleChangeContent={handleChangeContent}
+              setActivePage={setActivePage}
+              sidebarGroup={sidebarGroup}
+              activePage={activePage}
+              iconData={iconData}
+            />
+          </div>
+
+          {/*           Main Content */}
         </div>
 
-        {/*           Main Content */}
-      </div>
+        <div className="laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%] ">
+          {/* Render Page Dynamicly */}
+          {isLoading ? <LoadingPage /> : renderActiveContent()}
 
-      <div className="laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%] ">
-        {/* Render Page Dynamicly */}
-        {isLoading ? <LoadingPage /> : renderActiveContent()}
-
-        {/* <LoadingPage /> */}
+          {/* <LoadingPage /> */}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

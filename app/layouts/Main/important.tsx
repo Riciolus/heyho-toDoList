@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
-import { GoKebabHorizontal } from "react-icons/go";
 import { Task } from "@/app/page";
 import { getImportantTasks } from "@/app/lib/api";
 import AddTaskButton from "@/app/components/addTask";
 import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
 
 const ImportantContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -27,12 +27,7 @@ const ImportantContent = () => {
             <span>Important</span>
           </h1>
         </div>
-        <div
-          onClick={() => alert("bitch")}
-          className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg"
-        >
-          <GoKebabHorizontal />
-        </div>
+        <Dropdown />
       </div>
       {/* Task Lists */}
       <TaskList

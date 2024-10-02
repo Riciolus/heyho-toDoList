@@ -44,7 +44,7 @@ const AddTaskButton = ({
   };
 
   return (
-    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%] desktop:w-[39.5%] w-[90%] bottom-10">
+    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%] desktop:w-[39.5%] w-[90%] bottom-20 noFit:bottom-11">
       <form
         onSubmit={(event) => handleAddTask(event)}
         className="w-full flex items-center"

@@ -177,7 +177,7 @@ const Sidebar = ({
         <input
           id="inputGroup"
           placeholder="New List"
-          className="bg-transparent w-full px-1.5 hover:px-3 hover:bg-onhover pl-8 h-10  mr-3 hover:scale-[1.03] transition-all rounded-lg placeholder-neutral-50 outline-none font-normal text-base"
+          className="bg-transparent w-full px-1.5 hover:px-3 hover:bg-onhover pl-8 h-10  mr-3 hover:scale-[1.03] hover:text-sm transition-all rounded-lg placeholder-neutral-50 outline-none font-normal text-base"
         ></input>
       </form>
     </div>

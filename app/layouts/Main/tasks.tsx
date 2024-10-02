@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { GoKebabHorizontal } from "react-icons/go";
 import { TbSubtask } from "react-icons/tb";
 import { Task } from "@/app/page";
 import { getTasksByGroup } from "@/app/lib/api";
 import AddTaskButton from "@/app/components/addTask";
 import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
 
 const TasksContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -29,12 +29,7 @@ const TasksContent = () => {
             <span>Tasks</span>
           </h1>
         </div>
-        <div
-          onClick={() => alert("bitch")}
-          className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg"
-        >
-          <GoKebabHorizontal />
-        </div>
+        <Dropdown />
       </div>
 
       {/* Tasks Lists */}

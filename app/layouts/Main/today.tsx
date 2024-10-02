@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { GoKebabHorizontal } from "react-icons/go";
 import { Task } from "@/app/page";
 import { getDateFormattedLong } from "@/app/lib/datetime";
 import { getTodayTasks } from "@/app/lib/api";
 import AddTaskButton from "@/app/components/addTask";
 import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
 // import Image from "next/image";
 
 const TodayContent = () => {
@@ -29,12 +29,7 @@ const TodayContent = () => {
           </h1>
           <span className="">{date}</span>
         </div>
-        <div
-          onClick={() => alert("bitch")}
-          className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg"
-        >
-          <GoKebabHorizontal />
-        </div>
+        <Dropdown />
       </div>
       {/* Task Lists */}
       <TaskList

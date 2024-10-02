@@ -2,7 +2,7 @@ import { FiPlus } from "react-icons/fi";
 import { addNewTask } from "../lib/api";
 import { addImportantTask } from "../lib/utils";
 import { Task } from "../page";
-import { ColorTheme } from "./taskCard";
+import { ColorTheme } from "./task/taskCard";
 import { CardType } from "../layouts/TaskList";
 import { toast } from "sonner";
 

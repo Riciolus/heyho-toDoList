@@ -5,9 +5,9 @@ import AssignedToMeContent from "./layouts/Main/assgToMe";
 import ImportantContent from "./layouts/Main/important";
 import TasksContent from "./layouts/Main/tasks";
 import TodayContent from "./layouts/Main/today";
-import Sidebar from "./layouts/Sidebar";
+import Sidebar from "./layouts/Menu/sidebar";
 import Title from "./components/title";
-import NavigationBar from "./components/navbar";
+import NavigationBar from "./layouts/Menu/navbar";
 import LoadingPage from "./layouts/Main/loading";
 import DynamicGroupContent from "./layouts/Main/dynamicGroup";
 import { FaHandSparkles } from "react-icons/fa";
@@ -73,10 +73,10 @@ export default function MainPage() {
       tasks: <TasksContent />,
     };
 
-    console.log(sidebarGroup);
     const dynamicContent = sidebarGroup?.find(
       (group) => group.id === activePage
     );
+
     if (dynamicContent) {
       return <DynamicGroupContent data={dynamicContent} iconData={iconData} />;
     }
@@ -110,8 +110,9 @@ export default function MainPage() {
         <div className="h-full ">
           <Sidebar
             setSidebarGroup={setSidebarGroup}
-            sidebarGroup={sidebarGroup}
             handleChangeContent={handleChangeContent}
+            setActivePage={setActivePage}
+            sidebarGroup={sidebarGroup}
             activePage={activePage}
             iconData={iconData}
           />

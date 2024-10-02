@@ -1,4 +1,3 @@
-import React from "react";
 import { ColorClasses, ColorTheme } from "./taskCard";
 
 const Checkbox = ({

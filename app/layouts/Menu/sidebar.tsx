@@ -17,8 +17,9 @@ import GroupProperties from "./groupProperties";
 
 interface SidebarProps {
   handleChangeContent: (page: string) => void; // Type the prop as a function
-  activePage: string;
   setSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
+  setActivePage: React.Dispatch<React.SetStateAction<string>>;
+  activePage: string;
   sidebarGroup: Group[];
   iconData: object;
 }
@@ -30,8 +31,9 @@ const styles = {
 
 const Sidebar = ({
   handleChangeContent,
-  activePage,
   setSidebarGroup,
+  setActivePage,
+  activePage,
   sidebarGroup,
   iconData,
 }: SidebarProps) => {
@@ -44,8 +46,6 @@ const Sidebar = ({
 
     getTask();
   }, [setSidebarGroup]);
-
-  console.log(sidebarGroup);
 
   const buttonColorActive = (lists: string) => {
     if (activePage === lists) {
@@ -60,9 +60,9 @@ const Sidebar = ({
     const inputValue = form.inputGroup.value;
 
     createNewGroup(inputValue).then((newGroupData: Group) => {
-      console.log(newGroupData);
       setSidebarGroup([...sidebarGroup, newGroupData]);
       localStorage.setItem("active-page", newGroupData.id);
+      setActivePage(newGroupData.id);
     });
 
     form.inputGroup.value = "";

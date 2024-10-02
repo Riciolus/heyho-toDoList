@@ -1,4 +1,4 @@
-import { getDateFormattedLong, isTodayDate } from "../lib/datetime";
+import { getDateFormattedLong, isTodayDate } from "../../lib/datetime";
 
 const TodayBadge = ({
   createdAt,

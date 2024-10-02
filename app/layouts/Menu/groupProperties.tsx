@@ -36,8 +36,8 @@ const GroupProperties = ({
     <ContextMenuContent>
       <ContextMenuItem>Rename</ContextMenuItem>
       <AlertDialog>
-        <AlertDialogTrigger className="relative flex cursor-default select-none items-center rounded-sm    px-6 py-1 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-neutral-800 hover:text-neutral-50">
-          Delete Group{" "}
+        <AlertDialogTrigger className="relative flex cursor-default select-none items-center rounded-sm px-6 py-1 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-neutral-800 hover:text-neutral-50">
+          Delete Group
         </AlertDialogTrigger>
         <AlertDialogContent className="bg-neutral-800 rounded-md border-neutral-700 text-neutral-50">
           <AlertDialogHeader>
@@ -48,7 +48,7 @@ const GroupProperties = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-neutral-950  hover:bg-neutral-900  hover:text-neutral-50">
+            <AlertDialogCancel className="bg-neutral-950 hover:bg-neutral-900 hover:text-neutral-50">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction

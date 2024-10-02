@@ -1,11 +1,12 @@
-import LoadingCard from "@/app/components/loadingCard";
+import LoadingCard from "@/app/components/task/loadingCard";
 import { ScrollArea } from "@/app/components/shadcn/scroll-area";
-import TaskCard, { ColorTheme } from "@/app/components/taskCard";
+import TaskCard, { ColorTheme } from "@/app/components/task/taskCard";
 import { Task } from "@/app/page";
 import clsx from "clsx";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { motion } from "framer-motion";
+import ZeroTask from "@/app/components/task/0task";
 
 export type CardType = "today" | "default" | "important";
 
@@ -32,8 +33,8 @@ const TaskList = ({
     ? taskData.filter((task) => !task.completed)
     : [];
 
-  if (taskData.length === 0) {
-    return <div>Gada Task</div>;
+  if (!isLoading && taskData.length === 0) {
+    return <ZeroTask />;
   }
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">

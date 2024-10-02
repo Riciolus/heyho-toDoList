@@ -45,19 +45,6 @@ const TodayContent = () => {
         setTaskData={setTaskData}
       />
 
-      {/* <div className="w-full h-[70%] text-sm flex flex-col items-center justify-center">
-        <Image
-          src="/assets/bear_3d.png"
-          alt="Image not found"
-          width={100}
-          height={100}
-          className="w-28 opacity-90"
-        ></Image>
-        <h1 className="font-bold">Focus On Your Day</h1>
-        <p className="w-56 text-center mt-2">
-          Get things done with My Day, a list that refreshes every day
-        </p>
-      </div> */}
       {/* Add Task */}
       <AddTaskButton
         groupId="tasks"

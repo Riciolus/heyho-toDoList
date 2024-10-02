@@ -1,11 +1,11 @@
 import TodayBadge from "./todayBadge";
 import { Task } from "@/app/page";
 import TaskProperties from "./taskProperties";
-import { ContextMenu, ContextMenuTrigger } from "./shadcn/context-menu";
-import { updateCompleted, updateTaskImportance } from "../lib/api";
+import { ContextMenu, ContextMenuTrigger } from "../shadcn/context-menu";
+import { updateCompleted, updateTaskImportance } from "../../lib/api";
 import Checkbox from "./checkbox";
 import ImportantButton from "./completeButton";
-import { CardType } from "../layouts/TaskList";
+import { CardType } from "../../layouts/TaskList";
 import { motion } from "framer-motion";
 
 export type ColorTheme = "blue" | "pink" | "green" | "orange";

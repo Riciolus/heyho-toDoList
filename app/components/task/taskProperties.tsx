@@ -1,6 +1,6 @@
-import { deleteTask } from "../lib/api";
-import { Task } from "../page";
-import { ContextMenuContent, ContextMenuItem } from "./shadcn/context-menu";
+import { deleteTask } from "../../lib/api";
+import { Task } from "../../page";
+import { ContextMenuContent, ContextMenuItem } from "../shadcn/context-menu";
 
 type Propstype = {
   taskId: string;

@@ -1,4 +1,4 @@
-import LoadingCard from "@/app/components/loadingCard";
+import LoadingCard from "@/app/components/task/loadingCard";
 
 const LoadingPage = () => {
   return (

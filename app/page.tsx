@@ -72,10 +72,11 @@ export default function MainPage() {
       assgToMe: <AssignedToMeContent />,
       tasks: <TasksContent />,
     };
-    const dynamicContent = sidebarGroup.find(
+
+    console.log(sidebarGroup);
+    const dynamicContent = sidebarGroup?.find(
       (group) => group.id === activePage
     );
-
     if (dynamicContent) {
       return <DynamicGroupContent data={dynamicContent} iconData={iconData} />;
     }
@@ -84,9 +85,9 @@ export default function MainPage() {
   };
 
   // Change content
-  const handleChangeContent = (page: string) => {
-    localStorage.setItem("active-page", page);
-    setActivePage(page);
+  const handleChangeContent = (pageId: string) => {
+    localStorage.setItem("active-page", pageId);
+    setActivePage(pageId);
   };
 
   return (

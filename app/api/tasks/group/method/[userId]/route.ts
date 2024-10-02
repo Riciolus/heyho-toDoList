@@ -38,6 +38,8 @@ export async function POST(
     const body = await req.json();
     const { userId } = params;
     const { name } = body;
+    console.log(name);
+    console.log(userId);
 
     const newGroupData = await prisma.groups.create({
       data: {
@@ -45,7 +47,6 @@ export async function POST(
         name,
       },
     });
-
     return NextResponse.json({ status: true, data: newGroupData });
   } catch (error) {
     return NextResponse.json({ status: false, error });

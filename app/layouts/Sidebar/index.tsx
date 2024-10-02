@@ -45,21 +45,25 @@ const Sidebar = ({
     getTask();
   }, [setSidebarGroup]);
 
+  console.log(sidebarGroup);
+
   const buttonColorActive = (lists: string) => {
     if (activePage === lists) {
       return "bg-onhover";
     }
   };
 
-  const handleNewGroup = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleNewGroup = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
     const inputValue = form.inputGroup.value;
 
-    await createNewGroup(inputValue).then((newGroupData: Group) =>
-      setSidebarGroup([...sidebarGroup, newGroupData])
-    );
+    createNewGroup(inputValue).then((newGroupData: Group) => {
+      console.log(newGroupData);
+      setSidebarGroup([...sidebarGroup, newGroupData]);
+      localStorage.setItem("active-page", newGroupData.id);
+    });
 
     form.inputGroup.value = "";
   };
@@ -165,7 +169,7 @@ const Sidebar = ({
 
       <form
         onSubmit={handleNewGroup}
-        className="flex relative items-center gap-2       "
+        className="flex relative items-center gap-2    mx-1   "
       >
         <button type="submit" className="absolute">
           <LuFolders size={23} />
@@ -173,7 +177,7 @@ const Sidebar = ({
         <input
           id="inputGroup"
           placeholder="New List"
-          className="bg-transparent w-full px-1.5 hover:px-3 hover:bg-onhover pl-8  h-10  mr-3 hover:scale-[1.03] transition-all rounded-lg placeholder-neutral-50 outline-none font-medium text-base"
+          className="bg-transparent w-full px-1.5 hover:px-3 hover:bg-onhover pl-8 h-10  mr-3 hover:scale-[1.03] transition-all rounded-lg placeholder-neutral-50 outline-none font-normal text-base"
         ></input>
       </form>
     </div>

@@ -13,14 +13,10 @@ const TasksContent = () => {
   useEffect(() => {
     const groupId = "tasks";
 
-    const fecthTasksData = async () => {
-      await getTasksByGroup(groupId).then((result) => {
-        setTaskData(result.data.data);
-        setIsLoading(false);
-      });
-    };
-
-    fecthTasksData();
+    getTasksByGroup(groupId).then((result) => {
+      setTaskData(result.data.data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

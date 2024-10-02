@@ -5,6 +5,7 @@ import { Task } from "@/app/page";
 import clsx from "clsx";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export type CardType = "today" | "default" | "important";
 
@@ -23,8 +24,17 @@ const TaskList = ({
 }) => {
   const [showCompleted, setShowCompleted] = useState(true);
 
-  const notCompletedTasks = taskData.filter((task) => !task.completed);
-  const completedTasks = taskData.filter((task) => task.completed);
+  const completedTasks = Array.isArray(taskData)
+    ? taskData.filter((task) => task.completed)
+    : [];
+
+  const notCompletedTasks = Array.isArray(taskData)
+    ? taskData.filter((task) => !task.completed)
+    : [];
+
+  if (taskData.length === 0) {
+    return <div>Gada Task</div>;
+  }
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">
       <ScrollArea className="w-full">
@@ -40,8 +50,8 @@ const TaskList = ({
             notCompletedTasks.map((task: Task) => {
               return (
                 <TaskCard
-                  task={task}
                   key={task.id}
+                  task={task}
                   colorTheme={colorTheme}
                   cardType={cardType}
                   setTaskData={setTaskData}
@@ -51,13 +61,19 @@ const TaskList = ({
           )}
 
           {completedTasks.length > 0 && (
-            <button
-              onClick={() => setShowCompleted((prev) => !prev)}
-              className={`bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 text-${colorTheme}-300 py-1.5 rounded-xl`}
+            <motion.div
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ ease: "easeOut", duration: 0.3 }}
             >
-              {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
-              <span>Completed {`(${completedTasks.length})`}</span>
-            </button>
+              <button
+                onClick={() => setShowCompleted((prev) => !prev)}
+                className={`bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 text-${colorTheme}-300 py-1.5 rounded-xl`}
+              >
+                {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                <span>Completed {`(${completedTasks.length})`}</span>
+              </button>
+            </motion.div>
           )}
 
           {isLoading ? (

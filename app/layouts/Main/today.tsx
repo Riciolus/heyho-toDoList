@@ -13,13 +13,10 @@ const TodayContent = () => {
   const date = getDateFormattedLong();
 
   useEffect(() => {
-    const fecthTasksData = async () =>
-      await getTodayTasks().then((result) => {
-        setTaskData(result.data.data);
-        setIsLoading(false);
-      });
-
-    fecthTasksData();
+    getTodayTasks().then((result) => {
+      setTaskData(result.data.data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

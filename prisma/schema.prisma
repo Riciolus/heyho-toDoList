@@ -33,11 +33,9 @@ model Tasks {
 
 model Groups {
   id     String  @id @default(cuid())
-  name   String
+  name   String  
   icon   String  @default("list")
   user   Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   tasks  Tasks[]
-
-  @@unique([userId, name])
 }

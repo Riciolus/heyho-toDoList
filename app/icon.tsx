@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { FaUserAstronaut } from "react-icons/fa";
 
 // Image metadata
 export const size = {
@@ -14,8 +15,7 @@ export default function Icon() {
       // ImageResponse JSX element
       <div
         style={{
-          fontSize: 24,
-          background: "black",
+          fontSize: 25,
           width: "100%",
           height: "100%",
           display: "flex",
@@ -25,13 +25,10 @@ export default function Icon() {
           borderRadius: "999px",
         }}
       >
-        H!
+        <FaUserAstronaut />
       </div>
     ),
-    // ImageResponse options
     {
-      // For convenience, we can re-use the exported icons size metadata
-      // config to also set the ImageResponse's width and height.
       ...size,
     }
   );

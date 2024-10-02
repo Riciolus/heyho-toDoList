@@ -4235,7 +4235,6 @@ export namespace Prisma {
 
   export type GroupsWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId_name?: GroupsUserIdNameCompoundUniqueInput
     AND?: GroupsWhereInput | GroupsWhereInput[]
     OR?: GroupsWhereInput[]
     NOT?: GroupsWhereInput | GroupsWhereInput[]
@@ -4244,7 +4243,7 @@ export namespace Prisma {
     userId?: StringFilter<"Groups"> | string
     user?: XOR<UsersRelationFilter, UsersWhereInput>
     tasks?: TasksListRelationFilter
-  }, "id" | "userId_name">
+  }, "id">
 
   export type GroupsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4603,11 +4602,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type GroupsUserIdNameCompoundUniqueInput = {
-    userId: string
-    name: string
   }
 
   export type GroupsCountOrderByAggregateInput = {

@@ -11,14 +11,10 @@ const ImportantContent = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fecthTasksData = async () => {
-      await getImportantTasks().then((result) => {
-        setTaskData(result.data.data);
-        setIsLoading(false);
-      });
-    };
-
-    fecthTasksData();
+    getImportantTasks().then((result) => {
+      setTaskData(result.data.data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

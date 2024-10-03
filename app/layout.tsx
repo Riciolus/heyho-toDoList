@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="bg-neutral-900 text-neutral-50 text-sm font-sans overflow-hidden">
+      <body className="bg-neutral-900 text-neutral-50 max-h-screen h-screen text-sm font-sans overflow-hidden">
         {/* Main content area */}
 
         <main>{children}</main>

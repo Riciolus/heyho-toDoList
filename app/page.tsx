@@ -58,10 +58,15 @@ export default function MainPage() {
   // Get user last visited content in the first load or when refresh the page
   useEffect(() => {
     const storedPage = localStorage.getItem("active-page");
+
     if (storedPage) {
-      setActivePage(storedPage);
+      const parsedStoredPage = JSON.parse(storedPage);
+      setActivePage(parsedStoredPage.current);
     } else {
-      localStorage.setItem("active-page", "today");
+      localStorage.setItem(
+        "active-page",
+        JSON.stringify({ current: "today", previous: null })
+      );
     }
     setLoading(false);
   }, []);
@@ -87,7 +92,10 @@ export default function MainPage() {
 
   // Change content
   const handleChangeContent = (pageId: string) => {
-    localStorage.setItem("active-page", pageId);
+    localStorage.setItem(
+      "active-page",
+      JSON.stringify({ current: pageId, previous: activePage })
+    );
     setActivePage(pageId);
   };
 
@@ -105,7 +113,7 @@ export default function MainPage() {
         {/* Left Side  Content*/}
         {/* Exsist : Title and Sidebar */}
         <div
-          className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] ${
+          className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] border-r ${
             isSidebar && "left-[0rem]"
           }`}
         >

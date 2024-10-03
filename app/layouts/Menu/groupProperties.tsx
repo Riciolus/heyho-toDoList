@@ -20,14 +20,21 @@ import { toast } from "sonner";
 const GroupProperties = ({
   groupId,
   setSidebarGroup,
+  setActivePage,
 }: {
   groupId: string;
   setSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
+  setActivePage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const handleDeleteGroup = () => {
     setSidebarGroup((prevGroupData) =>
       prevGroupData.filter((group) => group.id !== groupId)
     );
+
+    const activePage = localStorage.getItem("active-page");
+    const parsedActivePage = activePage ? JSON.parse(activePage) : null;
+
+    setActivePage(parsedActivePage.previous);
     toast("Task Deleted Sucessfully!");
     deleteGroup(groupId);
   };
@@ -55,7 +62,9 @@ const GroupProperties = ({
               onClick={handleDeleteGroup}
               className="bg-neutral-950 hover:text-neutral-50 cursor-pointer"
             >
-              <ContextMenuItem>Continue</ContextMenuItem>
+              <ContextMenuItem className="hover:bg-transparent bg-transparent">
+                Continue
+              </ContextMenuItem>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

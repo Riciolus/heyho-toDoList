@@ -1,4 +1,3 @@
-import React from "react";
 import { GoKebabHorizontal } from "react-icons/go";
 import {
   DropdownMenu,

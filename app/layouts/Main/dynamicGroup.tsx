@@ -29,7 +29,7 @@ const DynamicGroupContent = ({
       {/* Title Bar */}
       <div className="flex justify-between items-center mb-5">
         <div>
-          <h1 className="flex  gap-2 items-center text-3xl font-semibold underline underline-offset-4 text-neutral-300 ">
+          <h1 className="flex  gap-2 items-center text-3xl font-semibold underline underline-offset-4 text-purple-200 ">
             {iconData[data.icon as keyof object]}
             <span>{data.name}</span>
           </h1>
@@ -38,19 +38,19 @@ const DynamicGroupContent = ({
       </div>
       {/* Task Lists */}
       <TaskList
-        colorTheme="blue"
+        colorTheme="purple"
         isLoading={isLoading}
         taskData={taskData}
-        cardType="default"
+        pageType="default"
         setTaskData={setTaskData}
       />
 
       {/* Add Task */}
       <AddTaskButton
         groupId={data.id}
-        colorTheme="green"
+        colorTheme="purple"
         setTaskData={setTaskData}
-        cardType="default"
+        pageType="default"
       />
     </div>
   );

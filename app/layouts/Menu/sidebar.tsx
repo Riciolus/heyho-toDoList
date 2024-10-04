@@ -6,19 +6,17 @@ import { TiWeatherSunny } from "react-icons/ti";
 import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
 import { Group } from "@/app/page";
-import { LuFolders } from "react-icons/lu";
 import { useEffect } from "react";
-import { createNewGroup, getGroupById } from "@/app/lib/api";
+import { getGroupById } from "@/app/lib/api";
+import GroupProperties from "./groupProperties";
+import { motion } from "framer-motion";
 import {
   ContextMenu,
   ContextMenuTrigger,
 } from "@/app/components/shadcn/context-menu";
-import GroupProperties from "./groupProperties";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
+import AddNewGroup from "@/app/components/sidebar/addNewGroup";
 
 interface SidebarProps {
-  handleChangeContent: (page: string) => void; // Type the prop as a function
   setSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
   activePage: string;
@@ -32,7 +30,6 @@ const styles = {
 };
 
 const Sidebar = ({
-  handleChangeContent,
   setSidebarGroup,
   setActivePage,
   activePage,
@@ -55,24 +52,13 @@ const Sidebar = ({
     }
   };
 
-  const handleNewGroup = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const inputValue = form.inputGroup.value;
-
-    if (inputValue.length === 0) {
-      return toast("Please input the task name!");
-    }
-
-    createNewGroup(inputValue).then((newGroupData: Group) => {
-      setSidebarGroup([...sidebarGroup, newGroupData]);
-      localStorage.setItem("active-page", newGroupData.id);
-      setActivePage(newGroupData.id);
-      toast(`Sucessfuly creating ${newGroupData.name} group!`);
-    });
-
-    form.inputGroup.value = "";
+  // Change content
+  const handleChangeContent = (pageId: string) => {
+    localStorage.setItem(
+      "active-page",
+      JSON.stringify({ current: pageId, previous: activePage })
+    );
+    setActivePage(pageId);
   };
 
   return (
@@ -162,6 +148,7 @@ const Sidebar = ({
                       initial={{ x: 5, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ ease: "easeOut", duration: 0.3 }}
+                      exit={{ opacity: 0 }}
                       key={group.id}
                     >
                       <ContextMenu>
@@ -190,19 +177,11 @@ const Sidebar = ({
         </div>
       </div>
 
-      <form
-        onSubmit={handleNewGroup}
-        className="flex items-center ps-2 noFit:ps-0 h-9 hover:ps-0  relative  rounded-lg transition-colors gap-3 cursor-pointer w-[90%]  mt-2 noFit:w-[100%]"
-      >
-        <button type="submit" className="absolute">
-          <LuFolders size={23} className="p-0.5 noFit:p-0" />
-        </button>
-        <input
-          id="inputGroup"
-          placeholder="New List"
-          className="bg-transparent w-full mx-1 h-full px-3 noFit:mr-4 hover:px-1.5 hover:bg-onhover pl-8    hover:scale-[1.03] hover:text-sm transition-all rounded-lg placeholder-neutral-50 outline-none font-normal text-sm"
-        ></input>
-      </form>
+      <AddNewGroup
+        setSidebarGroup={setSidebarGroup}
+        setActivePage={setActivePage}
+        activePage={activePage}
+      />
     </div>
   );
 };

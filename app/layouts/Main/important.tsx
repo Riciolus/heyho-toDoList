@@ -34,14 +34,14 @@ const ImportantContent = () => {
         colorTheme="pink"
         isLoading={isLoading}
         taskData={taskData}
-        cardType="important"
+        pageType="important"
         setTaskData={setTaskData}
       />
 
       {/* Add Task */}
       <AddTaskButton
         groupId="tasks"
-        cardType="important"
+        pageType="important"
         colorTheme="pink"
         setTaskData={setTaskData}
       />

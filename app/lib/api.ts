@@ -1,4 +1,6 @@
 import axios from "axios";
+
+// Dummies User Id / Temporary
 const userId = "ella";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -81,6 +83,6 @@ export const deleteGroup = async (groupId: string) => {
   const response = await axios.delete(
     `${BASE_URL}/tasks/group/method/${groupId}`
   );
-  console.log(response.data);
+
   return response.data;
 };

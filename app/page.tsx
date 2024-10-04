@@ -90,15 +90,6 @@ export default function MainPage() {
     return staticContent[activePage as keyof StaticContent];
   };
 
-  // Change content
-  const handleChangeContent = (pageId: string) => {
-    localStorage.setItem(
-      "active-page",
-      JSON.stringify({ current: pageId, previous: activePage })
-    );
-    setActivePage(pageId);
-  };
-
   return (
     <motion.div
       initial={{ x: 20, opacity: 0 }}
@@ -124,7 +115,6 @@ export default function MainPage() {
           <div className="h-full ">
             <Sidebar
               setSidebarGroup={setSidebarGroup}
-              handleChangeContent={handleChangeContent}
               setActivePage={setActivePage}
               sidebarGroup={sidebarGroup}
               activePage={activePage}

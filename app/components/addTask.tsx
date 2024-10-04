@@ -3,24 +3,28 @@ import { addNewTask } from "../lib/api";
 import { addImportantTask } from "../lib/utils";
 import { Task } from "../page";
 import { ColorTheme } from "./task/taskCard";
-import { CardType } from "../layouts/TaskList";
+import { PageType } from "../layouts/TaskList";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export interface Propstype {
   groupId: string;
   colorTheme: ColorTheme;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
-  cardType: CardType;
+  pageType: PageType;
 }
 
 const AddTaskButton = ({
   groupId,
-  cardType = "default",
+  pageType = "default",
   colorTheme,
   setTaskData,
 }: Propstype) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleAddTask = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const form = event.target as HTMLFormElement;
     const inputValue = form.inputTask.value;
@@ -32,11 +36,12 @@ const AddTaskButton = ({
     const data = {
       task: inputValue,
       groupId,
-      important: addImportantTask(cardType),
+      important: addImportantTask(pageType),
     };
 
     await addNewTask(data).then((result) => {
       setTaskData((prevData) => [...prevData, result]);
+      setIsLoading((prev) => !prev);
       toast("New task added successfully!");
     });
 
@@ -53,6 +58,7 @@ const AddTaskButton = ({
           <FiPlus className={`text-${colorTheme}-300`} size={24} />
         </button>
         <input
+          disabled={isLoading}
           placeholder="Add A Tasks"
           id="inputTask"
           className={`font-medium outline-none w-full py-5 px-3 place-self-center bg-onhover hover:bg-onhover focus:bg-onhover rounded-xl pl-9`}

@@ -36,14 +36,14 @@ const TodayContent = () => {
         colorTheme="orange"
         isLoading={isLoading}
         taskData={taskData}
-        cardType="today"
+        pageType="today"
         setTaskData={setTaskData}
       />
 
       {/* Add Task */}
       <AddTaskButton
         groupId="tasks"
-        cardType="today"
+        pageType="today"
         colorTheme="orange"
         setTaskData={setTaskData}
       />

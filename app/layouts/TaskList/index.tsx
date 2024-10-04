@@ -8,20 +8,20 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { motion } from "framer-motion";
 import ZeroTask from "@/app/components/task/0task";
 
-export type CardType = "today" | "default" | "important";
+export type PageType = "today" | "default" | "important" | "tasks";
 
 const TaskList = ({
   isLoading,
   taskData,
   setTaskData,
   colorTheme,
-  cardType,
+  pageType,
 }: {
   isLoading: boolean;
   taskData: Task[];
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
-  cardType: CardType;
+  pageType: PageType;
 }) => {
   const [showCompleted, setShowCompleted] = useState(true);
 
@@ -34,7 +34,7 @@ const TaskList = ({
     : [];
 
   if (!isLoading && taskData.length === 0) {
-    return <ZeroTask />;
+    return <ZeroTask pageType={pageType} />;
   }
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">
@@ -42,7 +42,7 @@ const TaskList = ({
         <div
           className={clsx(
             "flex flex-col gap-1.5 w-[98%]",
-            cardType === "today" ? "h-[31.5rem]" : "h-[34rem]"
+            pageType === "today" ? "h-[31.5rem]" : "h-[34rem]"
           )}
         >
           {isLoading ? (
@@ -54,7 +54,7 @@ const TaskList = ({
                   key={task.id}
                   task={task}
                   colorTheme={colorTheme}
-                  cardType={cardType}
+                  pageType={pageType}
                   setTaskData={setTaskData}
                 />
               );
@@ -87,7 +87,7 @@ const TaskList = ({
                   colorTheme={colorTheme}
                   task={task}
                   key={task.id}
-                  cardType={cardType}
+                  pageType={pageType}
                   setTaskData={setTaskData}
                 />
               );

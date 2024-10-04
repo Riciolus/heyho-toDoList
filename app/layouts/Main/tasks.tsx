@@ -37,7 +37,7 @@ const TasksContent = () => {
         colorTheme="blue"
         isLoading={isLoading}
         taskData={taskData}
-        cardType="default"
+        pageType="tasks"
         setTaskData={setTaskData}
       />
       {/* Add Task */}
@@ -45,7 +45,7 @@ const TasksContent = () => {
         groupId="tasks"
         colorTheme="blue"
         setTaskData={setTaskData}
-        cardType="default"
+        pageType="tasks"
       />
     </div>
   );

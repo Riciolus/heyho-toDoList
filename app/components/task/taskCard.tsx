@@ -5,35 +5,36 @@ import { ContextMenu, ContextMenuTrigger } from "../shadcn/context-menu";
 import { updateCompleted, updateTaskImportance } from "../../lib/api";
 import Checkbox from "./checkbox";
 import ImportantButton from "./completeButton";
-import { CardType } from "../../layouts/TaskList";
+import { PageType } from "../../layouts/TaskList";
 import { motion } from "framer-motion";
 
-export type ColorTheme = "blue" | "pink" | "green" | "orange";
+export type ColorTheme = "blue" | "pink" | "green" | "orange" | "purple";
 
 type Propstype = {
   task: Task;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
-  cardType: CardType;
+  pageType: PageType;
 };
 
 export type ColorClasses = {
   [key in ColorTheme]: string;
 };
 
-export const colorClasses: ColorClasses = {
+export const checkboxColorClasses: ColorClasses = {
   blue: "checked:bg-blue-400",
   pink: "checked:bg-pink-300",
   green: "checked:bg-green-400",
   orange: "checked:bg-orange-400",
+  purple: "checked:bg-purple-300",
 };
 
-const TaskCard = ({ task, colorTheme, setTaskData, cardType }: Propstype) => {
+const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
   ) => {
-    if (cardType === "important") {
+    if (pageType === "important") {
       setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
     } else {
       setTaskData((prevData) =>
@@ -73,7 +74,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, cardType }: Propstype) => {
                 taskId={task.id}
                 taskCompleted={task.completed}
                 handleCheckbox={handleCheckbox}
-                colorClasses={colorClasses}
+                colorClasses={checkboxColorClasses}
                 colorTheme={colorTheme}
               />
               <label className="cursor-pointer ml-2 text-sm">
@@ -86,7 +87,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, cardType }: Propstype) => {
                     {task.task}
                   </p>
 
-                  {cardType === "today" ? (
+                  {pageType === "today" ? (
                     <p
                       className={`${
                         task.completed ? "text-neutral-500" : "text-gray-300"

@@ -15,10 +15,10 @@ import { BsCart4, BsList } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 export type Group = {
-  id: string;
-  name: string;
-  userId: string;
+  label: string;
+  title: string;
   icon: string; //DELETED SOON
+  iconData: JSX.Element;
 };
 
 export type Task = {
@@ -29,7 +29,7 @@ export type Task = {
   important: boolean;
   groupId: string;
   groups: {
-    name: string;
+    title: string;
   };
 };
 
@@ -53,7 +53,7 @@ export default function MainPage() {
   const [activePage, setActivePage] = useState<string>("today"); // To store user current active page
   const [isSidebar, toggleSidebar] = useState<boolean>(false); // To store status of Sidebar (is opened or not)
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [sidebarGroup, setSidebarGroup] = useState<Group[]>([]);
+  const [dynamicSidebarGroup, setDynamicSidebarGroup] = useState<Group[]>([]);
 
   // Get user last visited content in the first load or when refresh the page
   useEffect(() => {
@@ -79,8 +79,8 @@ export default function MainPage() {
       tasks: <TasksContent />,
     };
 
-    const dynamicContent = sidebarGroup?.find(
-      (group) => group.id === activePage
+    const dynamicContent = dynamicSidebarGroup?.find(
+      (group) => group.label === activePage
     );
 
     if (dynamicContent) {
@@ -114,9 +114,9 @@ export default function MainPage() {
           {/*          Sidebar */}
           <div className="h-full ">
             <Sidebar
-              setSidebarGroup={setSidebarGroup}
+              setDynamicSidebarGroup={setDynamicSidebarGroup}
               setActivePage={setActivePage}
-              sidebarGroup={sidebarGroup}
+              dynamicSidebarGroup={dynamicSidebarGroup}
               activePage={activePage}
               iconData={iconData}
             />

@@ -21,6 +21,7 @@ const Dropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Sort By</DropdownMenuItem>
         <DropdownMenuItem>Delete All Task</DropdownMenuItem>
+        <DropdownMenuItem>Information</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

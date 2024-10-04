@@ -138,8 +138,8 @@ exports.Prisma.TasksScalarFieldEnum = {
 };
 
 exports.Prisma.GroupsScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
+  label: 'label',
+  title: 'title',
   icon: 'icon',
   userId: 'userId'
 };

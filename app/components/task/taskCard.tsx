@@ -6,7 +6,6 @@ import { updateCompleted, updateTaskImportance } from "../../lib/api";
 import Checkbox from "./checkbox";
 import ImportantButton from "./completeButton";
 import { PageType } from "../../layouts/TaskList";
-import { motion } from "framer-motion";
 
 export type ColorTheme = "blue" | "pink" | "green" | "orange" | "purple";
 
@@ -60,65 +59,59 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
   };
 
   return (
-    <motion.div
-      initial={{ x: 20, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ ease: "easeOut", duration: 0.3 }}
-    >
-      <ContextMenu>
-        <ContextMenuTrigger className="flex bg-neutral-800  hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
-          <div className="flex justify-between items-center w-full">
-            {/* Left Side Wrapper */}
-            <div className="flex gap-1 tablet:gap-1.5 items-center">
-              <Checkbox
-                taskId={task.id}
-                taskCompleted={task.completed}
-                handleCheckbox={handleCheckbox}
-                colorClasses={checkboxColorClasses}
-                colorTheme={colorTheme}
-              />
-              <label className="cursor-pointer ml-2 text-sm">
-                <div>
+    <ContextMenu>
+      <ContextMenuTrigger className="flex bg-neutral-800  hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
+        <div className="flex justify-between items-center w-full">
+          {/* Left Side Wrapper */}
+          <div className="flex gap-1 tablet:gap-1.5 items-center">
+            <Checkbox
+              taskId={task.id}
+              taskCompleted={task.completed}
+              handleCheckbox={handleCheckbox}
+              colorClasses={checkboxColorClasses}
+              colorTheme={colorTheme}
+            />
+            <label className="cursor-pointer ml-2 text-sm">
+              <div>
+                <p
+                  className={`${
+                    task.completed && "text-neutral-400 line-through"
+                  } font-normal`}
+                >
+                  {task.task}
+                </p>
+
+                {pageType === "today" ? (
                   <p
                     className={`${
-                      task.completed && "text-neutral-400 line-through"
-                    } font-normal`}
+                      task.completed ? "text-neutral-500" : "text-gray-300"
+                    }`}
                   >
-                    {task.task}
+                    {task.groups.title}
                   </p>
-
-                  {pageType === "today" ? (
-                    <p
-                      className={`${
-                        task.completed ? "text-neutral-500" : "text-gray-300"
-                      }`}
-                    >
-                      {task.groups.name}
-                    </p>
-                  ) : (
-                    <TodayBadge
-                      createdAt={task.created_at}
-                      isCompleted={task.completed}
-                    />
-                  )}
-                </div>
-              </label>
-            </div>
-
-            {/* Right side wrapper */}
-            <div>
-              <ImportantButton
-                taskId={task.id}
-                isCompleted={task.completed}
-                isImportant={task.important}
-                handleImportance={handleImportance}
-              />
-            </div>
+                ) : (
+                  <TodayBadge
+                    createdAt={task.created_at}
+                    isCompleted={task.completed}
+                  />
+                )}
+              </div>
+            </label>
           </div>
-        </ContextMenuTrigger>
-        <TaskProperties setTaskData={setTaskData} taskId={task.id} />
-      </ContextMenu>
-    </motion.div>
+
+          {/* Right side wrapper */}
+          <div>
+            <ImportantButton
+              taskId={task.id}
+              isCompleted={task.completed}
+              isImportant={task.important}
+              handleImportance={handleImportance}
+            />
+          </div>
+        </div>
+      </ContextMenuTrigger>
+      <TaskProperties setTaskData={setTaskData} taskId={task.id} />
+    </ContextMenu>
   );
 };
 

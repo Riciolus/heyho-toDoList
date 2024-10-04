@@ -22,7 +22,7 @@ export async function POST(
       include: {
         groups: {
           select: {
-            name: true,
+            title: true,
           },
         },
       },

@@ -5,7 +5,7 @@ import { Task } from "@/app/page";
 import clsx from "clsx";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ZeroTask from "@/app/components/task/0task";
 
 export type PageType = "today" | "default" | "important" | "tasks";
@@ -39,61 +39,77 @@ const TaskList = ({
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">
       <ScrollArea className="w-full">
-        <div
-          className={clsx(
-            "flex flex-col gap-1.5 w-[98%]",
-            pageType === "today" ? "h-[31.5rem]" : "h-[34rem]"
-          )}
-        >
-          {isLoading ? (
-            <LoadingCard />
-          ) : (
-            notCompletedTasks.map((task: Task) => {
-              return (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  colorTheme={colorTheme}
-                  pageType={pageType}
-                  setTaskData={setTaskData}
-                />
-              );
-            })
-          )}
+        <AnimatePresence>
+          <div
+            className={clsx(
+              "flex flex-col gap-1.5 w-[98%]",
+              pageType === "today" ? "h-[31.5rem]" : "h-[34rem]"
+            )}
+          >
+            {isLoading ? (
+              <LoadingCard />
+            ) : (
+              // AnimatePresence for tasks
+              <AnimatePresence>
+                {notCompletedTasks.map((task: Task) => (
+                  <motion.div
+                    key={task.id}
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ ease: "easeOut", duration: 0.3 }}
+                  >
+                    <TaskCard
+                      task={task}
+                      colorTheme={colorTheme}
+                      pageType={pageType}
+                      setTaskData={setTaskData}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            )}
 
-          {completedTasks.length > 0 && (
-            <motion.div
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ ease: "easeOut", duration: 0.3 }}
-            >
-              <button
-                onClick={() => setShowCompleted((prev) => !prev)}
-                className={`bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 text-${colorTheme}-300 py-1.5 rounded-xl`}
+            {completedTasks.length > 0 && (
+              <motion.div
+                initial={{ x: 10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ ease: "easeOut", duration: 0.3 }}
               >
-                {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                <span>Completed {`(${completedTasks.length})`}</span>
-              </button>
-            </motion.div>
-          )}
+                <button
+                  onClick={() => setShowCompleted((prev) => !prev)}
+                  className={`bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 text-${colorTheme}-300 py-1.5 rounded-xl`}
+                >
+                  {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                  <span>Completed {`(${completedTasks.length})`}</span>
+                </button>
+              </motion.div>
+            )}
 
-          {isLoading ? (
-            <LoadingCard />
-          ) : (
-            showCompleted &&
-            completedTasks.map((task: Task) => {
-              return (
-                <TaskCard
-                  colorTheme={colorTheme}
-                  task={task}
-                  key={task.id}
-                  pageType={pageType}
-                  setTaskData={setTaskData}
-                />
-              );
-            })
-          )}
-        </div>
+            {isLoading ? (
+              <LoadingCard />
+            ) : (
+              showCompleted && (
+                <AnimatePresence>
+                  {completedTasks.map((task: Task) => (
+                    <motion.div
+                      key={task.id}
+                      initial={{ x: 20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ ease: "easeOut", duration: 0.3 }}
+                    >
+                      <TaskCard
+                        colorTheme={colorTheme}
+                        task={task}
+                        pageType={pageType}
+                        setTaskData={setTaskData}
+                      />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              )
+            )}
+          </div>
+        </AnimatePresence>
       </ScrollArea>
     </div>
   );

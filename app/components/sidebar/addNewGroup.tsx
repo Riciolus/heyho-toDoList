@@ -30,12 +30,13 @@ const AddNewGroup = ({
         ...prevSidebarGroup,
         newGroupData,
       ]);
+      console.log(newGroupData);
       localStorage.setItem(
         "active-page",
-        JSON.stringify({ current: newGroupData.id, previous: activePage })
+        JSON.stringify({ current: newGroupData.label, previous: activePage })
       );
-      setActivePage(newGroupData.id);
-      toast(`Sucessfuly creating ${newGroupData.name} group!`);
+      setActivePage(newGroupData.label);
+      toast(`Sucessfuly creating ${newGroupData.title} group!`);
     });
 
     form.inputGroup.value = "";

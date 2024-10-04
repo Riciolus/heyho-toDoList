@@ -56,7 +56,7 @@ export const deleteTask = async (taskId: string) => {
 
 // GROUP API
 
-export const getGroupById = async () => {
+export const getGroupByLabel = async () => {
   const response = await axios.get(`${BASE_URL}/tasks/group/method/${userId}`);
 
   return response.data.data;
@@ -72,7 +72,7 @@ export const createNewGroup = async (newGroupName: string) => {
   const response = await axios.post(
     `${BASE_URL}/tasks/group/method/${userId}`,
     {
-      name: newGroupName,
+      title: newGroupName,
     }
   );
 

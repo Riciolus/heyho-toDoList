@@ -19,16 +19,16 @@ import { toast } from "sonner";
 
 const GroupProperties = ({
   groupId,
-  setSidebarGroup,
+  setDynamicSidebarGroup,
   setActivePage,
 }: {
   groupId: string;
-  setSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
+  setDynamicSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const handleDeleteGroup = () => {
-    setSidebarGroup((prevGroupData) =>
-      prevGroupData.filter((group) => group.id !== groupId)
+    setDynamicSidebarGroup((prevGroupData) =>
+      prevGroupData.filter((group) => group.label !== groupId)
     );
 
     const activePage = localStorage.getItem("active-page");

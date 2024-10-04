@@ -19,7 +19,7 @@ export async function GET(
       created_at: true,
       groups: {
         select: {
-          name: true,
+          title: true,
         },
       },
     },

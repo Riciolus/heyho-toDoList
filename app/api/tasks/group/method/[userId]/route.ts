@@ -14,14 +14,14 @@ export async function GET(
         userId,
       },
       select: {
-        id: true,
-        name: true,
+        label: true,
+        title: true,
         icon: true,
       },
     });
 
     const filteredDynamicGroup = groupData.filter(
-      (group) => group.id !== "tasks"
+      (group) => group.label !== "tasks"
     );
 
     return NextResponse.json({ status: true, data: filteredDynamicGroup });
@@ -37,14 +37,12 @@ export async function POST(
   try {
     const body = await req.json();
     const { userId } = params;
-    const { name } = body;
-    console.log(name);
-    console.log(userId);
+    const { title } = body;
 
     const newGroupData = await prisma.groups.create({
       data: {
         userId,
-        name,
+        title,
       },
     });
     return NextResponse.json({ status: true, data: newGroupData });
@@ -59,11 +57,11 @@ export async function DELETE(
 ) {
   try {
     const { userId } = params;
-    const id = userId;
+    const label = userId;
 
     await prisma.groups.delete({
       where: {
-        id,
+        label,
       },
     });
 

@@ -2,14 +2,14 @@ import AddTaskButton from "@/app/components/addTask";
 import { getTasksByGroup } from "@/app/lib/api";
 import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
-import { Task } from "@/app/page";
+import { Group, Task } from "@/app/page";
 import Dropdown from "@/app/components/task/dropdown";
 
 const DynamicGroupContent = ({
   data,
   iconData,
 }: {
-  data: { id: string; name: string; icon: string };
+  data: Group;
   iconData: object;
 }) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -18,11 +18,11 @@ const DynamicGroupContent = ({
   useEffect(() => {
     setIsLoading(true);
 
-    getTasksByGroup(data.id).then((result) => {
+    getTasksByGroup(data.label).then((result) => {
       setTaskData(result.data.data);
       setIsLoading(false);
     });
-  }, [data.id]);
+  }, [data.label]);
 
   return (
     <div className="text-base h-full">
@@ -31,7 +31,7 @@ const DynamicGroupContent = ({
         <div>
           <h1 className="flex  gap-2 items-center text-3xl font-semibold underline underline-offset-4 text-purple-200 ">
             {iconData[data.icon as keyof object]}
-            <span>{data.name}</span>
+            <span>{data.title}</span>
           </h1>
         </div>
         <Dropdown />
@@ -47,7 +47,7 @@ const DynamicGroupContent = ({
 
       {/* Add Task */}
       <AddTaskButton
-        groupId={data.id}
+        groupId={data.label}
         colorTheme="purple"
         setTaskData={setTaskData}
         pageType="default"

@@ -20,8 +20,12 @@ const Dropdown = () => {
         <DropdownMenuLabel>Task Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Sort By</DropdownMenuItem>
-        <DropdownMenuItem>Delete All Task</DropdownMenuItem>
+        <DropdownMenuItem>Rename List</DropdownMenuItem>
         <DropdownMenuItem>Information</DropdownMenuItem>
+        <DropdownMenuItem>Delete List</DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500">
+          Delete All Task
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

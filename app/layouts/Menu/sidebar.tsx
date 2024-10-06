@@ -4,7 +4,7 @@ import { TiWeatherSunny } from "react-icons/ti";
 import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
 import { Group } from "@/app/page";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getGroupByLabel } from "@/app/lib/api";
 import GroupProperties from "../../components/sidebar/groupProperties";
 import { motion } from "framer-motion";
@@ -59,16 +59,29 @@ const Sidebar = ({
   dynamicSidebarGroup,
   iconData,
 }: SidebarProps) => {
+  const [isEditing, setIsEditing] = useState<string>("");
+  const [userInputEditGroup, setUserInputEditGroup] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     async function getGroupData() {
       const result = await getGroupByLabel();
       localStorage.setItem("group", JSON.stringify(result));
-      console.log(result);
       setDynamicSidebarGroup(result);
     }
 
     getGroupData();
   }, [setDynamicSidebarGroup]);
+
+  useEffect(() => {
+    if (isEditing != "" && inputRef.current) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isEditing]);
 
   // Change content
   const handleChangeContent = (pageId: string) => {
@@ -77,6 +90,18 @@ const Sidebar = ({
       JSON.stringify({ current: pageId, previous: activePage })
     );
     setActivePage(pageId);
+  };
+
+  const handleEditGroup = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    setDynamicSidebarGroup((prevGroups) =>
+      prevGroups.map((prev) =>
+        prev.label === isEditing ? { ...prev, title: userInputEditGroup } : prev
+      )
+    );
+    setIsEditing("");
+    setUserInputEditGroup("");
   };
 
   return (
@@ -126,24 +151,43 @@ const Sidebar = ({
                   exit={{ opacity: 0 }}
                   key={group.label}
                 >
-                  <ContextMenu>
-                    <ContextMenuTrigger>
-                      <div
-                        onClick={() => handleChangeContent(group.label)}
-                        className={`${styles.button} ${
-                          activePage === group.label && "bg-onhover"
-                        } `}
-                      >
-                        {iconData[group.icon as keyof object]}
-                        <span> {group.title}</span>
-                      </div>
-                    </ContextMenuTrigger>
-                    <GroupProperties
-                      groupId={group.label}
-                      setDynamicSidebarGroup={setDynamicSidebarGroup}
-                      setActivePage={setActivePage}
-                    />
-                  </ContextMenu>
+                  <div>
+                    <ContextMenu>
+                      <ContextMenuTrigger>
+                        <div
+                          onClick={() => handleChangeContent(group.label)}
+                          className={`${styles.button} ${
+                            activePage === group.label && "bg-onhover"
+                          } `}
+                        >
+                          {iconData[group.icon as keyof object]}
+                          {isEditing === group.label ? (
+                            <form onSubmit={handleEditGroup}>
+                              <input
+                                id="editGroup"
+                                ref={inputRef}
+                                defaultValue={group.title}
+                                autoFocus={true}
+                                onChange={(event) =>
+                                  setUserInputEditGroup(event.target.value)
+                                }
+                                onBlur={handleEditGroup}
+                                className="bg-transparent outline-none"
+                              ></input>
+                            </form>
+                          ) : (
+                            <span> {group.title}</span>
+                          )}
+                        </div>
+                      </ContextMenuTrigger>
+                      <GroupProperties
+                        groupId={group.label}
+                        setDynamicSidebarGroup={setDynamicSidebarGroup}
+                        setActivePage={setActivePage}
+                        setIsEditing={setIsEditing}
+                      />
+                    </ContextMenu>
+                  </div>
                 </motion.div>
               );
             })}

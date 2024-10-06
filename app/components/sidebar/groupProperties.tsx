@@ -21,10 +21,12 @@ const GroupProperties = ({
   groupId,
   setDynamicSidebarGroup,
   setActivePage,
+  setIsEditing,
 }: {
   groupId: string;
   setDynamicSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const handleDeleteGroup = () => {
     setDynamicSidebarGroup((prevGroupData) =>
@@ -41,10 +43,12 @@ const GroupProperties = ({
 
   return (
     <ContextMenuContent>
-      <ContextMenuItem>Rename</ContextMenuItem>
+      <ContextMenuItem onClick={() => setIsEditing(groupId)}>
+        Edit List
+      </ContextMenuItem>
       <AlertDialog>
         <AlertDialogTrigger className="relative flex cursor-default select-none items-center rounded-sm px-6 py-1 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-neutral-800 hover:text-neutral-50">
-          Delete Group
+          Delete List
         </AlertDialogTrigger>
         <AlertDialogContent className="bg-neutral-800 rounded-md border-neutral-700 text-neutral-50">
           <AlertDialogHeader>

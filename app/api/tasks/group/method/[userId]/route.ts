@@ -51,6 +51,30 @@ export async function POST(
   }
 }
 
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { userId: string } }
+) {
+  try {
+    const body = await req.json();
+    const { userId } = params;
+    const { title } = body;
+
+    const editData = await prisma.groups.update({
+      where: {
+        label: userId,
+      },
+      data: {
+        title,
+      },
+    });
+
+    return NextResponse.json({ status: true, data: editData });
+  } catch (error) {
+    return NextResponse.json({ status: false, error });
+  }
+}
+
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { userId: string } }

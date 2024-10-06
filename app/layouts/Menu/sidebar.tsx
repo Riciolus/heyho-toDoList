@@ -5,16 +5,16 @@ import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
 import { Group } from "@/app/page";
 import { useEffect, useRef, useState } from "react";
-import { getGroupByLabel } from "@/app/lib/api";
+import { editGroup, getGroupByLabel } from "@/app/lib/api";
 import GroupProperties from "../../components/sidebar/groupProperties";
 import { motion } from "framer-motion";
+import AddNewGroup from "@/app/components/sidebar/addNewGroup";
+import ProfileSection from "@/app/components/sidebar/profile";
+import SearchBarSection from "@/app/components/sidebar/search";
 import {
   ContextMenu,
   ContextMenuTrigger,
 } from "@/app/components/shadcn/context-menu";
-import AddNewGroup from "@/app/components/sidebar/addNewGroup";
-import ProfileSection from "@/app/components/sidebar/profile";
-import SearchBarSection from "@/app/components/sidebar/search";
 
 interface SidebarProps {
   setDynamicSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
@@ -59,7 +59,7 @@ const Sidebar = ({
   dynamicSidebarGroup,
   iconData,
 }: SidebarProps) => {
-  const [isEditing, setIsEditing] = useState<string>("");
+  const [isEditingGroupLabel, setIsEditingGroupLabel] = useState<string>("");
   const [userInputEditGroup, setUserInputEditGroup] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -74,14 +74,14 @@ const Sidebar = ({
   }, [setDynamicSidebarGroup]);
 
   useEffect(() => {
-    if (isEditing != "" && inputRef.current) {
+    if (isEditingGroupLabel != "" && inputRef.current) {
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 0);
 
       return () => clearTimeout(timer);
     }
-  }, [isEditing]);
+  }, [isEditingGroupLabel]);
 
   // Change content
   const handleChangeContent = (pageId: string) => {
@@ -95,12 +95,16 @@ const Sidebar = ({
   const handleEditGroup = (event: React.FormEvent) => {
     event.preventDefault();
 
+    editGroup(userInputEditGroup, isEditingGroupLabel);
+
     setDynamicSidebarGroup((prevGroups) =>
       prevGroups.map((prev) =>
-        prev.label === isEditing ? { ...prev, title: userInputEditGroup } : prev
+        prev.label === isEditingGroupLabel
+          ? { ...prev, title: userInputEditGroup }
+          : prev
       )
     );
-    setIsEditing("");
+    setIsEditingGroupLabel("");
     setUserInputEditGroup("");
   };
 
@@ -161,7 +165,7 @@ const Sidebar = ({
                           } `}
                         >
                           {iconData[group.icon as keyof object]}
-                          {isEditing === group.label ? (
+                          {isEditingGroupLabel === group.label ? (
                             <form onSubmit={handleEditGroup}>
                               <input
                                 id="editGroup"
@@ -184,7 +188,7 @@ const Sidebar = ({
                         groupId={group.label}
                         setDynamicSidebarGroup={setDynamicSidebarGroup}
                         setActivePage={setActivePage}
-                        setIsEditing={setIsEditing}
+                        setIsEditing={setIsEditingGroupLabel}
                       />
                     </ContextMenu>
                   </div>

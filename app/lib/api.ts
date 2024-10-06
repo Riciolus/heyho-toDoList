@@ -79,6 +79,13 @@ export const createNewGroup = async (newGroupName: string) => {
   return response.data.data;
 };
 
+// disini userId itu task id, belom diganti
+export const editGroup = async (newGroupName: string, userId: string) => {
+  await axios.patch(`${BASE_URL}/tasks/group/method/${userId}`, {
+    title: newGroupName,
+  });
+};
+
 export const deleteGroup = async (groupId: string) => {
   const response = await axios.delete(
     `${BASE_URL}/tasks/group/method/${groupId}`

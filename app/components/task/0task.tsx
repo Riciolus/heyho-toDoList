@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { PageType } from "@/app/layouts/TaskList";
 
 type PageDataItem = {
   header: string;
@@ -10,12 +11,10 @@ type PageDataItem = {
 type PageData = Array<{
   today?: PageDataItem;
   important?: PageDataItem;
-  assignedToMe?: PageDataItem;
+  assignment?: PageDataItem;
   tasks?: PageDataItem;
   default?: PageDataItem;
 }>;
-
-type PageType = "today" | "important" | "tasks" | "default";
 
 const pageData: PageData = [
   {
@@ -33,10 +32,10 @@ const pageData: PageData = [
     },
   },
   {
-    assignedToMe: {
+    assignment: {
       header: "Focus on Your Responsibilities",
       text: "Keep track of the tasks others have assigned to you and stay on top of your commitments.",
-      iconPath: "/assets/fluent-emojis/handshake_3d.png",
+      iconPath: "/assets/fluent-emojis/smiling_face_with_sunglasses_3d.png",
     },
   },
   {

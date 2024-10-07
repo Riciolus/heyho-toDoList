@@ -1,10 +1,11 @@
+import AddTaskButton from "@/app/components/addTask";
+import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
+import ZeroTask from "@/app/components/task/0task";
 import { useEffect, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { Task } from "@/app/page";
 import { getImportantTasks } from "@/app/lib/api";
-import AddTaskButton from "@/app/components/addTask";
-import TaskList from "../TaskList";
-import Dropdown from "@/app/components/task/dropdown";
 
 const ImportantContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -30,13 +31,17 @@ const ImportantContent = () => {
         <Dropdown />
       </div>
       {/* Task Lists */}
-      <TaskList
-        colorTheme="pink"
-        isLoading={isLoading}
-        taskData={taskData}
-        pageType="important"
-        setTaskData={setTaskData}
-      />
+      {!isLoading && taskData.length === 0 ? (
+        <ZeroTask pageType="important" />
+      ) : (
+        <TaskList
+          colorTheme="pink"
+          isLoading={isLoading}
+          taskData={taskData}
+          pageType="important"
+          setTaskData={setTaskData}
+        />
+      )}
 
       {/* Add Task */}
       <AddTaskButton

@@ -1,51 +1,59 @@
-// import { Task } from "@/app/page";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-import { FaUserAstronaut } from "react-icons/fa";
-import { GoKebabHorizontal } from "react-icons/go";
-// import LoadingCard from "@/components/ui/loadingCard";
-// import TaskCard from "@/components/ui/taskCard";
-// import AddTaskButton from "@/components/ui/addTask";
+import Dropdown from "@/app/components/task/dropdown";
+import { TbSubtask } from "react-icons/tb";
+import TaskList from "../TaskList";
+import AddTaskButton from "@/app/components/addTask";
+import { useEffect, useState } from "react";
+import { getTasksByGroup } from "@/app/lib/api";
+import { Task } from "@/app/page";
+import ZeroTask from "@/app/components/task/0task";
 
 const AssignedToMeContent = () => {
-  // const [taskData, setTaskData] = useState<Task[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [taskData, setTaskData] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:4000/tasks/2/cm0w6tuj3000010i7z2ppri91`)
-  //     .then((result) => {
-  //       setTaskData(result.data.data);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const groupId = "assignedToMe";
+
+    getTasksByGroup(groupId).then((result) => {
+      setTaskData(result.data.data);
+      setIsLoading(false);
+    });
+  }, []);
+
   return (
-    <div className="text-base">
+    <div className="text-base h-full">
       {/* Title Bar */}
-      <div className="flex justify-between items-center ">
+      <div className="flex justify-between items-center mb-5">
         <div className="text-green-200">
           <h1 className="flex gap-2 items-center text-3xl font-semibold underline underline-offset-4 ">
-            <FaUserAstronaut />
-            <span>Assigned To Me</span>
+            <TbSubtask />
+            <span>Assinged To Me</span>
           </h1>
         </div>
-        <div className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg">
-          <GoKebabHorizontal />
-        </div>
+        <Dropdown />
       </div>
+
       {/* Tasks Lists */}
-      {/* px-1 tablet:px-0 */}
-      {/* <div className="flex flex-col gap-1.5 mt-5">
-        {isLoading ? (
-          <LoadingCard />
-        ) : (
-          taskData.map((task: Task, index: number) => {
-            return <TaskCard task={task} key={index} />;
-          })
-        )}
-      </div> */}
+
+      {!isLoading && taskData.length === 0 ? (
+        <ZeroTask pageType="assignment" />
+      ) : (
+        <TaskList
+          isLoading={isLoading}
+          taskData={taskData}
+          colorTheme="green"
+          pageType="assignment"
+          setTaskData={setTaskData}
+        />
+      )}
+
       {/* Add Task */}
-      {/* <AddTaskButton groupId={2} /> */}
+      <AddTaskButton
+        colorTheme="green"
+        groupId="assignment"
+        pageType="assignment"
+        setTaskData={setTaskData}
+      />
     </div>
   );
 };

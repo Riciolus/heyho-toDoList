@@ -1,10 +1,11 @@
+import AddTaskButton from "@/app/components/addTask";
+import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
+import ZeroTask from "@/app/components/task/0task";
 import { useEffect, useState } from "react";
 import { TbSubtask } from "react-icons/tb";
 import { Task } from "@/app/page";
 import { getTasksByGroup } from "@/app/lib/api";
-import AddTaskButton from "@/app/components/addTask";
-import TaskList from "../TaskList";
-import Dropdown from "@/app/components/task/dropdown";
 
 const TasksContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -33,13 +34,17 @@ const TasksContent = () => {
       </div>
 
       {/* Tasks Lists */}
-      <TaskList
-        colorTheme="blue"
-        isLoading={isLoading}
-        taskData={taskData}
-        pageType="tasks"
-        setTaskData={setTaskData}
-      />
+      {!isLoading && taskData.length === 0 ? (
+        <ZeroTask pageType="tasks" />
+      ) : (
+        <TaskList
+          colorTheme="blue"
+          isLoading={isLoading}
+          taskData={taskData}
+          pageType="tasks"
+          setTaskData={setTaskData}
+        />
+      )}
       {/* Add Task */}
       <AddTaskButton
         groupId="tasks"

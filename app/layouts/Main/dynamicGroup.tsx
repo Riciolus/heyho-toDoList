@@ -1,9 +1,10 @@
 import AddTaskButton from "@/app/components/addTask";
+import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
+import ZeroTask from "@/app/components/task/0task";
 import { getTasksByGroup } from "@/app/lib/api";
 import { useEffect, useState } from "react";
-import TaskList from "../TaskList";
 import { Group, Task } from "@/app/page";
-import Dropdown from "@/app/components/task/dropdown";
 
 const DynamicGroupContent = ({
   data,
@@ -37,13 +38,17 @@ const DynamicGroupContent = ({
         <Dropdown />
       </div>
       {/* Task Lists */}
-      <TaskList
-        colorTheme="purple"
-        isLoading={isLoading}
-        taskData={taskData}
-        pageType="default"
-        setTaskData={setTaskData}
-      />
+      {!isLoading && taskData.length === 0 ? (
+        <ZeroTask pageType="default" />
+      ) : (
+        <TaskList
+          colorTheme="purple"
+          isLoading={isLoading}
+          taskData={taskData}
+          pageType="default"
+          setTaskData={setTaskData}
+        />
+      )}
 
       {/* Add Task */}
       <AddTaskButton

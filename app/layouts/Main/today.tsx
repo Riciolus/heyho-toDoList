@@ -1,11 +1,11 @@
+import AddTaskButton from "@/app/components/addTask";
+import TaskList from "../TaskList";
+import Dropdown from "@/app/components/task/dropdown";
+import ZeroTask from "@/app/components/task/0task";
 import { useEffect, useState } from "react";
 import { Task } from "@/app/page";
 import { getDateFormattedLong } from "@/app/lib/datetime";
 import { getTodayTasks } from "@/app/lib/api";
-import AddTaskButton from "@/app/components/addTask";
-import TaskList from "../TaskList";
-import Dropdown from "@/app/components/task/dropdown";
-// import Image from "next/image";
 
 const TodayContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -32,13 +32,17 @@ const TodayContent = () => {
         <Dropdown />
       </div>
       {/* Task Lists */}
-      <TaskList
-        colorTheme="orange"
-        isLoading={isLoading}
-        taskData={taskData}
-        pageType="today"
-        setTaskData={setTaskData}
-      />
+      {!isLoading && taskData.length === 0 ? (
+        <ZeroTask pageType="today" />
+      ) : (
+        <TaskList
+          colorTheme="orange"
+          isLoading={isLoading}
+          taskData={taskData}
+          pageType="today"
+          setTaskData={setTaskData}
+        />
+      )}
 
       {/* Add Task */}
       <AddTaskButton

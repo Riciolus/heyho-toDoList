@@ -1,25 +1,29 @@
-import LoadingCard from "@/app/components/task/loadingCard";
-import { ScrollArea } from "@/app/components/shadcn/scroll-area";
-import TaskCard, { ColorTheme } from "@/app/components/task/taskCard";
-import { Task } from "@/app/page";
 import clsx from "clsx";
-import { useState } from "react";
+import LoadingCard from "@/app/components/task/loadingCard";
+import TaskCard, { ColorTheme } from "@/app/components/task/taskCard";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
-import ZeroTask from "@/app/components/task/0task";
+import { ScrollArea } from "@/app/components/shadcn/scroll-area";
+import { useState } from "react";
+import { Task } from "@/app/page";
 
-export type PageType = "today" | "default" | "important" | "tasks";
+export type PageType =
+  | "today"
+  | "default"
+  | "important"
+  | "tasks"
+  | "assignment";
 
 const TaskList = ({
+  setTaskData,
   isLoading,
   taskData,
-  setTaskData,
   colorTheme,
   pageType,
 }: {
+  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   isLoading: boolean;
   taskData: Task[];
-  setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
   pageType: PageType;
 }) => {
@@ -33,9 +37,6 @@ const TaskList = ({
     ? taskData.filter((task) => !task.completed)
     : [];
 
-  if (!isLoading && taskData.length === 0) {
-    return <ZeroTask pageType={pageType} />;
-  }
   return (
     <div className="flex flex-col items-center px-1 tablet:px-0">
       <ScrollArea className="w-full">

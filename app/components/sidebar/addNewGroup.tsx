@@ -30,7 +30,7 @@ const AddNewGroup = ({
         ...prevSidebarGroup,
         newGroupData,
       ]);
-      console.log(newGroupData);
+
       localStorage.setItem(
         "active-page",
         JSON.stringify({ current: newGroupData.label, previous: activePage })

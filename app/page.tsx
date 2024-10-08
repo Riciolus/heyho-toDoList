@@ -13,7 +13,7 @@ import DynamicGroupContent from "./layouts/Main/dynamicGroup";
 import { FaHandSparkles } from "react-icons/fa";
 import { BsCart4, BsList } from "react-icons/bs";
 import { motion } from "framer-motion";
-import Link from "next/link";
+// import Link from "next/link";
 
 export type Group = {
   label: string;
@@ -121,7 +121,7 @@ export default function MainPage() {
               activePage={activePage}
               iconData={iconData}
             />
-            <Link href={"/home"}>asd</Link>
+            {/* <Link href={"/home"}>asd</Link> */}
           </div>
 
           {/*           Main Content */}

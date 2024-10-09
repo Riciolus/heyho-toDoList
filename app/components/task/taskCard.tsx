@@ -91,7 +91,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
                   </p>
                 ) : (
                   <TodayBadge
-                    createdAt={task.created_at}
+                    dueDate={task.due_date}
                     isCompleted={task.completed}
                   />
                 )}

@@ -2072,6 +2072,7 @@ export namespace Prisma {
     important: boolean | null
     completed: boolean | null
     created_at: Date | null
+    due_date: Date | null
     groupId: string | null
   }
 
@@ -2082,6 +2083,7 @@ export namespace Prisma {
     important: boolean | null
     completed: boolean | null
     created_at: Date | null
+    due_date: Date | null
     groupId: string | null
   }
 
@@ -2092,6 +2094,7 @@ export namespace Prisma {
     important: number
     completed: number
     created_at: number
+    due_date: number
     groupId: number
     _all: number
   }
@@ -2104,6 +2107,7 @@ export namespace Prisma {
     important?: true
     completed?: true
     created_at?: true
+    due_date?: true
     groupId?: true
   }
 
@@ -2114,6 +2118,7 @@ export namespace Prisma {
     important?: true
     completed?: true
     created_at?: true
+    due_date?: true
     groupId?: true
   }
 
@@ -2124,6 +2129,7 @@ export namespace Prisma {
     important?: true
     completed?: true
     created_at?: true
+    due_date?: true
     groupId?: true
     _all?: true
   }
@@ -2207,6 +2213,7 @@ export namespace Prisma {
     important: boolean
     completed: boolean
     created_at: Date
+    due_date: Date
     groupId: string
     _count: TasksCountAggregateOutputType | null
     _min: TasksMinAggregateOutputType | null
@@ -2234,6 +2241,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: boolean
+    due_date?: boolean
     groupId?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     groups?: boolean | GroupsDefaultArgs<ExtArgs>
@@ -2246,6 +2254,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: boolean
+    due_date?: boolean
     groupId?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     groups?: boolean | GroupsDefaultArgs<ExtArgs>
@@ -2258,6 +2267,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: boolean
+    due_date?: boolean
     groupId?: boolean
   }
 
@@ -2283,6 +2293,7 @@ export namespace Prisma {
       important: boolean
       completed: boolean
       created_at: Date
+      due_date: Date
       groupId: string
     }, ExtArgs["result"]["tasks"]>
     composites: {}
@@ -2685,6 +2696,7 @@ export namespace Prisma {
     readonly important: FieldRef<"Tasks", 'Boolean'>
     readonly completed: FieldRef<"Tasks", 'Boolean'>
     readonly created_at: FieldRef<"Tasks", 'DateTime'>
+    readonly due_date: FieldRef<"Tasks", 'DateTime'>
     readonly groupId: FieldRef<"Tasks", 'String'>
   }
     
@@ -3997,6 +4009,7 @@ export namespace Prisma {
     important: 'important',
     completed: 'completed',
     created_at: 'created_at',
+    due_date: 'due_date',
     groupId: 'groupId'
   };
 
@@ -4154,6 +4167,7 @@ export namespace Prisma {
     important?: BoolFilter<"Tasks"> | boolean
     completed?: BoolFilter<"Tasks"> | boolean
     created_at?: DateTimeFilter<"Tasks"> | Date | string
+    due_date?: DateTimeFilter<"Tasks"> | Date | string
     groupId?: StringFilter<"Tasks"> | string
     user?: XOR<UsersRelationFilter, UsersWhereInput>
     groups?: XOR<GroupsRelationFilter, GroupsWhereInput>
@@ -4166,6 +4180,7 @@ export namespace Prisma {
     important?: SortOrder
     completed?: SortOrder
     created_at?: SortOrder
+    due_date?: SortOrder
     groupId?: SortOrder
     user?: UsersOrderByWithRelationInput
     groups?: GroupsOrderByWithRelationInput
@@ -4181,6 +4196,7 @@ export namespace Prisma {
     important?: BoolFilter<"Tasks"> | boolean
     completed?: BoolFilter<"Tasks"> | boolean
     created_at?: DateTimeFilter<"Tasks"> | Date | string
+    due_date?: DateTimeFilter<"Tasks"> | Date | string
     groupId?: StringFilter<"Tasks"> | string
     user?: XOR<UsersRelationFilter, UsersWhereInput>
     groups?: XOR<GroupsRelationFilter, GroupsWhereInput>
@@ -4193,6 +4209,7 @@ export namespace Prisma {
     important?: SortOrder
     completed?: SortOrder
     created_at?: SortOrder
+    due_date?: SortOrder
     groupId?: SortOrder
     _count?: TasksCountOrderByAggregateInput
     _max?: TasksMaxOrderByAggregateInput
@@ -4209,6 +4226,7 @@ export namespace Prisma {
     important?: BoolWithAggregatesFilter<"Tasks"> | boolean
     completed?: BoolWithAggregatesFilter<"Tasks"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Tasks"> | Date | string
+    due_date?: DateTimeWithAggregatesFilter<"Tasks"> | Date | string
     groupId?: StringWithAggregatesFilter<"Tasks"> | string
   }
 
@@ -4335,6 +4353,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     user: UsersCreateNestedOneWithoutTasksInput
     groups: GroupsCreateNestedOneWithoutTasksInput
   }
@@ -4346,6 +4365,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     groupId: string
   }
 
@@ -4355,6 +4375,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UsersUpdateOneRequiredWithoutTasksNestedInput
     groups?: GroupsUpdateOneRequiredWithoutTasksNestedInput
   }
@@ -4366,6 +4387,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4376,6 +4398,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     groupId: string
   }
 
@@ -4385,6 +4408,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TasksUncheckedUpdateManyInput = {
@@ -4394,6 +4418,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4573,6 +4598,7 @@ export namespace Prisma {
     important?: SortOrder
     completed?: SortOrder
     created_at?: SortOrder
+    due_date?: SortOrder
     groupId?: SortOrder
   }
 
@@ -4583,6 +4609,7 @@ export namespace Prisma {
     important?: SortOrder
     completed?: SortOrder
     created_at?: SortOrder
+    due_date?: SortOrder
     groupId?: SortOrder
   }
 
@@ -4593,6 +4620,7 @@ export namespace Prisma {
     important?: SortOrder
     completed?: SortOrder
     created_at?: SortOrder
+    due_date?: SortOrder
     groupId?: SortOrder
   }
 
@@ -4891,6 +4919,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     groups: GroupsCreateNestedOneWithoutTasksInput
   }
 
@@ -4900,6 +4929,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     groupId: string
   }
 
@@ -4963,6 +4993,7 @@ export namespace Prisma {
     important?: BoolFilter<"Tasks"> | boolean
     completed?: BoolFilter<"Tasks"> | boolean
     created_at?: DateTimeFilter<"Tasks"> | Date | string
+    due_date?: DateTimeFilter<"Tasks"> | Date | string
     groupId?: StringFilter<"Tasks"> | string
   }
 
@@ -5117,6 +5148,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     user: UsersCreateNestedOneWithoutTasksInput
   }
 
@@ -5127,6 +5159,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
   }
 
   export type TasksCreateOrConnectWithoutGroupsInput = {
@@ -5190,6 +5223,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
     groupId: string
   }
 
@@ -5205,6 +5239,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupsUpdateOneRequiredWithoutTasksNestedInput
   }
 
@@ -5214,6 +5249,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5223,6 +5259,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5253,6 +5290,7 @@ export namespace Prisma {
     important?: boolean
     completed?: boolean
     created_at?: Date | string
+    due_date?: Date | string
   }
 
   export type TasksUpdateWithoutGroupsInput = {
@@ -5261,6 +5299,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UsersUpdateOneRequiredWithoutTasksNestedInput
   }
 
@@ -5271,6 +5310,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TasksUncheckedUpdateManyWithoutGroupsInput = {
@@ -5280,6 +5320,7 @@ export namespace Prisma {
     important?: BoolFieldUpdateOperationsInput | boolean
     completed?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

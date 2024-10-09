@@ -14,15 +14,14 @@ export function getDateFormattedLong(dateNow?: string) {
     }
   };
 
-  const formattedDate = new Intl.DateTimeFormat("id-ID", options).format(
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
     date()
   );
 
   const [weekday, monthDay] = formattedDate.split(",");
   const monthDaySplitter = monthDay.split(" ");
-  const month = monthDaySplitter[2];
-  const day = monthDaySplitter[1];
-
+  const month = monthDaySplitter[1];
+  const day = monthDaySplitter[2];
   return `${weekday}, ${day} ${month}`;
 }
 
@@ -42,7 +41,7 @@ export function tes(dateNow?: string) {
     }
   };
 
-  const formattedDate = new Intl.DateTimeFormat("en-EN", options).format(
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
     date()
   );
 

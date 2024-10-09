@@ -13,7 +13,7 @@ const navigationData: NavigationData[] = [
 
 const NavigationBarHome = () => {
   return (
-    <div className="relative top-3 flex justify-center items-center">
+    <nav className="relative top-3 flex justify-center items-center">
       <div className="flex justify-center items-center    font-semibold border border-neutral-600 bg-white/10 backdrop-blur rounded-full">
         {navigationData.map((data) => {
           return (
@@ -26,7 +26,7 @@ const NavigationBarHome = () => {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };
 

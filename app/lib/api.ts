@@ -54,6 +54,14 @@ export const deleteTask = async (taskId: string) => {
   return response.data.status;
 };
 
+export const searchTasks = async (searchQuery: string) => {
+  const response = await axios.get(
+    `${BASE_URL}/tasks/search/${userId}/${searchQuery}`
+  );
+  console.log(response.data);
+  return response.data;
+};
+
 // GROUP API
 
 export const getGroupByLabel = async () => {

@@ -27,8 +27,10 @@ model Tasks {
   important  Boolean  @default(false)
   completed  Boolean  @default(false)
   created_at DateTime @default(now())
+  due_date   DateTime @default(now())
   groups     Groups   @relation(fields: [groupId], references: [label], onDelete: Cascade)
   groupId    String
+  
 }
 
 model Groups {

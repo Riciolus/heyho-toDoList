@@ -1,18 +1,18 @@
 import { getDateFormattedLong, isTodayDate } from "../../lib/datetime";
 
 const TodayBadge = ({
-  createdAt,
+  dueDate,
   isCompleted,
 }: {
-  createdAt: string;
+  dueDate: string;
   isCompleted: boolean;
 }) => {
   return (
     <div className="flex tablet:gap-3 gap-1.5">
       <p className={isCompleted ? "text-neutral-400" : "text-gray-300"}>
-        {createdAt && getDateFormattedLong(createdAt)}
+        {dueDate && getDateFormattedLong(dueDate)}
       </p>
-      {createdAt && isTodayDate(createdAt) && (
+      {dueDate && isTodayDate(dueDate) && (
         <p
           className={`${
             isCompleted ? "bg-orange-400/50" : "bg-orange-400"

@@ -7,12 +7,12 @@ const NavigationBar = ({
   toggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
-    <div className="flex justify-between bg-neutral-900 items-center px-3 tablet:hidden h-14 border-b border-line">
+    <nav className="flex justify-between bg-neutral-900 items-center px-3 tablet:hidden h-14 border-b border-line">
       <div className="text-lg font-semibold">Heyho!</div>
       <button onClick={() => toggleSidebar((prev) => !prev)}>
         <IoMenu size={32} />
       </button>
-    </div>
+    </nav>
   );
 };
 

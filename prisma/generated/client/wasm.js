@@ -134,6 +134,7 @@ exports.Prisma.TasksScalarFieldEnum = {
   important: 'important',
   completed: 'completed',
   created_at: 'created_at',
+  due_date: 'due_date',
   groupId: 'groupId'
 };
 

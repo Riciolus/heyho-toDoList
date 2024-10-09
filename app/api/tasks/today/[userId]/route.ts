@@ -9,7 +9,6 @@ export async function GET(
 ) {
   const { userId } = params;
   const currentDate = new Date().toISOString().substring(0, 10);
-
   const todayTasks = await prisma.tasks.findMany({
     select: {
       id: true,
@@ -29,7 +28,7 @@ export async function GET(
           userId,
         },
         {
-          created_at: {
+          due_date: {
             gte: new Date(`${currentDate} 00:00:00`),
             lte: new Date(`${currentDate} 23:59:59`),
           },

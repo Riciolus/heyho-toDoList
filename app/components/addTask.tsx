@@ -6,6 +6,7 @@ import { ColorTheme } from "./task/taskCard";
 import { PageType } from "../layouts/TaskList";
 import { toast } from "sonner";
 import { useState } from "react";
+import { DatePicker } from "./task/datepicker";
 
 export interface Propstype {
   groupId: string;
@@ -29,30 +30,42 @@ const AddTaskButton = ({
     const form = event.target as HTMLFormElement;
     const inputValue = form.inputTask.value;
 
+    const formattedDate = () => {
+      if (form.date?.innerText) {
+        if (form.date.innerText === "Pick a date") return new Date();
+
+        return new Date(form.date.innerText);
+      } else {
+        return new Date();
+      }
+    };
+
     if (inputValue.length === 0) {
       return null;
     }
 
+    console.log(formattedDate());
     const data = {
       task: inputValue,
       groupId,
       important: addImportantTask(pageType),
+      due_date: formattedDate(),
     };
 
     await addNewTask(data).then((result) => {
       setTaskData((prevData) => [...prevData, result]);
-      setIsLoading((prev) => !prev);
       toast("New task added successfully!");
     });
 
+    setIsLoading((prev) => !prev);
     form.inputTask.value = "";
   };
 
   return (
-    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%] desktop:w-[39.5%] w-[90%] bottom-20 noFit:bottom-11">
+    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%]  desktop:w-[39.5%] w-[90%] rounded-xl  bg-onhover bottom-20 noFit:bottom-11">
       <form
         onSubmit={(event) => handleAddTask(event)}
-        className="w-full flex items-center"
+        className="relative w-full flex items-center px-2"
       >
         <button type="submit" className="absolute ml-2">
           <FiPlus className={`text-${colorTheme}-300`} size={24} />
@@ -61,8 +74,13 @@ const AddTaskButton = ({
           disabled={isLoading}
           placeholder="Add A Tasks"
           id="inputTask"
-          className={`font-medium outline-none w-full py-5 px-3 place-self-center bg-onhover hover:bg-onhover focus:bg-onhover rounded-xl pl-9`}
+          className={`font-medium outline-none w-full py-5 px-3 place-self-center  bg-transparent  pl-9`}
         />
+        {pageType !== "today" && (
+          <div className="">
+            <DatePicker />
+          </div>
+        )}
       </form>
     </div>
   );

@@ -10,7 +10,7 @@ export async function POST(
   try {
     const body = await req.json();
     const { userId } = params;
-    const { task, groupId, important } = body;
+    const { task, groupId, important, due_date } = body;
 
     const createdTasks = await prisma.tasks.create({
       data: {
@@ -18,6 +18,7 @@ export async function POST(
         task,
         groupId,
         important,
+        due_date,
       },
       include: {
         groups: {

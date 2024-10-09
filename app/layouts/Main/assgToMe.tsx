@@ -12,7 +12,7 @@ const AssignedToMeContent = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const groupId = "assignedToMe";
+    const groupId = "assignment";
 
     getTasksByGroup(groupId).then((result) => {
       setTaskData(result.data.data);

@@ -13,6 +13,7 @@ import DynamicGroupContent from "./layouts/Main/dynamicGroup";
 import { FaHandSparkles } from "react-icons/fa";
 import { BsCart4, BsList } from "react-icons/bs";
 import { motion } from "framer-motion";
+import SearchContent from "./layouts/Main/search";
 // import Link from "next/link";
 
 export type Group = {
@@ -26,7 +27,7 @@ export type Task = {
   id: string;
   task: string;
   completed: boolean;
-  created_at: string;
+  due_date: string;
   important: boolean;
   groupId: string;
   groups: {
@@ -39,6 +40,7 @@ export type StaticContent = {
   important: JSX.Element;
   assgToMe: JSX.Element;
   tasks: JSX.Element;
+  search: JSX.Element;
 };
 
 const iconData: { [key: string]: JSX.Element } = {
@@ -55,6 +57,7 @@ export default function MainPage() {
   const [isSidebar, toggleSidebar] = useState<boolean>(false); // To store status of Sidebar (is opened or not)
   const [isLoading, setLoading] = useState<boolean>(true);
   const [dynamicSidebarGroup, setDynamicSidebarGroup] = useState<Group[]>([]);
+  const [searchedTaskData, setSearchedTaskData] = useState<Task[]>([]);
 
   // Get user last visited content in the first load or when refresh the page
   useEffect(() => {
@@ -78,6 +81,7 @@ export default function MainPage() {
       important: <ImportantContent />,
       assgToMe: <AssignedToMeContent />,
       tasks: <TasksContent />,
+      search: <SearchContent searchedTaskData={searchedTaskData} />,
     };
 
     const dynamicContent = dynamicSidebarGroup?.find(
@@ -117,6 +121,7 @@ export default function MainPage() {
             <Sidebar
               setDynamicSidebarGroup={setDynamicSidebarGroup}
               setActivePage={setActivePage}
+              setSearchedTaskData={setSearchedTaskData}
               dynamicSidebarGroup={dynamicSidebarGroup}
               activePage={activePage}
               iconData={iconData}

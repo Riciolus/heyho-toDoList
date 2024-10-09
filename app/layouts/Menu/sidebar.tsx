@@ -3,7 +3,7 @@
 import { TiWeatherSunny } from "react-icons/ti";
 import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
-import { Group } from "@/app/page";
+import { Group, Task } from "@/app/page";
 import { useEffect, useRef, useState } from "react";
 import { editGroup, getGroupByLabel } from "@/app/lib/api";
 import GroupProperties from "../../components/sidebar/groupProperties";
@@ -19,6 +19,7 @@ import {
 interface SidebarProps {
   setDynamicSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
+  setSearchedTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   activePage: string;
   dynamicSidebarGroup: Group[];
   iconData: object;
@@ -55,6 +56,7 @@ const styles = {
 const Sidebar = ({
   setDynamicSidebarGroup,
   setActivePage,
+  setSearchedTaskData,
   activePage,
   dynamicSidebarGroup,
   iconData,
@@ -109,13 +111,16 @@ const Sidebar = ({
   };
 
   return (
-    <div className="flex flex-col h-fit  noFit:h-full justify-between ">
+    <nav className="flex flex-col h-fit  noFit:h-full justify-between ">
       <div className="flex flex-col mt-6 gap-2">
         {/* PROFILE SECTION */}
         <ProfileSection />
 
         {/* SEARCH BAR */}
-        <SearchBarSection />
+        <SearchBarSection
+          setSearchedTaskData={setSearchedTaskData}
+          handleChangeContent={handleChangeContent}
+        />
 
         {/* STATIC GROUP SECTION */}
 
@@ -205,7 +210,7 @@ const Sidebar = ({
           activePage={activePage}
         />
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -14,6 +14,7 @@ type PageData = Array<{
   assignment?: PageDataItem;
   tasks?: PageDataItem;
   default?: PageDataItem;
+  search?: PageDataItem;
 }>;
 
 const pageData: PageData = [
@@ -50,6 +51,13 @@ const pageData: PageData = [
       header: "Your Awesome Space",
       text: "Organize your tasks the way you want. Create and manage tasks in this personalized group.",
       iconPath: "/assets/fluent-emojis/face_savoring_food_3d.png",
+    },
+  },
+  {
+    search: {
+      header: "Can't Find Your Tasks",
+      text: "We searched high and low but couldn't find what you're looking for",
+      iconPath: "/assets/fluent-emojis/face_with_monocle_3d.png",
     },
   },
 ];

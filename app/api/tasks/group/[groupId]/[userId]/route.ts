@@ -15,7 +15,7 @@ export async function GET(
         task: true,
         completed: true,
         important: true,
-        created_at: true,
+        due_date: true,
         groupId: true,
       },
       where: {

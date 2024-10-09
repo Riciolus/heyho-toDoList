@@ -12,7 +12,8 @@ export type PageType =
   | "default"
   | "important"
   | "tasks"
-  | "assignment";
+  | "assignment"
+  | "search";
 
 const TaskList = ({
   setTaskData,

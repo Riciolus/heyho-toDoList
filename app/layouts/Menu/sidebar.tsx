@@ -4,7 +4,7 @@ import { TiWeatherSunny } from "react-icons/ti";
 import { FaRegStar, FaUserAstronaut } from "react-icons/fa";
 import { TbSubtask } from "react-icons/tb";
 import { Group, Task } from "@/app/page";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { editGroup, getGroupByLabel } from "@/app/lib/api";
 import GroupProperties from "../../components/sidebar/groupProperties";
 import { motion } from "framer-motion";
@@ -86,13 +86,16 @@ const Sidebar = ({
   }, [isEditingGroupLabel]);
 
   // Change content
-  const handleChangeContent = (pageId: string) => {
-    localStorage.setItem(
-      "active-page",
-      JSON.stringify({ current: pageId, previous: activePage })
-    );
-    setActivePage(pageId);
-  };
+  const handleChangeContent = useCallback(
+    (pageId: string) => {
+      localStorage.setItem(
+        "active-page",
+        JSON.stringify({ current: pageId, previous: activePage })
+      );
+      setActivePage(pageId);
+    },
+    [activePage, setActivePage]
+  );
 
   const handleEditGroup = (event: React.FormEvent) => {
     event.preventDefault();

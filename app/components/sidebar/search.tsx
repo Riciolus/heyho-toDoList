@@ -29,7 +29,7 @@ const SearchBarSection = ({
     }, 500);
 
     return () => clearTimeout(debounce);
-  }, [searchQuery]);
+  }, [searchQuery, handleChangeContent, setSearchedTaskData]);
 
   return (
     <div className="relative mb-2 flex laptop:w-[62%] w-[90%] mt-1">

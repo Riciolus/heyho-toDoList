@@ -47,9 +47,9 @@ const AddNewGroup = ({
         onSubmit={handleNewGroup}
         className="flex items-center ps-2 noFit:ps-0 h-9 hover:ps-0  relative  rounded-lg transition-colors gap-3 cursor-pointer w-[90%]  mt-2 noFit:w-[100%]"
       >
-        <button type="submit" className="absolute">
+        <div aria-label="New List" className="absolute">
           <LuFolders size={23} className="p-0.5 noFit:p-0" />
-        </button>
+        </div>
         <input
           id="inputGroup"
           placeholder="New List"

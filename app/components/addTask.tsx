@@ -44,7 +44,6 @@ const AddTaskButton = ({
       return null;
     }
 
-    console.log(formattedDate());
     const data = {
       task: inputValue,
       groupId,
@@ -67,7 +66,11 @@ const AddTaskButton = ({
         onSubmit={(event) => handleAddTask(event)}
         className="relative w-full flex items-center px-2"
       >
-        <button type="submit" className="absolute ml-2">
+        <button
+          aria-label="Add New Task"
+          type="submit"
+          className="absolute ml-2"
+        >
           <FiPlus className={`text-${colorTheme}-300`} size={24} />
         </button>
         <input

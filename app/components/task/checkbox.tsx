@@ -22,8 +22,9 @@ const Checkbox = ({
         onChange={(e) => handleCheckbox(e.target.checked)}
         checked={taskCompleted}
         type="checkbox"
-        className={`peer  h-4 w-4 cursor-pointer transition-all appearance-none rounded-full shadow hover:shadow-md border border-neutral-400  ${colorClasses[colorTheme]} checked:border-onhover`}
+        className={`peer h-4 w-4 cursor-pointer transition-all appearance-none rounded-full shadow hover:shadow-md border border-neutral-400 ${colorClasses[colorTheme]} checked:border-onhover`}
         id={taskId}
+        aria-label="Mark task as completed"
       />
       <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <svg

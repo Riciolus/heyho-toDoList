@@ -100,14 +100,14 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
           </div>
 
           {/* Right side wrapper */}
-          <div>
+          <button>
             <ImportantButton
               taskId={task.id}
               isCompleted={task.completed}
               isImportant={task.important}
               handleImportance={handleImportance}
             />
-          </div>
+          </button>
         </div>
       </ContextMenuTrigger>
       <TaskProperties setTaskData={setTaskData} taskId={task.id} />

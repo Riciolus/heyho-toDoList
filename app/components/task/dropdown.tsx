@@ -12,9 +12,12 @@ const Dropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg">
+        <button
+          aria-label="Task Menu"
+          className="bg-onhover hover:bg-[#3f3f3f] p-1.5 rounded-lg"
+        >
           <GoKebabHorizontal />
-        </div>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Task Menu</DropdownMenuLabel>

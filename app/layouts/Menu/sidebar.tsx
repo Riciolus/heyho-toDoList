@@ -123,6 +123,7 @@ const Sidebar = ({
         <SearchBarSection
           setSearchedTaskData={setSearchedTaskData}
           handleChangeContent={handleChangeContent}
+          activePage={activePage}
         />
 
         {/* STATIC GROUP SECTION */}

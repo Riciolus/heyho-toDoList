@@ -49,7 +49,6 @@ export function tes(dateNow?: string) {
   const monthDaySplitter = monthDay.split(" ");
   const month = monthDaySplitter[1];
   const day = monthDaySplitter[2];
-  console.log(formattedDate);
   return `${weekday}, ${day} ${month}`;
 }
 // Format Date to: 2024-03-14

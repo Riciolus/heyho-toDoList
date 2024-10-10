@@ -7,29 +7,41 @@ import { BiSearchAlt } from "react-icons/bi";
 const SearchBarSection = ({
   setSearchedTaskData,
   handleChangeContent,
+  activePage,
 }: {
   setSearchedTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   handleChangeContent: (pageId: string) => void;
+  activePage: string;
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      handleChangeContent("search");
-
       if (searchQuery.length === 0) {
         setSearchedTaskData([]);
       }
 
       if (searchQuery.trim()) {
-        searchTasks(searchQuery).then((result) =>
-          setSearchedTaskData(result.data)
-        );
+        searchTasks(searchQuery).then((result) => {
+          setSearchedTaskData(result.data);
+        });
       }
     }, 500);
-
     return () => clearTimeout(debounce);
-  }, [searchQuery, handleChangeContent, setSearchedTaskData]);
+  }, [searchQuery, setSearchedTaskData]);
+
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      handleChangeContent("search");
+    }
+  }, [searchQuery, handleChangeContent]);
+
+  useEffect(() => {
+    // Check if you're switching away from the search page and clear the query only then
+    if (activePage !== "search") {
+      setSearchQuery(""); // Clear search query when leaving the search page
+    }
+  }, [activePage, setSearchQuery]);
 
   return (
     <div className="relative mb-2 flex laptop:w-[62%] w-[90%] mt-1">

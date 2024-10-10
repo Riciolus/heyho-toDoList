@@ -58,7 +58,7 @@ export const searchTasks = async (searchQuery: string) => {
   const response = await axios.get(
     `${BASE_URL}/tasks/search/${userId}/${searchQuery}`
   );
-  console.log(response.data);
+
   return response.data;
 };
 

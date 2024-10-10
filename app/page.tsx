@@ -101,7 +101,7 @@ export default function MainPage() {
       animate={{ x: 0, opacity: 1 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
     >
-      <div className="noFit:mx-[13vw] h-screen flex flex-col tablet:flex-row">
+      <div className="noFit:mx-[13vw] overflow-hidden h-screen flex flex-col tablet:flex-row">
         {/* Navigation Bar */}
         {/* Navbar only visible when on mobile devices */}
         <NavigationBar toggleSidebar={toggleSidebar} />

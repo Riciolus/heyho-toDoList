@@ -2,28 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Color */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --line: hsla(0, 0%, 100%, 0.14);
+  --background: #1c1c1c;
+  --foreground: #ffffff00;
   --onhover: #2c2c2c;
   --lazyload: #1f1f1f;
-  --card: #262626;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    /* --background: #1c1c1c; */
-    --foreground: #ededed;
-    --onhover: #2c2c2c;
-    --lazyload: #1f1f1f;
-    --card: #2a2a2a;
-  }
+  --card: #2a2a2a;
+  --line: hsla(0, 0%, 100%, 0.14);
 }
 
 @layer base {
   :root {
     --radius: 0.5rem;
   }
+}
+
+/* Scrollbar Sytle */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--onhover) var(--foreground);
 }

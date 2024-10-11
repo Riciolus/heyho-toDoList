@@ -2,12 +2,13 @@ import Link from "next/link";
 import cursorImage from "../../../public/assets/images/cursor.png";
 import messageImage from "../../../public/assets/images/message.png";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
     <div className="bg-[linear-gradient(to_bottom,#171717_38%,#4F21A1_65%,#A46EDB_82%)] relative overflow-clip">
       {/* CONTENT */}
-      <div className="relative z-30 flex flex-col justify-center items-center text-center p-3 laptop:mt-48 mt-20">
+      <div className="relative flex flex-col justify-center items-center text-center p-3 laptop:pt-48 pt-20">
         {/* Title */}
         <div className="flex justify-center">
           <div className="inline-flex relative">
@@ -15,20 +16,34 @@ const Hero = () => {
               Create. Organize.
               <br /> Achieve.
             </h1>
-            <Image
-              src={cursorImage}
-              height={200}
-              width={200}
+            <motion.div
               className="absolute right-[660px] top-[30px] hidden noFit:inline"
-              alt="Cursor Image"
-            />
-            <Image
-              src={messageImage}
-              height={200}
-              width={200}
+              drag
+              dragSnapToOrigin
+            >
+              <Image
+                src={cursorImage}
+                height={200}
+                width={200}
+                className="max-w-none"
+                alt="Cursor Image"
+                draggable="false"
+              />
+            </motion.div>
+            <motion.div
               className="absolute top-[62px] left-[634px] hidden noFit:inline"
-              alt="Message Image"
-            />
+              drag
+              dragSnapToOrigin
+            >
+              <Image
+                src={messageImage}
+                height={200}
+                width={200}
+                className="max-w-none"
+                alt="Message Image"
+                draggable="false"
+              />
+            </motion.div>
           </div>
         </div>
 
@@ -42,12 +57,12 @@ const Hero = () => {
         </div>
 
         {/* Button  */}
-        <div className="flex justify-center mt-12">
-          <button className="bg-neutral-50 text-neutral-950 py-3 px-5 rounded-lg font-medium hover:bg-neutral-300">
-            <Link href="/auth/register">
+        <div className="flex justify-center mt-12 z-50">
+          <Link href="/auth/register" className=" ">
+            <button className="bg-neutral-50 text-neutral-950 py-3 px-5  rounded-lg font-medium hover:bg-neutral-300">
               <span>Get for free</span>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
 

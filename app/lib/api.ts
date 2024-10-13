@@ -104,3 +104,18 @@ export const deleteGroup = async (groupId: string) => {
 
   return response.data;
 };
+
+// USER API
+// REGISTER
+export const signUp = async (data: {
+  email: string;
+  name: string;
+  password: string;
+}) => {
+  try {
+    const user = await axios.post(`${BASE_URL}/auth/register`, data);
+    return user;
+  } catch (error) {
+    console.log("An Error occured.");
+  }
+};

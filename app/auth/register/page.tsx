@@ -15,19 +15,24 @@ import { Button } from "@/app/components/shadcn/button";
 import { Input } from "@/app/components/shadcn/input";
 import { motion } from "framer-motion";
 import NavigationBarHome from "@/app/components/home/navbar";
+import { toast } from "sonner";
+import { signUp } from "@/app/lib/api";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(3).max(15),
+  name: z.string().min(3).max(15),
   email: z.string().email(),
   password: z.string().min(5).max(20),
   validationPassword: z.string().min(5).max(20),
 });
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       validationPassword: "",
@@ -35,9 +40,21 @@ const RegisterPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const { password, validationPassword, name, email } = values;
+
+    if (password !== validationPassword) {
+      return toast("Password validation is not match.");
+    }
+
+    signUp({ name, email, password }).then((response) => {
+      console.log(response);
+      if (response?.data.status) {
+        toast(response?.data.message);
+        return setTimeout(() => router.push("/auth/login"), 1000);
+      }
+
+      return toast(response?.data.message);
+    });
   }
   return (
     <div className="overflow-hidden h-screen max-h-screen">
@@ -64,7 +81,7 @@ const RegisterPage = () => {
                   <div className="flex flex-col gap-4">
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Username</FormLabel>

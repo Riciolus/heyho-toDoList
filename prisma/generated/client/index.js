@@ -141,7 +141,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\clone\\heyho-toDoList\\prisma\\generated\\client",
+      "value": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\cloneserver\\heyho-toDoList\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -155,12 +155,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\clone\\heyho-toDoList\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\cloneserver\\heyho-toDoList\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "5.19.1",
@@ -169,6 +168,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { TbSubtask } from "react-icons/tb";
 import { Task } from "@/app/page";
 import { getTasksByGroup } from "@/app/lib/api";
+import { toast } from "sonner";
 
 const TasksContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -14,10 +15,18 @@ const TasksContent = () => {
   useEffect(() => {
     const groupId = "tasks";
 
-    getTasksByGroup(groupId).then((result) => {
-      setTaskData(result.data.data);
-      setIsLoading(false);
-    });
+    getTasksByGroup(groupId)
+      .then((result) => {
+        if (result?.data?.data) {
+          setTaskData(result.data.data);
+        } else {
+          toast("Server busy, Please try again later.");
+          setTaskData([]); // Handle cases where data is missing
+        }
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading state
+      });
   }, []);
 
   return (

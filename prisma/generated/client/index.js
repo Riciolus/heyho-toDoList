@@ -141,7 +141,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\to-do-app--clone-microsoft-to-do\\client\\prisma\\generated\\client",
+      "value": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\clone\\heyho-toDoList\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -155,7 +155,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\to-do-app--clone-microsoft-to-do\\client\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\marce\\OneDrive\\Desktop\\aProject\\clone\\heyho-toDoList\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

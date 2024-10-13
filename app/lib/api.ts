@@ -71,9 +71,12 @@ export const getGroupByLabel = async () => {
 };
 
 export const getTasksByGroup = (groupId: string) => {
-  const response = axios.get(`${BASE_URL}/tasks/group/${groupId}/${userId}`);
-
-  return response;
+  try {
+    const response = axios.get(`${BASE_URL}/tasks/group/${groupId}/${userId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const createNewGroup = async (newGroupName: string) => {

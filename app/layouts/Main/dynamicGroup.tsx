@@ -5,6 +5,7 @@ import ZeroTask from "@/app/components/task/0task";
 import { getTasksByGroup } from "@/app/lib/api";
 import { useEffect, useState } from "react";
 import { Group, Task } from "@/app/page";
+import { toast } from "sonner";
 
 const DynamicGroupContent = ({
   data,
@@ -19,10 +20,18 @@ const DynamicGroupContent = ({
   useEffect(() => {
     setIsLoading(true);
 
-    getTasksByGroup(data.label).then((result) => {
-      setTaskData(result.data.data);
-      setIsLoading(false);
-    });
+    getTasksByGroup(data.label)
+      .then((result) => {
+        if (result?.data?.data) {
+          setTaskData(result.data.data);
+        } else {
+          toast("Server busy, Please try again later.");
+          setTaskData([]); // Handle cases where data is missing
+        }
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading state
+      });
   }, [data.label]);
 
   return (

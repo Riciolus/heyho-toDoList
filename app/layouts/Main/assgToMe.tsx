@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getTasksByGroup } from "@/app/lib/api";
 import { Task } from "@/app/page";
 import ZeroTask from "@/app/components/task/0task";
+import { toast } from "sonner";
 
 const AssignedToMeContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
@@ -14,10 +15,18 @@ const AssignedToMeContent = () => {
   useEffect(() => {
     const groupId = "assignment";
 
-    getTasksByGroup(groupId).then((result) => {
-      setTaskData(result.data.data);
-      setIsLoading(false);
-    });
+    getTasksByGroup(groupId)
+      .then((result) => {
+        if (result?.data?.data) {
+          setTaskData(result.data.data);
+        } else {
+          toast("Server busy, Please try again later.");
+          setTaskData([]); // Handle cases where data is missing
+        }
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading state
+      });
   }, []);
 
   return (

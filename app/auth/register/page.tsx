@@ -47,7 +47,6 @@ const RegisterPage = () => {
     }
 
     signUp({ name, email, password }).then((response) => {
-      console.log(response);
       if (response?.data.status) {
         toast(response?.data.message);
         return setTimeout(() => router.push("/auth/login"), 1000);

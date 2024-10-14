@@ -15,24 +15,37 @@ import { Button } from "@/app/components/shadcn/button";
 import { Input } from "@/app/components/shadcn/input";
 import { motion } from "framer-motion";
 import NavigationBarHome from "@/app/components/home/navbar";
+import { signIn } from "@/app/lib/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(3).max(15),
+  email: z.string().email(),
   password: z.string().min(5).max(20),
 });
 
 const LoginPage = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    signIn(values).then((response) => {
+      if (response?.data.status) {
+        toast(response.data.message);
+        return router.push("/");
+      }
+
+      return toast(response?.data.message);
+    });
   }
   return (
     <div className="overflow-hidden h-screen max-h-screen">
@@ -59,13 +72,13 @@ const LoginPage = () => {
                     {/* Username Input */}
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Username</FormLabel>
+                          <FormLabel>Email</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="username"
+                              placeholder="example@gmail.com"
                               className="bg-neutral-800 w-[24rem] border-line"
                               {...field}
                             />

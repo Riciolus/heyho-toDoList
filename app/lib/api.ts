@@ -119,3 +119,13 @@ export const signUp = async (data: {
     console.log("An Error occured.");
   }
 };
+
+export const signIn = async (data: { email: string; password: string }) => {
+  try {
+    const user = await axios.post(`${BASE_URL}/auth/login`, data);
+
+    return user;
+  } catch (error) {
+    console.log("An Error occured.");
+  }
+};

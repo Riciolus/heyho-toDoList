@@ -58,11 +58,11 @@ const LoginPage = () => {
           transition={{ ease: "easeOut", duration: 0.5 }}
           className="container flex justify-center items-center"
         >
-          <div className="border border-line px-16 py-12 rounded-lg">
-            <h2 className="text-center  text-3xl font-semibold ">
+          <div className="flex flex-col justify-center items-center noPhone:border noPhone:border-line px-16 py-12 rounded-lg">
+            <h2 className="text-center  text-3xl w-[24rem] noPhone:w-full font-semibold ">
               Welcome back! <br /> Your tasks await you.
             </h2>
-            <div className="mt-12">
+            <div className="mt-8 noPhone:mt-12">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -79,7 +79,7 @@ const LoginPage = () => {
                           <FormControl>
                             <Input
                               placeholder="example@gmail.com"
-                              className="bg-neutral-800 w-[24rem] border-line"
+                              className="bg-neutral-800 w-[19rem] noPhone:w-[24rem] border-line"
                               {...field}
                             />
                           </FormControl>
@@ -99,7 +99,7 @@ const LoginPage = () => {
                             <Input
                               placeholder="*****"
                               type="password"
-                              className="bg-neutral-800 w-[24rem] border-line"
+                              className="bg-neutral-800 w-[19rem] noPhone:w-[24rem] border-line"
                               {...field}
                             />
                           </FormControl>

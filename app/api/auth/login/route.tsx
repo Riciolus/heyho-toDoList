@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
       email,
     },
   });
-  console.log(user);
+
   if (!user) {
     return NextResponse.json({ status: false, message: "Invalid email" });
   }

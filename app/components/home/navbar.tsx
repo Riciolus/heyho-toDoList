@@ -20,7 +20,7 @@ const NavigationBarHome = ({ toAuthPage }: { toAuthPage: PageType }) => {
 
   return (
     <nav className="relative top-5 flex justify-center items-center z-50">
-      <div className="flex justify-center items-center  px-2 noPhone:px-0  font-semibold border border-neutral-600 bg-white/10 backdrop-blur rounded-full">
+      <div className="flex justify-center items-center font-semibold border border-neutral-600 bg-white/10 backdrop-blur rounded-full">
         {navData.map(({ name, href }) => {
           return (
             <Link href={href} key={name}>

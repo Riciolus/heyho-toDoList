@@ -2,10 +2,12 @@ import prisma from "@/app/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email, password } = body;
+  const cookie = cookies();
 
   const user = await prisma.users.findUnique({
     where: {
@@ -31,10 +33,19 @@ export async function POST(req: NextRequest) {
     }
   );
 
+  cookie.set({
+    httpOnly: true,
+    name: "authToken",
+    value: token,
+    secure: process.env.AUTH_SECRET === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 10,
+  });
+
   return NextResponse.json({
     status: true,
-    message: "Success! Welcome back.",
+    message: "Success! Welcome Back.",
     token,
-    user,
   });
 }

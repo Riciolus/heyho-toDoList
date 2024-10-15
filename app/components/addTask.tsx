@@ -61,7 +61,7 @@ const AddTaskButton = ({
   };
 
   return (
-    <div className="fixed noFit:w-[40%] tablet:w-[55%] laptop:w-[38%]  desktop:w-[39.5%] w-[90%] rounded-xl  bg-onhover bottom-5 noFit:bottom-11">
+    <div className="absolute noFit:w-[40%] tablet:w-[55%] laptop:w-[38%]  desktop:w-[39.5%] w-[90%] rounded-xl  bg-onhover bottom-16 noFit:bottom-11">
       <form
         onSubmit={(event) => handleAddTask(event)}
         className="relative w-full flex items-center px-2"

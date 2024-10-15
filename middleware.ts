@@ -1,15 +1,37 @@
+import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
+
+const secretKey = new TextEncoder().encode(process.env.AUTH_SECRET);
 
 export async function middleware(request: NextRequest) {
-  const isLoggin = true;
+  const cookie = cookies();
+  const token = cookie.get("authToken")?.value;
 
-  if (!isLoggin) {
-    return NextResponse.redirect(new URL("/home", request.url));
+  const isApiRoute = request.nextUrl.pathname.startsWith("/api");
+
+  if (!token) {
+    if (isApiRoute) {
+      // Respond with JSON for API routes
+      return NextResponse.json(
+        { status: false, message: "Unauthorized" },
+        { status: 401 }
+      );
+    } else {
+      // Redirect for non-API routes (e.g., pages)
+      return NextResponse.redirect(new URL("/home", request.url));
+    }
   }
 
-  return NextResponse.next();
+  try {
+    await jwtVerify(token, secretKey);
+
+    return NextResponse.next();
+  } catch (error) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
 }
 
 export const config = {
-  matcher: "/",
+  matcher: ["/", "/api/tasks/:path*"],
 };

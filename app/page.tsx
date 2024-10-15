@@ -109,7 +109,7 @@ export default function MainPage() {
         {/* Left Side  Content*/}
         {/* Exsist : Title and Sidebar */}
         <div
-          className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem] tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] border-r ${
+          className={`flex z-50 bg-neutral-900 tablet:bg-transparent ease-in-out  flex-col absolute left-[-16rem]  tablet:static h-screen transition-all tablet:border-x border-line pl-3 py-3 w-[65%] tablet:w-[40%] border-r ${
             isSidebar && "left-[0rem]"
           }`}
         >
@@ -126,7 +126,6 @@ export default function MainPage() {
               activePage={activePage}
               iconData={iconData}
             />
-            {/* <Link href={"/home"}>asd</Link> */}
           </div>
 
           {/*           Main Content */}

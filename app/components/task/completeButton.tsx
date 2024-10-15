@@ -14,8 +14,11 @@ const ImportantButton = ({
   handleImportance: (taskId: string, toStatus: boolean) => void;
 }) => {
   return (
-    <motion.button whileTap={{ scale: isCompleted ? 1 : 0.5 }}>
-      <button
+    <motion.button
+      aria-label="Set Important"
+      whileTap={{ scale: isCompleted ? 1 : 0.5 }}
+    >
+      <div
         aria-label="Set Important"
         className={`${
           isCompleted ? "cursor-not-allowed" : "active:animate-ping "
@@ -44,7 +47,7 @@ const ImportantButton = ({
             } tablet:w-4 tablet:h-4 w-5 h-5`}
           />
         )}
-      </button>
+      </div>
     </motion.button>
   );
 };

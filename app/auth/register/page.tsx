@@ -18,6 +18,7 @@ import NavigationBarHome from "@/app/components/home/navbar";
 import { toast } from "sonner";
 import { signUp } from "@/app/lib/api";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(3).max(15),
@@ -28,6 +29,7 @@ const formSchema = z.object({
 
 const RegisterPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,23 +45,27 @@ const RegisterPage = () => {
     const { password, validationPassword, name, email } = values;
 
     if (password !== validationPassword) {
-      return toast("Password validation is not match.");
+      return toast("Password validation does not match.");
     }
 
-    signUp({ name, email, password }).then((response) => {
-      if (response?.data.status) {
-        toast(response?.data.message);
-        return setTimeout(() => router.push("/auth/login"), 1000);
-      }
+    setIsLoading(true);
 
-      return toast(response?.data.message);
-    });
+    signUp({ name, email, password })
+      .then((response) => {
+        if (response?.data.status) {
+          toast(response?.data.message);
+          return setTimeout(() => router.push("/auth/login"), 1000);
+        }
+
+        return toast(response?.data.message);
+      })
+      .finally(() => setIsLoading((prev) => !prev));
   }
   return (
     <div className="overflow-hidden h-screen max-h-screen ">
       <NavigationBarHome toAuthPage="login" />
 
-      <div className="flex h-full justify-center bg-neutral-900 text-neutral-50 ">
+      <div className="flex h-fit mt-16 noPhone:mt-0 noPhone:h-full  justify-center items-center bg-neutral-900 text-neutral-50 ">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -157,8 +163,9 @@ const RegisterPage = () => {
                       <Button
                         className="bg-neutral-700 text-neutral-50 hover:bg-onhover w-full border border-line"
                         type="submit"
+                        disabled={isLoading}
                       >
-                        Submit
+                        {isLoading ? "Loading" : "Submit"}
                       </Button>
                     </div>
                   </div>

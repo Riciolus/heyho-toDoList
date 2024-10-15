@@ -18,6 +18,7 @@ import NavigationBarHome from "@/app/components/home/navbar";
 import { signIn } from "@/app/lib/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 
 const LoginPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,22 +38,24 @@ const LoginPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setIsLoading(true);
 
-    signIn(values).then((response) => {
-      if (response?.data.status) {
-        toast(response.data.message);
-        return router.push("/");
-      }
+    signIn(values)
+      .then((response) => {
+        if (response?.data.status) {
+          toast(response.data.message);
+          return router.push("/");
+        }
 
-      return toast(response?.data.message);
-    });
+        return toast(response?.data.message);
+      })
+      .finally(() => setIsLoading((prev) => !prev));
   }
   return (
     <div className="overflow-hidden h-screen max-h-screen">
       <NavigationBarHome toAuthPage="register" />
 
-      <div className="flex h-full justify-center bg-neutral-900 text-neutral-50 ">
+      <div className="flex h-fit mt-16 noPhone:mt-0 noPhone:h-full justify-center bg-neutral-900 text-neutral-50 ">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -112,8 +116,9 @@ const LoginPage = () => {
                       <Button
                         className="bg-neutral-700 text-neutral-50 hover:bg-onhover w-full border border-line"
                         type="submit"
+                        disabled={isLoading}
                       >
-                        Submit
+                        {isLoading ? "Loading" : "Submit"}
                       </Button>
                     </div>
                   </div>

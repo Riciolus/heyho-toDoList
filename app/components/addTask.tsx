@@ -51,12 +51,13 @@ const AddTaskButton = ({
       due_date: formattedDate(),
     };
 
-    await addNewTask(data).then((result) => {
-      setTaskData((prevData) => [...prevData, result]);
-      toast("New task added successfully!");
-    });
+    addNewTask(data)
+      .then((result) => {
+        setTaskData((prevData) => [...prevData, result]);
+        toast("New task added successfully!");
+      })
+      .finally(() => setIsLoading((prev) => !prev));
 
-    setIsLoading((prev) => !prev);
     form.inputTask.value = "";
   };
 

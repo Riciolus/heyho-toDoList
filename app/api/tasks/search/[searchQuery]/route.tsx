@@ -1,12 +1,14 @@
 import prisma from "@/app/lib/db";
+import { getUserIdFromCookie } from "@/app/lib/getIdServerside";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { userId: string; searchQuery: string } }
+  { params }: { params: { searchQuery: string } }
 ) {
   try {
-    const { userId, searchQuery } = params;
+    const userId = await getUserIdFromCookie();
+    const { searchQuery } = params;
 
     const searchedData = await prisma.tasks.findMany({
       where: {

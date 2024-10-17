@@ -7,18 +7,14 @@ const secretKey = new TextEncoder().encode(process.env.AUTH_SECRET);
 export async function middleware(request: NextRequest) {
   const cookie = cookies();
   const token = cookie.get("authToken")?.value;
-
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
-
   if (!token) {
     if (isApiRoute) {
-      // Respond with JSON for API routes
       return NextResponse.json(
         { status: false, message: "Unauthorized" },
         { status: 401 }
       );
     } else {
-      // Redirect for non-API routes (e.g., pages)
       return NextResponse.redirect(new URL("/home", request.url));
     }
   }

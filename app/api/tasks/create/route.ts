@@ -1,13 +1,11 @@
 import prisma from "@/app/lib/db";
+import { getUserIdFromCookie } from "@/app/lib/getIdServerside";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { userId } = params;
+    const userId = await getUserIdFromCookie();
     const { task, groupId, important, due_date } = body;
 
     const createdTasks = await prisma.tasks.create({

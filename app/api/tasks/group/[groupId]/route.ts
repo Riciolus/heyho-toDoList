@@ -1,12 +1,15 @@
 import prisma from "@/app/lib/db";
+import { getUserIdFromCookie } from "@/app/lib/getIdServerside";
 import { NextRequest, NextResponse } from "next/server";
 
+// get all tasks from spesific group (id)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { userId: string; groupId: string } }
+  { params }: { params: { groupId: string } }
 ) {
   try {
-    const { userId, groupId } = params;
+    const userId = await getUserIdFromCookie();
+    const { groupId } = params;
     const tasksByGroup = await prisma.tasks.findMany({
       select: {
         id: true,

@@ -1,19 +1,16 @@
 import axios from "axios";
 
-// Dummies User Id / Temporary
-const userId = "ella";
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // TASKS API
 export const getTodayTasks = () => {
-  const response = axios.get(`${BASE_URL}/tasks/today/${userId}`);
+  const response = axios.get(`${BASE_URL}/tasks/today`);
 
   return response;
 };
 
 export const getImportantTasks = () => {
-  const response = axios.get(`${BASE_URL}/tasks/important/${userId}`);
+  const response = axios.get(`${BASE_URL}/tasks/important`);
 
   return response;
 };
@@ -43,7 +40,7 @@ export const updateCompleted = async ({
 };
 
 export const addNewTask = async (data: object) => {
-  const response = await axios.post(`${BASE_URL}/tasks/create/${userId}`, data);
+  const response = await axios.post(`${BASE_URL}/tasks/create`, data);
 
   return response.data.data;
 };
@@ -55,9 +52,7 @@ export const deleteTask = async (taskId: string) => {
 };
 
 export const searchTasks = async (searchQuery: string) => {
-  const response = await axios.get(
-    `${BASE_URL}/tasks/search/${userId}/${searchQuery}`
-  );
+  const response = await axios.get(`${BASE_URL}/tasks/search/${searchQuery}`);
 
   return response.data;
 };
@@ -65,14 +60,14 @@ export const searchTasks = async (searchQuery: string) => {
 // GROUP API
 
 export const getGroupByLabel = async () => {
-  const response = await axios.get(`${BASE_URL}/tasks/group/method/${userId}`);
+  const response = await axios.get(`${BASE_URL}/tasks/group/method`);
 
   return response.data.data;
 };
 
 export const getTasksByGroup = (groupId: string) => {
   try {
-    const response = axios.get(`${BASE_URL}/tasks/group/${groupId}/${userId}`);
+    const response = axios.get(`${BASE_URL}/tasks/group/${groupId}`);
     return response;
   } catch (error) {
     throw error;
@@ -80,26 +75,23 @@ export const getTasksByGroup = (groupId: string) => {
 };
 
 export const createNewGroup = async (newGroupName: string) => {
-  const response = await axios.post(
-    `${BASE_URL}/tasks/group/method/${userId}`,
-    {
-      title: newGroupName,
-    }
-  );
+  const response = await axios.post(`${BASE_URL}/tasks/group/method`, {
+    title: newGroupName,
+  });
 
   return response.data.data;
 };
 
 // disini userId itu task id, belom diganti
-export const editGroup = async (newGroupName: string, userId: string) => {
-  await axios.patch(`${BASE_URL}/tasks/group/method/${userId}`, {
+export const editGroup = async (newGroupName: string, label: string) => {
+  await axios.patch(`${BASE_URL}/tasks/group/method/${label}`, {
     title: newGroupName,
   });
 };
 
-export const deleteGroup = async (groupId: string) => {
+export const deleteGroup = async (label: string) => {
   const response = await axios.delete(
-    `${BASE_URL}/tasks/group/method/${groupId}`
+    `${BASE_URL}/tasks/group/method/${label}`
   );
 
   return response.data;

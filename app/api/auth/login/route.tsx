@@ -16,13 +16,20 @@ export async function POST(req: NextRequest) {
   });
 
   if (!user) {
-    return NextResponse.json({ status: false, message: "Invalid email" });
+    return NextResponse.json({
+      status: false,
+      message:
+        "Account not found. Please check your credentials or sign up for a new account.",
+    });
   }
 
   const isMatch = await compare(password, user.password);
 
   if (!isMatch) {
-    return NextResponse.json({ status: false, message: "Invalid password" });
+    return NextResponse.json({
+      status: false,
+      message: "Password does not match!",
+    });
   }
 
   const token = jwt.sign(
@@ -45,7 +52,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     status: true,
-    message: "Success! Welcome Back.",
+    message: `Login successful! Welcome back ${user.name}`,
     token,
   });
 }

@@ -1,12 +1,10 @@
 import prisma from "@/app/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import { getUserIdFromCookie } from "@/app/lib/getIdServerside";
+import { NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function GET() {
   try {
-    const { userId } = params;
+    const userId = await getUserIdFromCookie();
     const currentDate = new Date().toISOString().substring(0, 10);
     const todayTasks = await prisma.tasks.findMany({
       select: {

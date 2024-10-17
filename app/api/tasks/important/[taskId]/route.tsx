@@ -1,37 +1,6 @@
 import prisma from "@/app/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
-) {
-  try {
-    const { userId } = params;
-
-    const importantTasks = await prisma.tasks.findMany({
-      select: {
-        id: true,
-        task: true,
-        completed: true,
-        important: true,
-        due_date: true,
-        groupId: true,
-      },
-      where: {
-        AND: [
-          {
-            userId,
-            important: true,
-          },
-        ],
-      },
-    });
-    return NextResponse.json({ status: true, data: importantTasks });
-  } catch (error) {
-    return NextResponse.json({ status: false, error });
-  }
-}
-
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { taskId: string } }

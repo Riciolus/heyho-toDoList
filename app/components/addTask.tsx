@@ -1,6 +1,6 @@
 import { FiPlus } from "react-icons/fi";
 import { addNewTask } from "../lib/api";
-import { addImportantTask } from "../lib/utils";
+import { addImportantTask, cn } from "../lib/utils";
 import { Task } from "../page";
 import { ColorTheme } from "./task/taskCard";
 import { PageType } from "../layouts/TaskList";
@@ -72,7 +72,7 @@ const AddTaskButton = ({
           type="submit"
           className="absolute ml-2"
         >
-          <FiPlus className={`text-${colorTheme}-300`} size={24} />
+          <FiPlus className={cn(`text-${colorTheme}-300`)} size={24} />
         </button>
         <input
           disabled={isLoading}

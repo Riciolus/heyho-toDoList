@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import LoadingCard from "@/app/components/task/loadingCard";
 import TaskCard, { ColorTheme } from "@/app/components/task/taskCard";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -6,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ScrollArea } from "@/app/components/shadcn/scroll-area";
 import { useState } from "react";
 import { Task } from "@/app/page";
+import { cn } from "@/app/lib/utils";
 
 export type PageType =
   | "today"
@@ -30,6 +30,8 @@ const TaskList = ({
 }) => {
   const [showCompleted, setShowCompleted] = useState(true);
 
+  const textColorTheme = `text-${colorTheme}-300`;
+
   const completedTasks = Array.isArray(taskData)
     ? taskData.filter((task) => task.completed)
     : [];
@@ -43,7 +45,7 @@ const TaskList = ({
       <ScrollArea className="w-full">
         <AnimatePresence>
           <div
-            className={clsx(
+            className={cn(
               "flex flex-col gap-1.5 w-[98%]",
               pageType === "today" ? "h-[31.5rem]" : "h-[34rem]"
             )}
@@ -79,7 +81,10 @@ const TaskList = ({
               >
                 <button
                   onClick={() => setShowCompleted((prev) => !prev)}
-                  className={`bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 text-${colorTheme}-300 py-1.5 rounded-xl`}
+                  className={cn(
+                    "bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 py-1.5 rounded-xl",
+                    textColorTheme
+                  )}
                 >
                   {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}
                   <span>Completed {`(${completedTasks.length})`}</span>

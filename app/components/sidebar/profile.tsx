@@ -51,12 +51,10 @@ const ProfileSection = () => {
             />
           </div>
 
-          {profileData && (
-            <div className="flex flex-col justify-center text-left gap-0.5">
-              <span className="font-bold">{profileData.name}</span>
-              <span className="text-neutral-300">{profileData.email}</span>
-            </div>
-          )}
+          <div className="flex flex-col justify-center text-left">
+            <span className="font-bold">{profileData?.name}</span>
+            <span className="text-neutral-300">{profileData?.email}</span>
+          </div>
 
           <div className="h-fit w-fit"></div>
         </div>

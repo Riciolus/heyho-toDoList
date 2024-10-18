@@ -8,10 +8,19 @@ type NavigationData = {
 };
 
 const NavigationBarHome = ({ toAuthPage }: { toAuthPage: PageType }) => {
+  // const scrolltoHash = (element_id: string) => {
+  //   const element = document.getElementById(element_id);
+  //   element?.scrollIntoView({
+  //     behavior: "smooth",
+  //     block: "end",
+  //     inline: "nearest",
+  //   });
+  // };
+
   const navData: NavigationData[] = [
-    { name: "Home", href: "/home" },
-    { name: "Feature", href: "/home" },
-    { name: "Overview", href: "/home" },
+    { name: "Home", href: "/home#hero" },
+    { name: "Feature", href: "/home#feature" },
+    { name: "Overview", href: "/home#overview" },
     {
       name: toAuthPage === "register" ? "Sign Up" : "Sign In",
       href: `/auth/${toAuthPage}`,
@@ -19,7 +28,7 @@ const NavigationBarHome = ({ toAuthPage }: { toAuthPage: PageType }) => {
   ];
 
   return (
-    <nav className="relative top-5 flex justify-center items-center z-50">
+    <nav className="fixed top-5 inset-x-0 flex justify-center items-center z-50">
       <div className="flex justify-center items-center font-semibold border border-neutral-600 bg-white/10 backdrop-blur rounded-full">
         {navData.map(({ name, href }) => {
           return (

@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} scroll-smooth`}>
       <body className="bg-neutral-900 text-neutral-50 antialiased max-h-screen h-screen text-sm font-sans ">
         {/* Main content area */}
 

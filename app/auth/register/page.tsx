@@ -62,10 +62,10 @@ const RegisterPage = () => {
       .finally(() => setIsLoading((prev) => !prev));
   }
   return (
-    <div className="overflow-hidden h-screen max-h-screen ">
+    <div className="flex justify-center items-center overflow-hidden h-svh ">
       <NavigationBarHome toAuthPage="login" />
 
-      <div className="flex h-fit mt-16 noPhone:mt-0 noPhone:h-full  justify-center items-center bg-neutral-900 text-neutral-50 ">
+      <div className="flex justify-center items-center bg-neutral-900 text-neutral-50 ">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

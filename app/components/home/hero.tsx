@@ -6,7 +6,10 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="bg-[linear-gradient(to_bottom,#171717_38%,#4F21A1_65%,#A46EDB_82%)] relative overflow-clip">
+    <div
+      id="hero"
+      className="bg-[linear-gradient(to_bottom,#171717_38%,#4F21A1_65%,#A46EDB_82%)] relative overflow-clip"
+    >
       {/* CONTENT */}
       <div className="relative flex flex-col justify-center items-center text-center p-3 laptop:pt-48 pt-20">
         {/* Title */}

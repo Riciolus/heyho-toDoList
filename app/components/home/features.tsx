@@ -21,7 +21,10 @@ const featureData = [
 
 const Features = () => {
   return (
-    <div className="flex justify-center mx-5 bg-neutral-900 text-neutral-50 py-24">
+    <div
+      id="feature"
+      className="flex justify-center mx-5 bg-neutral-900 text-neutral-50 py-24"
+    >
       <div className="container relative">
         <h2 className="text-center font-semibold text-4xl laptop:text-5xl tracking-tighter">
           Everything you need

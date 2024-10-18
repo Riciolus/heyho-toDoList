@@ -16,7 +16,10 @@ const ProductShowcase = () => {
   const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
 
   return (
-    <div className="flex justify-center bg-neutral-900 text-neutral-50 bg-gradient-to-b from-neutral-900 via-[#5D2CA8] via-90% to-neutral-900  py-[68px]">
+    <div
+      id="overview"
+      className="flex justify-center bg-neutral-900 text-neutral-50 bg-gradient-to-b from-neutral-900 via-[#5D2CA8] via-90% to-neutral-900  py-[68px]"
+    >
       <div className="mx-3 container relative">
         <h2 className="text-center text-4xl laptop:text-5xl font-semibold tracking-tighter">
           Intuitive Interface

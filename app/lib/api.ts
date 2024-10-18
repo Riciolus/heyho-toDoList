@@ -2,6 +2,16 @@ import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+// PROFILE API
+export const getUserProfileData = async () => {
+  const response = await axios.get(`${BASE_URL}/user/profile`);
+  return response.data;
+};
+
+export const logoutAccount = async () => {
+  await axios.post(`${BASE_URL}/user/logout`);
+};
+
 // TASKS API
 export const getTodayTasks = () => {
   const response = axios.get(`${BASE_URL}/tasks/today`);

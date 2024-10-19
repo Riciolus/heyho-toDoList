@@ -63,7 +63,7 @@ const Hero = () => {
         <div className="flex justify-center mt-12 z-50">
           <Link href="/auth/register" className=" ">
             <button className="bg-neutral-50 text-neutral-950 py-3 px-5  rounded-lg font-medium hover:bg-neutral-300">
-              <span>Get for free</span>
+              <span>Get Started</span>
             </button>
           </Link>
         </div>

@@ -30,7 +30,7 @@ const TaskList = ({
 }) => {
   const [showCompleted, setShowCompleted] = useState(true);
 
-  const textColorTheme = `text-${colorTheme}-300`;
+  // const textColorTheme = ;
 
   const completedTasks = Array.isArray(taskData)
     ? taskData.filter((task) => task.completed)
@@ -83,7 +83,7 @@ const TaskList = ({
                   onClick={() => setShowCompleted((prev) => !prev)}
                   className={cn(
                     "bg-neutral-800 flex items-center justify-center gap-1.5 w-fit px-2.5 text-sm font-medium mt-3 mb-0.5 py-1.5 rounded-xl",
-                    textColorTheme
+                    `text-${colorTheme}-300`
                   )}
                 >
                   {showCompleted ? <IoIosArrowDown /> : <IoIosArrowUp />}

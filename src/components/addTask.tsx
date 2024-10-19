@@ -4,7 +4,7 @@ import { Task } from "../app/page";
 import { ColorTheme } from "./task/taskCard";
 import { PageType } from "../layouts/TaskList";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { DatePicker } from "./task/datepicker";
 import { addNewTask } from "../lib/api";
 
@@ -23,43 +23,46 @@ const AddTaskButton = ({
 }: Propstype) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleAddTask = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
+  const handleAddTask = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setIsLoading(true);
 
-    const form = event.target as HTMLFormElement;
-    const inputValue = form.inputTask.value;
+      const form = event.target as HTMLFormElement;
+      const inputValue = form.inputTask.value;
 
-    const formattedDate = () => {
-      if (form.date?.innerText) {
-        if (form.date.innerText === "Pick a date") return new Date();
+      const formattedDate = () => {
+        if (form.date?.innerText) {
+          if (form.date.innerText === "Pick a date") return new Date();
 
-        return new Date(form.date.innerText);
-      } else {
-        return new Date();
+          return new Date(form.date.innerText);
+        } else {
+          return new Date();
+        }
+      };
+
+      if (inputValue.length === 0) {
+        return null;
       }
-    };
 
-    if (inputValue.length === 0) {
-      return null;
-    }
+      const data = {
+        task: inputValue,
+        groupId,
+        important: addImportantTask(pageType),
+        due_date: formattedDate(),
+      };
 
-    const data = {
-      task: inputValue,
-      groupId,
-      important: addImportantTask(pageType),
-      due_date: formattedDate(),
-    };
+      addNewTask(data)
+        .then((result) => {
+          setTaskData((prevData) => [...prevData, result]);
+          toast("New task added successfully!");
+        })
+        .finally(() => setIsLoading((prev) => !prev));
 
-    addNewTask(data)
-      .then((result) => {
-        setTaskData((prevData) => [...prevData, result]);
-        toast("New task added successfully!");
-      })
-      .finally(() => setIsLoading((prev) => !prev));
-
-    form.inputTask.value = "";
-  };
+      form.inputTask.value = "";
+    },
+    [groupId, pageType, setTaskData]
+  );
 
   return (
     <div className="absolute noFit:w-[40%] tablet:w-[55%] laptop:w-[38%]  desktop:w-[39.5%] w-[90%] rounded-xl  bg-onhover bottom-16 noFit:bottom-11">

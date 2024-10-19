@@ -50,9 +50,9 @@ const AssignedToMeContent = () => {
         <TaskList
           isLoading={isLoading}
           taskData={taskData}
-          colorTheme="green"
-          pageType="assignment"
           setTaskData={setTaskData}
+          pageType="assignment"
+          colorTheme="green"
         />
       )}
 

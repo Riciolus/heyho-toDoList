@@ -5,17 +5,17 @@ const featureData = [
   {
     title: "Integration Ecosystem",
     description:
-      "inaliajsdjajdwdawLorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis unde, nihil aut velit dignissimos blanditiis labore.",
+      "Seamlessly connect with your favorite productivity tools, calendars, and apps to streamline task management. Our app integrates effortlessly with other platforms, ensuring that all your tasks and schedules are in one place for optimal efficiency.",
   },
   {
     title: "Goal Setting and Tracking",
     description:
-      "asdadsasdadwhawd Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis unde, nihil aut velit dignissimos blanditiis labore.",
+      "Set clear goals, break them down into actionable tasks, and track your progress with real-time updates. Whether personal or professional, stay motivated as you complete milestones and see your achievements build up over time.",
   },
   {
     title: "Secure Data Encryption",
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis unde, nihil aut velit dignissimos blanditiis labore.",
+      "Your data is protected with top-tier encryption, ensuring that all your tasks, goals, and personal information remain confidential. We prioritize security so you can focus on your tasks with peace of mind, knowing your information is safe.",
   },
 ];
 

@@ -64,7 +64,9 @@ const ProfileSection = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Invite members</DropdownMenuItem>
-        <DropdownMenuItem>Home</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/home")}>
+          Home
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

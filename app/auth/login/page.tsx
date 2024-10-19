@@ -55,13 +55,19 @@ const LoginPage = () => {
     <div className="flex justify-center items-center overflow-hidden h-svh ">
       <NavigationBarHome toAuthPage="register" />
 
-      <div className="flex h-fit justify-center items-center bg-neutral-900 text-neutral-50 ">
+      <div className="relative flex justify-center h-full noPhone:h-fit items-center bg-neutral-900 text-neutral-50 overflow-hidden rounded-lg">
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ ease: "easeOut", duration: 0.5 }}
-          className="container flex justify-center items-center"
+          className=" flex justify-center items-center"
         >
+          {/* Upper Right Gradient Effect */}
+          <div className="absolute bg-gradient-to-l from-purple-800 to-green-500 w-[33%] h-[25%] rounded-full blur-[82px] -z-10 top-0 right-0 " />
+
+          {/* Lower Left Gradient Effect */}
+          <div className="absolute bg-gradient-to-l from-purple-400 to-blue-500 w-[70%] h-[20%] opacity-55 animate-out rounded-full blur-3xl -z-10 bottom-0 -left-16 " />
+
           <div className="flex flex-col justify-center items-center noPhone:border noPhone:border-line px-16 py-12 rounded-lg">
             <h2 className="text-center  text-3xl w-[24rem] noPhone:w-full font-semibold ">
               Welcome back! <br /> Your tasks await you.

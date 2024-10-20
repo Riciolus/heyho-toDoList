@@ -54,6 +54,14 @@ const RegisterPage = () => {
       .then((response) => {
         if (response?.data.status) {
           toast(response?.data.message);
+          localStorage.setItem(
+            "active-page",
+            JSON.stringify({
+              current: response.data.generateStarterGroupId,
+              previous: "today",
+            })
+          );
+
           return router.push("/auth/login");
         }
 

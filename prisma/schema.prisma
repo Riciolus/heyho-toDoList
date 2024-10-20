@@ -37,7 +37,7 @@ model Groups {
   label     String  @id @default(cuid())
   title   String  
   icon   String  @default("list")
-  user   Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  user   Users?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
   tasks  Tasks[]
 }

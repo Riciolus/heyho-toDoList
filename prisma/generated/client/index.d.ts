@@ -3161,7 +3161,7 @@ export namespace Prisma {
     label: string
     title: string
     icon: string
-    userId: string
+    userId: string | null
     _count: GroupsCountAggregateOutputType | null
     _min: GroupsMinAggregateOutputType | null
     _max: GroupsMaxAggregateOutputType | null
@@ -3186,7 +3186,7 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     userId?: boolean
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    user?: boolean | Groups$userArgs<ExtArgs>
     tasks?: boolean | Groups$tasksArgs<ExtArgs>
     _count?: boolean | GroupsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["groups"]>
@@ -3196,7 +3196,7 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     userId?: boolean
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    user?: boolean | Groups$userArgs<ExtArgs>
   }, ExtArgs["result"]["groups"]>
 
   export type GroupsSelectScalar = {
@@ -3207,25 +3207,25 @@ export namespace Prisma {
   }
 
   export type GroupsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    user?: boolean | Groups$userArgs<ExtArgs>
     tasks?: boolean | Groups$tasksArgs<ExtArgs>
     _count?: boolean | GroupsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GroupsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    user?: boolean | Groups$userArgs<ExtArgs>
   }
 
   export type $GroupsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Groups"
     objects: {
-      user: Prisma.$UsersPayload<ExtArgs>
+      user: Prisma.$UsersPayload<ExtArgs> | null
       tasks: Prisma.$TasksPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       label: string
       title: string
       icon: string
-      userId: string
+      userId: string | null
     }, ExtArgs["result"]["groups"]>
     composites: {}
   }
@@ -3590,7 +3590,7 @@ export namespace Prisma {
    */
   export interface Prisma__GroupsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends Groups$userArgs<ExtArgs> = {}>(args?: Subset<T, Groups$userArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     tasks<T extends Groups$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Groups$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TasksPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3943,6 +3943,21 @@ export namespace Prisma {
   }
 
   /**
+   * Groups.user
+   */
+  export type Groups$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Users
+     */
+    select?: UsersSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersInclude<ExtArgs> | null
+    where?: UsersWhereInput
+  }
+
+  /**
    * Groups.tasks
    */
   export type Groups$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4040,6 +4055,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -4237,8 +4260,8 @@ export namespace Prisma {
     label?: StringFilter<"Groups"> | string
     title?: StringFilter<"Groups"> | string
     icon?: StringFilter<"Groups"> | string
-    userId?: StringFilter<"Groups"> | string
-    user?: XOR<UsersRelationFilter, UsersWhereInput>
+    userId?: StringNullableFilter<"Groups"> | string | null
+    user?: XOR<UsersNullableRelationFilter, UsersWhereInput> | null
     tasks?: TasksListRelationFilter
   }
 
@@ -4246,7 +4269,7 @@ export namespace Prisma {
     label?: SortOrder
     title?: SortOrder
     icon?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     user?: UsersOrderByWithRelationInput
     tasks?: TasksOrderByRelationAggregateInput
   }
@@ -4258,8 +4281,8 @@ export namespace Prisma {
     NOT?: GroupsWhereInput | GroupsWhereInput[]
     title?: StringFilter<"Groups"> | string
     icon?: StringFilter<"Groups"> | string
-    userId?: StringFilter<"Groups"> | string
-    user?: XOR<UsersRelationFilter, UsersWhereInput>
+    userId?: StringNullableFilter<"Groups"> | string | null
+    user?: XOR<UsersNullableRelationFilter, UsersWhereInput> | null
     tasks?: TasksListRelationFilter
   }, "label">
 
@@ -4267,7 +4290,7 @@ export namespace Prisma {
     label?: SortOrder
     title?: SortOrder
     icon?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     _count?: GroupsCountOrderByAggregateInput
     _max?: GroupsMaxOrderByAggregateInput
     _min?: GroupsMinOrderByAggregateInput
@@ -4280,7 +4303,7 @@ export namespace Prisma {
     label?: StringWithAggregatesFilter<"Groups"> | string
     title?: StringWithAggregatesFilter<"Groups"> | string
     icon?: StringWithAggregatesFilter<"Groups"> | string
-    userId?: StringWithAggregatesFilter<"Groups"> | string
+    userId?: StringNullableWithAggregatesFilter<"Groups"> | string | null
   }
 
   export type UsersCreateInput = {
@@ -4426,7 +4449,7 @@ export namespace Prisma {
     label?: string
     title: string
     icon?: string
-    user: UsersCreateNestedOneWithoutGroupsInput
+    user?: UsersCreateNestedOneWithoutGroupsInput
     tasks?: TasksCreateNestedManyWithoutGroupsInput
   }
 
@@ -4434,7 +4457,7 @@ export namespace Prisma {
     label?: string
     title: string
     icon?: string
-    userId: string
+    userId?: string | null
     tasks?: TasksUncheckedCreateNestedManyWithoutGroupsInput
   }
 
@@ -4442,7 +4465,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
-    user?: UsersUpdateOneRequiredWithoutGroupsNestedInput
+    user?: UsersUpdateOneWithoutGroupsNestedInput
     tasks?: TasksUpdateManyWithoutGroupsNestedInput
   }
 
@@ -4450,7 +4473,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     tasks?: TasksUncheckedUpdateManyWithoutGroupsNestedInput
   }
 
@@ -4458,7 +4481,7 @@ export namespace Prisma {
     label?: string
     title: string
     icon?: string
-    userId: string
+    userId?: string | null
   }
 
   export type GroupsUpdateManyMutationInput = {
@@ -4471,7 +4494,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4632,6 +4655,31 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type UsersNullableRelationFilter = {
+    is?: UsersWhereInput | null
+    isNot?: UsersWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type GroupsCountOrderByAggregateInput = {
     label?: SortOrder
     title?: SortOrder
@@ -4651,6 +4699,24 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     userId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type TasksCreateNestedManyWithoutUserInput = {
@@ -4797,10 +4863,12 @@ export namespace Prisma {
     connect?: TasksWhereUniqueInput | TasksWhereUniqueInput[]
   }
 
-  export type UsersUpdateOneRequiredWithoutGroupsNestedInput = {
+  export type UsersUpdateOneWithoutGroupsNestedInput = {
     create?: XOR<UsersCreateWithoutGroupsInput, UsersUncheckedCreateWithoutGroupsInput>
     connectOrCreate?: UsersCreateOrConnectWithoutGroupsInput
     upsert?: UsersUpsertWithoutGroupsInput
+    disconnect?: UsersWhereInput | boolean
+    delete?: UsersWhereInput | boolean
     connect?: UsersWhereUniqueInput
     update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutGroupsInput, UsersUpdateWithoutGroupsInput>, UsersUncheckedUpdateWithoutGroupsInput>
   }
@@ -4817,6 +4885,10 @@ export namespace Prisma {
     update?: TasksUpdateWithWhereUniqueWithoutGroupsInput | TasksUpdateWithWhereUniqueWithoutGroupsInput[]
     updateMany?: TasksUpdateManyWithWhereWithoutGroupsInput | TasksUpdateManyWithWhereWithoutGroupsInput[]
     deleteMany?: TasksScalarWhereInput | TasksScalarWhereInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type TasksUncheckedUpdateManyWithoutGroupsNestedInput = {
@@ -4911,6 +4983,48 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type TasksCreateWithoutUserInput = {
@@ -5020,7 +5134,7 @@ export namespace Prisma {
     label?: StringFilter<"Groups"> | string
     title?: StringFilter<"Groups"> | string
     icon?: StringFilter<"Groups"> | string
-    userId?: StringFilter<"Groups"> | string
+    userId?: StringNullableFilter<"Groups"> | string | null
   }
 
   export type UsersCreateWithoutTasksInput = {
@@ -5050,14 +5164,14 @@ export namespace Prisma {
     label?: string
     title: string
     icon?: string
-    user: UsersCreateNestedOneWithoutGroupsInput
+    user?: UsersCreateNestedOneWithoutGroupsInput
   }
 
   export type GroupsUncheckedCreateWithoutTasksInput = {
     label?: string
     title: string
     icon?: string
-    userId: string
+    userId?: string | null
   }
 
   export type GroupsCreateOrConnectWithoutTasksInput = {
@@ -5109,14 +5223,14 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
-    user?: UsersUpdateOneRequiredWithoutGroupsNestedInput
+    user?: UsersUpdateOneWithoutGroupsNestedInput
   }
 
   export type GroupsUncheckedUpdateWithoutTasksInput = {
     label?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UsersCreateWithoutGroupsInput = {

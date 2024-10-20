@@ -18,7 +18,7 @@ export async function GET() {
     });
 
     const filteredDynamicGroup = groupData.filter(
-      (group) => group.label !== "tasks"
+      (group) => group.label !== "tasks" && group.label !== "assignment"
     );
 
     return NextResponse.json({ status: true, data: filteredDynamicGroup });

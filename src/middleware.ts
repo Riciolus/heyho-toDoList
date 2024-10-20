@@ -7,6 +7,9 @@ const secretKey = new TextEncoder().encode(process.env.AUTH_SECRET);
 export async function middleware(request: NextRequest) {
   const cookie = cookies();
   const token = cookie.get("authToken")?.value;
+
+  console.log("hit middleware");
+
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
   if (!token) {
     if (isApiRoute) {

@@ -1,6 +1,5 @@
 import { searchTasks } from "@/src/lib/api";
 import { Task } from "@/src/app/page";
-// import { Task } from "@/app/page";
 import { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 
@@ -24,17 +23,12 @@ const SearchBarSection = ({
       if (searchQuery.trim()) {
         searchTasks(searchQuery).then((result) => {
           setSearchedTaskData(result.data);
+          handleChangeContent("search");
         });
       }
     }, 500);
     return () => clearTimeout(debounce);
-  }, [searchQuery, setSearchedTaskData]);
-
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      handleChangeContent("search");
-    }
-  }, [searchQuery, handleChangeContent]);
+  }, [searchQuery, setSearchedTaskData, handleChangeContent]);
 
   useEffect(() => {
     // Check if you're switching away from the search page and clear the query only then

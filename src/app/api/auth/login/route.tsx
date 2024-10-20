@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     status: true,
-    message: `Login successful! Welcome back ${user.name}`,
+    message: `Login successful! Welcome ${user.name}.`,
     token,
   });
 }

@@ -1,7 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { cn } from "@/src/lib/utils";
 
 const AssignToButton = ({
   assignTo,
@@ -14,16 +14,17 @@ const AssignToButton = ({
     <Popover>
       <PopoverTrigger type="button" className="mr-1.5">
         <div>
-          <Button
-            type="button"
+          <div
+            // type="button"
             id="date"
-            variant={"outline"}
-            className={
-              "w-fit rounded-xl bg-neutral-800/90 text-neutral-300 hover:bg-neutral-900/50 transition hover:text-neutral-300 p-2 h-fit"
-            }
+            // variant={"outline"}
+            className={cn(
+              "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold transition-colors",
+              " w-fit rounded-xl bg-neutral-800/90 text-neutral-300 hover:bg-neutral-900/50 transition hover:text-neutral-300 p-2 h-fit"
+            )}
           >
             Assign to
-          </Button>
+          </div>
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-64 bg-neutral-900 border-line">

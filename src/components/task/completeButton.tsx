@@ -19,7 +19,6 @@ const ImportantButton = ({
       whileTap={{ scale: isCompleted ? 1 : 0.5 }}
     >
       <div
-        aria-label="Set Important"
         className={`${
           isCompleted ? "cursor-not-allowed" : "active:animate-ping "
         } `}

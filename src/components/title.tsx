@@ -7,7 +7,7 @@ const Title = () => {
         Heyho! To Do List
       </HoverCardTrigger>
       <HoverCardContent className="relative  overflow-hidden">
-        <div className="absolute bg-gradient-to-tr from-green-300 to-red-300 w-16 h-12 blur-xl bottom-0 right-5 "></div>
+        <div className="absolute bg-gradient-to-tr from-green-300 to-red-300 w-16 h-12 blur-xl bottom-0 right-5 " />
         <div>
           To Do List App for organizing your task! – created and maintained by
           @riciolus.

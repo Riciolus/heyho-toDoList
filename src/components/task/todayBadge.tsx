@@ -12,7 +12,7 @@ const TodayBadge = ({
       <p className={isCompleted ? "text-neutral-400" : "text-gray-300"}>
         {dueDate && getDateFormattedLong(dueDate)}
       </p>
-      {dueDate && isTodayDate(dueDate) && (
+      {isTodayDate(dueDate) && (
         <p
           className={`${
             isCompleted ? "bg-orange-400/50" : "bg-orange-400"

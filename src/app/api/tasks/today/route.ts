@@ -22,7 +22,7 @@ export async function GET() {
       where: {
         AND: [
           {
-            userId,
+            creatorId: userId,
           },
           {
             due_date: {

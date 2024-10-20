@@ -15,29 +15,31 @@ model Users {
   email      String   @unique
   password   String
   created_at DateTime @default(now())
-  tasks      Tasks[]
+  tasks     Tasks[] @relation("TaskCreator")
+  assignedTasks     Tasks[] @relation("TaskAssignee")
   groups     Groups[]
 }
 
 model Tasks {
   id         String   @id @default(cuid())
-  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
   task       String
   important  Boolean  @default(false)
   completed  Boolean  @default(false)
   created_at DateTime @default(now())
   due_date   DateTime @default(now())
+  creator    Users    @relation("TaskCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId  String
+  assignee     Users?    @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: Cascade)
+  assigneeId   String?
   groups     Groups   @relation(fields: [groupId], references: [label], onDelete: Cascade)
   groupId    String
-  
 }
 
 model Groups {
-  label     String  @id @default(cuid())
-  title   String  
+  label  String  @id @default(cuid())
+  title  String
   icon   String  @default("list")
-  user   Users?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
+  creator   Users?  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String?
   tasks  Tasks[]
 }

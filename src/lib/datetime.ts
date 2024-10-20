@@ -58,9 +58,10 @@ export function formatDateShort(dateString: string) {
 
 export const isTodayDate = (dateToCompare: string) => {
   if (
-    new Date(dateToCompare).toISOString().substring(0, 10) ===
-    new Date().toISOString().substring(0, 10)
+    formatDateShort(dateToCompare) === new Date().toISOString().substring(0, 10)
   ) {
     return true;
   }
+
+  return false;
 };

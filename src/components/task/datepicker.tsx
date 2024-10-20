@@ -8,7 +8,6 @@ import { CalendarIcon } from "lucide-react";
 
 export function DatePicker() {
   const [date, setDate] = useState<Date>();
-
   return (
     <Popover>
       <PopoverTrigger asChild>

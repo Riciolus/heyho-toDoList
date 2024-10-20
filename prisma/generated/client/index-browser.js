@@ -129,12 +129,13 @@ exports.Prisma.UsersScalarFieldEnum = {
 
 exports.Prisma.TasksScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   task: 'task',
   important: 'important',
   completed: 'completed',
   created_at: 'created_at',
   due_date: 'due_date',
+  creatorId: 'creatorId',
+  assigneeId: 'assigneeId',
   groupId: 'groupId'
 };
 
@@ -142,7 +143,7 @@ exports.Prisma.GroupsScalarFieldEnum = {
   label: 'label',
   title: 'title',
   icon: 'icon',
-  userId: 'userId'
+  creatorId: 'creatorId'
 };
 
 exports.Prisma.SortOrder = {

@@ -8,7 +8,7 @@ export async function GET() {
     const userId = await getUserIdFromCookie();
     const groupData = await prisma.groups.findMany({
       where: {
-        userId,
+        creatorId: userId,
       },
       select: {
         label: true,
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
     const newGroupData = await prisma.groups.create({
       data: {
-        userId,
+        creatorId: userId,
         title,
       },
     });

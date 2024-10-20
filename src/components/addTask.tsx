@@ -34,7 +34,6 @@ const AddTaskButton = ({
       const formattedDate = () => {
         if (form.date?.innerText) {
           if (form.date.innerText === "Pick a date") return new Date();
-
           return new Date(form.date.innerText);
         } else {
           return new Date();

@@ -34,29 +34,64 @@ export async function POST(req: NextRequest) {
     data: {
       title: "Getting Started",
       icon: "start",
-      userId: user.id,
+      creatorId: user.id,
       tasks: {
         createMany: {
           data: [
             {
-              userId: user.id,
+              creatorId: user.id,
               task: "Heyho! Let's start by organizing your tasks.",
             },
             {
-              userId: user.id,
+              creatorId: user.id,
               task: "Click the star icon to mark a task as important. You'll find all important tasks in the Important menu.",
             },
             {
-              userId: user.id,
+              creatorId: user.id,
               task: "Done with a task? Click the checkbox to mark it as completed.",
             },
             {
-              userId: user.id,
+              creatorId: user.id,
               task: "Create a new task! The default due date is today, but you can set a future date if needed.",
             },
             {
-              userId: user.id,
+              creatorId: user.id,
               task: "That's it! Enjoy managing your tasks with ease. Sayonara!",
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  // Generated "Groceries" group as example
+  await prisma.groups.create({
+    data: {
+      title: "Groceries",
+      icon: "cart",
+      creatorId: user.id,
+      tasks: {
+        createMany: {
+          data: [
+            {
+              creatorId: user.id,
+              task: "Milk",
+            },
+            {
+              creatorId: user.id,
+              task: "Butter",
+            },
+            {
+              creatorId: user.id,
+              task: "Banana",
+            },
+            {
+              creatorId: user.id,
+              task: "Chocolate",
+            },
+            {
+              creatorId: user.id,
+              task: "Vegetables",
             },
           ],
         },

@@ -12,7 +12,7 @@ export async function GET(
 
     const searchedData = await prisma.tasks.findMany({
       where: {
-        userId,
+        creatorId: userId,
         task: {
           contains: searchQuery,
           mode: "insensitive",

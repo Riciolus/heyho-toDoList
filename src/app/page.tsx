@@ -30,6 +30,8 @@ export type Task = {
   due_date: string;
   important: boolean;
   groupId: string;
+  creatorId: string;
+  assigneeId: string;
   groups: {
     title: string;
   };

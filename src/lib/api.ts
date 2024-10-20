@@ -52,7 +52,7 @@ export const updateCompleted = async ({
 export const addNewTask = async (data: object) => {
   const response = await axios.post(`${BASE_URL}/tasks/create`, data);
 
-  return response.data.data;
+  return response.data;
 };
 
 export const deleteTask = async (taskId: string) => {
@@ -75,9 +75,18 @@ export const getGroupByLabel = async () => {
   return response.data.data;
 };
 
-export const getTasksByGroup = (groupId: string) => {
+export const getTasksByGroup = async (groupId: string) => {
   try {
-    const response = axios.get(`${BASE_URL}/tasks/group/${groupId}`);
+    const response = await axios.get(`${BASE_URL}/tasks/group/${groupId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAssignedTask = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tasks/assignee`);
     return response;
   } catch (error) {
     throw error;

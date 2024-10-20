@@ -53,6 +53,7 @@ const AddNewGroup = ({
         <input
           id="inputGroup"
           placeholder="New List"
+          autoComplete="off"
           className="bg-transparent w-full mx-1 noFit:hover:ps-3 h-full px-3 noFit:mr-4 hover:px-1.5 hover:bg-onhover pl-8    hover:scale-[1.03] hover:text-sm transition-all rounded-lg placeholder-neutral-50 outline-none font-normal text-sm"
         ></input>
       </form>

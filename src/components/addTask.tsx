@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useCallback, useState } from "react";
 import { DatePicker } from "./task/datepicker";
 import { addNewTask } from "../lib/api";
+import AssignToButton from "./task/assignToTask";
 
 export interface Propstype {
   groupId: string;
@@ -22,11 +23,13 @@ const AddTaskButton = ({
   setTaskData,
 }: Propstype) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [assignTo, setAssignTo] = useState("");
 
   const handleAddTask = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      setIsLoading(true);
+
+      setIsLoading((prev) => prev);
 
       const form = event.target as HTMLFormElement;
       const inputValue = form.inputTask.value;
@@ -49,18 +52,23 @@ const AddTaskButton = ({
         groupId,
         important: addImportantTask(pageType),
         due_date: formattedDate(),
+        assignTo,
+        method: pageType,
       };
 
       addNewTask(data)
         .then((result) => {
-          setTaskData((prevData) => [...prevData, result]);
-          toast("New task added successfully!");
-        })
-        .finally(() => setIsLoading((prev) => !prev));
+          if (result.status) {
+            setTaskData((prevData) => [...prevData, result.data]);
+            form.inputTask.value = "";
+            return toast("New task added successfully!");
+          }
 
-      form.inputTask.value = "";
+          toast(result.message || "An error occured.");
+        })
+        .finally(() => setIsLoading(() => false));
     },
-    [groupId, pageType, setTaskData]
+    [groupId, pageType, setTaskData, assignTo]
   );
 
   return (
@@ -80,10 +88,18 @@ const AddTaskButton = ({
           disabled={isLoading}
           placeholder="Add A Tasks"
           id="inputTask"
+          autoComplete="off"
           className={`font-medium outline-none w-full py-5 px-3 place-self-center  bg-transparent  pl-9`}
         />
+        {/* Assign To Button */}
+        {pageType === "assignment" && (
+          <AssignToButton setAssignTo={setAssignTo} assignTo={assignTo} />
+        )}
+
+        {/* Date Picker Button */}
         {pageType !== "today" && (
-          <div className="">
+          <div>
+            {pageType === "assignment"}
             <DatePicker />
           </div>
         )}

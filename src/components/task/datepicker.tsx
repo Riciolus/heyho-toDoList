@@ -15,7 +15,7 @@ export function DatePicker() {
           id="date"
           variant={"outline"}
           className={cn(
-            "w-fit rounded-xl bg-neutral-800/40 text-neutral-300 hover:bg-neutral-800/80 transition hover:text-neutral-300 p-2 h-fit",
+            "w-fit rounded-xl bg-neutral-800 text-neutral-300 hover:bg-neutral-900/40 transition hover:text-neutral-300 p-2 h-fit",
             !date && "text-muted-foreground"
           )}
         >

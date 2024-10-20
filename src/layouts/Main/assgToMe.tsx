@@ -1,24 +1,24 @@
 import Dropdown from "@/src/components/task/dropdown";
 import { TbSubtask } from "react-icons/tb";
-import TaskList from "../TaskList";
 import AddTaskButton from "@/src/components/addTask";
 import { useEffect, useState } from "react";
-import { getTasksByGroup } from "@/src/lib/api";
+import { getAssignedTask } from "@/src/lib/api";
 import { Task } from "@/src/app/page";
 import ZeroTask from "@/src/components/task/0task";
 import { toast } from "sonner";
+import AssignmentTaskList from "../TaskList/assignment";
 
 const AssignedToMeContent = () => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const groupId = "assignment";
-
-    getTasksByGroup(groupId)
+    getAssignedTask()
       .then((result) => {
         if (result?.data?.data) {
           setTaskData(result.data.data);
+          setUserId(result.data.userId);
         } else {
           toast("Server busy, Please try again later.");
           setTaskData([]); // Handle cases where data is missing
@@ -47,19 +47,20 @@ const AssignedToMeContent = () => {
       {!isLoading && taskData.length === 0 ? (
         <ZeroTask pageType="assignment" />
       ) : (
-        <TaskList
+        <AssignmentTaskList
           isLoading={isLoading}
           taskData={taskData}
           setTaskData={setTaskData}
           pageType="assignment"
           colorTheme="green"
+          userId={userId}
         />
       )}
 
       {/* Add Task */}
       <AddTaskButton
         colorTheme="green"
-        groupId="assignment"
+        groupId="tasks"
         pageType="assignment"
         setTaskData={setTaskData}
       />

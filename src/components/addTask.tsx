@@ -8,8 +8,13 @@ import { useCallback, useState } from "react";
 import { DatePicker } from "./task/datepicker";
 import { addNewTask } from "../lib/api";
 import AssignToButton from "./task/assignToTask";
+import useSpeechToText from "../lib/useSpeechToText";
+import { MdKeyboardVoice } from "react-icons/md";
 
 export interface Propstype {
+  options: {
+    interimResults: boolean;
+  };
   groupId: string;
   colorTheme: ColorTheme;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -24,6 +29,44 @@ const AddTaskButton = ({
 }: Propstype) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [assignTo, setAssignTo] = useState("");
+  // const [textInput, setTextInput] = useState("");
+  const { isListening, transcript, startListening, stopListening } =
+    useSpeechToText({ continuous: true });
+
+  const startStopListening = () => {
+    isListening ? stopVoiceInput() : startListening();
+  };
+
+  const stopVoiceInput = () => {
+    // setTextInput(
+    //   (prevVal) =>
+    //     prevVal +
+    //     (transcript.length ? (prevVal.length ? " " : "") + transcript : "")
+    // );
+    console.log(transcript);
+    stopListening();
+    console.log(Date.now());
+    const data = {
+      task: transcript,
+      groupId,
+      important: false, // change later
+      // due_date: getDateFormattedLong(),
+      assignTo,
+      method: pageType,
+    };
+
+    addNewTask(data)
+      .then((result) => {
+        if (result.status) {
+          setTaskData((prevData) => [...prevData, result.data]);
+          // form.inputTask.value = "";
+          return toast("New task added successfully!");
+        }
+
+        toast(result.message || "An error occured.");
+      })
+      .finally(() => setIsLoading(() => false));
+  };
 
   const handleAddTask = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -103,6 +146,17 @@ const AddTaskButton = ({
             <DatePicker />
           </div>
         )}
+        <button
+          onClick={() => {
+            startStopListening();
+          }}
+          className={cn(
+            "ml-1 bg-neutral-800 py-2 px-1 rounded-lg transition-colors",
+            isListening && "bg-neutral-700"
+          )}
+        >
+          <MdKeyboardVoice size={20} />
+        </button>
       </form>
     </div>
   );

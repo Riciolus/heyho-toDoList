@@ -15,19 +15,16 @@ const SearchBarSection = ({
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    const debounce = setTimeout(() => {
-      if (searchQuery.length === 0) {
-        setSearchedTaskData([]);
-      }
+    if (searchQuery.length === 0) {
+      setSearchedTaskData([]);
+    }
 
-      if (searchQuery.trim()) {
-        searchTasks(searchQuery).then((result) => {
-          setSearchedTaskData(result.data);
-          handleChangeContent("search");
-        });
-      }
-    }, 500);
-    return () => clearTimeout(debounce);
+    if (searchQuery.trim()) {
+      searchTasks(searchQuery).then((result) => {
+        setSearchedTaskData(result.data);
+        handleChangeContent("search");
+      });
+    }
   }, [searchQuery, setSearchedTaskData, handleChangeContent]);
 
   useEffect(() => {

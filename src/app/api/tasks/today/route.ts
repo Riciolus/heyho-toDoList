@@ -33,6 +33,7 @@ export async function GET() {
         ],
       },
     });
+
     return NextResponse.json({ status: true, data: todayTasks });
   } catch (error) {
     return NextResponse.json({ status: false, error });

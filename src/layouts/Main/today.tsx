@@ -16,7 +16,7 @@ const TodayContent = () => {
   useEffect(() => {
     getTodayTasks()
       .then((result) => {
-        if (result?.data?.data) {
+        if (result?.data.status) {
           setTaskData(result.data.data);
         } else {
           toast("Server busy, Please try again later.");

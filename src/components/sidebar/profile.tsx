@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type ProfileData = {
   email: string;
@@ -62,7 +63,9 @@ const ProfileSection = () => {
       <DropdownMenuContent className="w-[15rem] noPhone:w-[24rem] tablet:w-[17rem] desktop:w-[24rem] laptop:w-[19rem] laptop:mr-8">
         <DropdownMenuLabel>Task Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={"/settings"}>Settings</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Invite members</DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/home")}>
           Home

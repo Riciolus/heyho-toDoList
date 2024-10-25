@@ -1,3 +1,5 @@
+"use clienet";
+
 import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -13,7 +15,7 @@ export const logoutAccount = async () => {
 };
 
 // TASKS API
-export const getTodayTasks = () => {
+export const getTodayTasks = async () => {
   const response = axios.get(`${BASE_URL}/tasks/today`);
 
   return response;

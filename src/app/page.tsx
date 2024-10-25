@@ -14,12 +14,11 @@ import { FaHandSparkles } from "react-icons/fa";
 import { BsCart4, BsList } from "react-icons/bs";
 import { motion } from "framer-motion";
 import SearchContent from "../layouts/Main/search";
-// import Link from "next/link";
 
 export type Group = {
   label: string;
   title: string;
-  icon: string; //DELETED SOON
+  icon: string;
   iconData: JSX.Element;
 };
 
@@ -76,6 +75,8 @@ export default function MainPage() {
     }
     setLoading(false);
   }, []);
+
+  useEffect(() => {}, []);
 
   const renderActiveContent = () => {
     const staticContent: StaticContent = {

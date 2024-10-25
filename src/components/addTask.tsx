@@ -12,9 +12,6 @@ import useSpeechToText from "../lib/useSpeechToText";
 import { MdKeyboardVoice } from "react-icons/md";
 
 export interface Propstype {
-  options: {
-    interimResults: boolean;
-  };
   groupId: string;
   colorTheme: ColorTheme;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;

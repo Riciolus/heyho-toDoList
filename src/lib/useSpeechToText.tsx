@@ -13,6 +13,7 @@ interface UseSpeechToText {
   transcript: string;
   startListening: () => void;
   stopListening: () => void;
+  setTranscript: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const useSpeechToText = (
@@ -40,6 +41,7 @@ const useSpeechToText = (
       for (let i = 0; i < event.results.length; i++) {
         text += event.results[i][0].transcript;
       }
+
       setTranscript(text);
     };
 
@@ -76,6 +78,7 @@ const useSpeechToText = (
     transcript,
     startListening,
     stopListening,
+    setTranscript,
   };
 };
 

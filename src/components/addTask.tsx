@@ -26,43 +26,22 @@ const AddTaskButton = ({
 }: Propstype) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [assignTo, setAssignTo] = useState("");
-  // const [textInput, setTextInput] = useState("");
-  const { isListening, transcript, startListening, stopListening } =
-    useSpeechToText({ continuous: true });
+
+  const {
+    isListening,
+    transcript,
+    startListening,
+    stopListening,
+    setTranscript,
+  } = useSpeechToText({ continuous: true });
 
   const startStopListening = () => {
     isListening ? stopVoiceInput() : startListening();
   };
 
   const stopVoiceInput = () => {
-    // setTextInput(
-    //   (prevVal) =>
-    //     prevVal +
-    //     (transcript.length ? (prevVal.length ? " " : "") + transcript : "")
-    // );
-    console.log(transcript);
     stopListening();
-    console.log(Date.now());
-    const data = {
-      task: transcript,
-      groupId,
-      important: false, // change later
-      // due_date: getDateFormattedLong(),
-      assignTo,
-      method: pageType,
-    };
-
-    addNewTask(data)
-      .then((result) => {
-        if (result.status) {
-          setTaskData((prevData) => [...prevData, result.data]);
-          // form.inputTask.value = "";
-          return toast("New task added successfully!");
-        }
-
-        toast(result.message || "An error occured.");
-      })
-      .finally(() => setIsLoading(() => false));
+    console.log(transcript);
   };
 
   const handleAddTask = useCallback(
@@ -70,9 +49,7 @@ const AddTaskButton = ({
       event.preventDefault();
 
       setIsLoading((prev) => prev);
-
       const form = event.target as HTMLFormElement;
-      const inputValue = form.inputTask.value;
 
       const formattedDate = () => {
         if (form.date?.innerText) {
@@ -83,12 +60,12 @@ const AddTaskButton = ({
         }
       };
 
-      if (inputValue.length === 0) {
+      if (transcript.length === 0) {
         return null;
       }
 
       const data = {
-        task: inputValue,
+        task: transcript,
         groupId,
         important: addImportantTask(pageType),
         due_date: formattedDate(),
@@ -100,7 +77,7 @@ const AddTaskButton = ({
         .then((result) => {
           if (result.status) {
             setTaskData((prevData) => [...prevData, result.data]);
-            form.inputTask.value = "";
+            setTranscript("");
             return toast("New task added successfully!");
           }
 
@@ -108,7 +85,7 @@ const AddTaskButton = ({
         })
         .finally(() => setIsLoading(() => false));
     },
-    [groupId, pageType, setTaskData, assignTo]
+    [groupId, pageType, setTaskData, assignTo, setTranscript, transcript]
   );
 
   return (
@@ -126,7 +103,9 @@ const AddTaskButton = ({
         </button>
         <input
           disabled={isLoading}
-          placeholder="Add A Tasks"
+          placeholder="Add A Task"
+          value={transcript}
+          onChange={(e) => setTranscript(e.target.value)}
           id="inputTask"
           autoComplete="off"
           className={`font-medium outline-none w-full py-5 px-3 place-self-center  bg-transparent  pl-9`}
@@ -143,12 +122,14 @@ const AddTaskButton = ({
             <DatePicker />
           </div>
         )}
+        {/* Speech to text button */}
         <button
+          type="button"
           onClick={() => {
             startStopListening();
           }}
           className={cn(
-            "ml-1 bg-neutral-800 py-2 px-1 rounded-lg transition-colors",
+            "ml-1 bg-neutral-800 py-2 px-1.5 rounded-lg transition-colors",
             isListening && "bg-neutral-700"
           )}
         >

@@ -15,12 +15,12 @@ export function DatePicker() {
           id="date"
           variant={"outline"}
           className={cn(
-            "w-fit rounded-xl bg-neutral-800 text-neutral-300 hover:bg-neutral-900/40 transition hover:text-neutral-300 p-2 h-fit",
+            "w-fit rounded-xl bg-neutral-800 text-neutral-300 hover:bg-neutral-900/40 transition hover:text-neutral-300 p-2.5 h-fit",
             !date && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PP") : <span>Pick a date</span>}
+          <CalendarIcon className={cn(" h-4 w-4 flex", date && "mr-2")} />
+          {date ? format(date, "PP") : null}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0 bg-neutral-900 text-neutral-50 border-line">

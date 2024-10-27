@@ -2,6 +2,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { cn } from "@/src/lib/utils";
+import { MdOutlineAssignment } from "react-icons/md";
 
 const AssignToButton = ({
   assignTo,
@@ -12,7 +13,7 @@ const AssignToButton = ({
 }) => {
   return (
     <Popover>
-      <PopoverTrigger type="button" className="mr-1.5">
+      <PopoverTrigger type="button" className="mr-1">
         <div>
           <div
             // type="button"
@@ -20,10 +21,10 @@ const AssignToButton = ({
             // variant={"outline"}
             className={cn(
               "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold transition-colors",
-              " w-fit rounded-xl bg-neutral-800/90 text-neutral-300 hover:bg-neutral-900/50 transition hover:text-neutral-300 p-2 h-fit"
+              "w-fit rounded-xl bg-neutral-800/90 text-neutral-300 hover:bg-neutral-900/50 transition hover:text-neutral-300 p-2 h-fit"
             )}
           >
-            Assign to
+            <MdOutlineAssignment size={20} />
           </div>
         </div>
       </PopoverTrigger>

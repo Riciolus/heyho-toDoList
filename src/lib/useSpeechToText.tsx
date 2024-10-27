@@ -49,11 +49,6 @@ const useSpeechToText = (
       console.error("Speech recognition error", event.error);
     };
 
-    recognition.onend = () => {
-      setIsListening(false);
-      setTranscript("");
-    };
-
     return () => {
       recognition.stop();
     };
@@ -69,6 +64,8 @@ const useSpeechToText = (
   const stopListening = () => {
     if (recognitionRef.current && isListening) {
       recognitionRef.current.stop();
+      console.log("stoplistening");
+
       setIsListening(false);
     }
   };

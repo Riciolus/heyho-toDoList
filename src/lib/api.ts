@@ -14,6 +14,15 @@ export const logoutAccount = async () => {
   await axios.post(`${BASE_URL}/user/logout`);
 };
 
+export const editProfileData = async (data: {
+  avatar?: string;
+  name?: string;
+}) => {
+  const response = await axios.patch(`${BASE_URL}/user/profile`, data);
+
+  return response;
+};
+
 // TASKS API
 export const getTodayTasks = async () => {
   const response = axios.get(`${BASE_URL}/tasks/today`);

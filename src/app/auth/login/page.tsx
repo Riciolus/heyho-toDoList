@@ -48,7 +48,9 @@ const LoginPage = () => {
           return router.push("/");
         }
 
-        return toast(response?.data.message);
+        return toast(
+          response?.data.message ?? "An error occured, Please try again later."
+        );
       })
       .finally(() => setIsLoading((prev) => !prev));
   }

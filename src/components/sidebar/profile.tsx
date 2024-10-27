@@ -31,9 +31,9 @@ const ProfileSection = () => {
   }, []);
 
   const handleLogout = () => {
-    logoutAccount().then(() => {
-      router.push("/home");
-    });
+    router.push("/home");
+
+    logoutAccount();
   };
 
   return (
@@ -42,7 +42,11 @@ const ProfileSection = () => {
         <div className="flex gap-3 mb-1">
           <div className="rounded-full h-fit  ">
             <Image
-              src="/assets/images/avatar.jpg"
+              src={
+                profileData?.avatar
+                  ? "/assets/images/message.png"
+                  : "/assets/images/avatar.jpg"
+              }
               width={50}
               height={50}
               alt="Avatar..."

@@ -1,6 +1,6 @@
 import prisma from "@/src/lib/db";
 import { getUserIdFromCookie } from "@/src/lib/getIdServerside";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -11,11 +11,38 @@ export async function GET() {
       select: {
         name: true,
         email: true,
+        avatar: true,
       },
     });
 
     return NextResponse.json({ status: true, userData });
   } catch (error) {
     return NextResponse.json({ status: false, error });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const userId = await getUserIdFromCookie();
+
+    const { avatar } = await req.json();
+
+    console.log(avatar);
+
+    const changeUserData = await prisma.users.update({
+      where: { id: userId },
+      select: {
+        name: true,
+        email: true,
+        avatar: true,
+      },
+      data: {
+        avatar,
+      },
+    });
+
+    return NextResponse.json({ status: true, data: changeUserData });
+  } catch (error) {
+    return NextResponse.json({ status: false, error }, { status: 401 });
   }
 }

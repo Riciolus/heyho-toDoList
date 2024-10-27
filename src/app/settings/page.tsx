@@ -1,9 +1,12 @@
 "use client";
 
+import { editProfileData } from "@/src/lib/api";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaTachometerAlt, FaUserAstronaut } from "react-icons/fa";
 import { MdOutlineRoomPreferences } from "react-icons/md";
+import { toast } from "sonner";
 
 const staticGroupData = [
   {
@@ -12,7 +15,7 @@ const staticGroupData = [
     icon: <FaUserAstronaut size={24} className="p-0.5" />,
   },
   {
-    title: "preferences",
+    title: "themes",
     label: "Themes",
     icon: <FaTachometerAlt size={24} className="p-0.5" />,
   },
@@ -30,10 +33,35 @@ const styles = {
 
 export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   useEffect(() => {
     setActiveSection("profile");
   }, []);
+
+  const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!image) return toast("Image error, please try again.");
+
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = async () => {
+      const base64data = reader.result;
+
+      const data = {
+        avatar: JSON.stringify({ file: base64data }),
+      };
+
+      editProfileData(data).then((result) => console.log(result.data));
+    };
+  };
+
+  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFileImage = e.target.files?.[0];
+    if (newFileImage) setImage(newFileImage);
+    console.log(newFileImage);
+  };
 
   return (
     <div>
@@ -68,6 +96,27 @@ export default function MainPage() {
               </motion.div>
             </div>
           </nav>
+          <div className="p-3">
+            <form onSubmit={handleEditProfile}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleChangeImage}
+              />
+              <button type="submit">Submit</button>
+              <div className="rounded-full h-fit  ">
+                <Image
+                  src="/assets/images/avatar.jpg"
+                  width={50}
+                  height={50}
+                  alt="Avatar..."
+                  className="rounded-full"
+                  priority
+                  draggable="false"
+                />
+              </div>
+            </form>
+          </div>
         </div>
       </motion.div>
     </div>

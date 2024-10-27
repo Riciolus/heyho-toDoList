@@ -19,6 +19,7 @@ import { signIn } from "@/src/lib/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CgSpinner } from "react-icons/cg";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -124,7 +125,11 @@ const LoginPage = () => {
                         type="submit"
                         disabled={isLoading}
                       >
-                        {isLoading ? "Loading" : "Submit"}
+                        {isLoading ? (
+                          <CgSpinner className="animate-spin" size={22} />
+                        ) : (
+                          <span>Sign In</span>
+                        )}
                       </Button>
                     </div>
                   </div>

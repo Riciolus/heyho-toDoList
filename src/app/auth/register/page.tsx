@@ -18,6 +18,7 @@ import NavigationBarHome from "@/src/components/home/navbar";
 import { toast } from "sonner";
 import { signUp } from "@/src/lib/api";
 import { useRouter } from "next/navigation";
+import { CgSpinner } from "react-icons/cg";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -179,7 +180,11 @@ const RegisterPage = () => {
                         type="submit"
                         disabled={isLoading}
                       >
-                        {isLoading ? "Loading" : "Submit"}
+                        {isLoading ? (
+                          <CgSpinner className="animate-spin" size={22} />
+                        ) : (
+                          <span>Sign Up</span>
+                        )}
                       </Button>
                     </div>
                   </div>

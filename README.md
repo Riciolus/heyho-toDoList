@@ -1,4 +1,4 @@
-<h1>To-Do List Web App</h1>
+<h1>Heyho Web App</h1>
 <p>
   This is a simple to-do list web application built using <strong>Next.js</strong>, <strong>Prisma</strong>, and <strong>Supabase</strong>. It allows users to create tasks, organize them into groups, mark tasks as important, and assign them to specific users.
 </p>

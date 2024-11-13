@@ -9,6 +9,7 @@ export async function middleware(request: NextRequest) {
   const token = cookie.get("authToken")?.value;
 
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
+
   if (!token) {
     if (isApiRoute) {
       return NextResponse.json(

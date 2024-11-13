@@ -1,4 +1,4 @@
-"use clienet";
+"use client";
 
 import axios from "axios";
 

@@ -24,10 +24,7 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const userId = await getUserIdFromCookie();
-
     const { avatar } = await req.json();
-
-    console.log(avatar);
 
     const changeUserData = await prisma.users.update({
       where: { id: userId },

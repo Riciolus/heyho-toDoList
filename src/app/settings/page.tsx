@@ -34,6 +34,7 @@ const styles = {
 export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
     setActiveSection("profile");
@@ -50,7 +51,7 @@ export default function MainPage() {
       const base64data = reader.result;
 
       const data = {
-        avatar: JSON.stringify({ file: base64data }),
+        avatar: base64data as string,
       };
 
       editProfileData(data).then((result) => console.log(result.data));
@@ -59,8 +60,12 @@ export default function MainPage() {
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFileImage = e.target.files?.[0];
-    if (newFileImage) setImage(newFileImage);
-    console.log(newFileImage);
+    if (newFileImage) {
+      setImage(newFileImage);
+      const objectUrl = URL.createObjectURL(newFileImage);
+      setPreview(objectUrl);
+      console.log(newFileImage);
+    }
   };
 
   return (
@@ -71,7 +76,7 @@ export default function MainPage() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ ease: "easeOut", duration: 0.3 }}
       >
-        <div className="noFit:mx-[13vw] border-x border-line overflow-hidden h-screen flex flex-col tablet:flex-row">
+        <div className="noFit:mx-[13vw] border-x border-line overflow-hidden h-screen flex flex-row tablet:flex-row">
           {/* Left side */}
           <nav className="flex flex-col h-screen p-5 border-r w-1/3 border-line  noFit:h-full">
             <div className="flex flex-col mt-6 gap-2">
@@ -97,24 +102,33 @@ export default function MainPage() {
             </div>
           </nav>
           <div className="p-3">
+            {/* Edit Profile Form */}
             <form onSubmit={handleEditProfile}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleChangeImage}
-              />
-              <button type="submit">Submit</button>
-              <div className="rounded-full h-fit  ">
+              {/* Image Profile Picture */}
+              <div className="relative rounded-full h-full w-full">
                 <Image
-                  src="/assets/images/avatar.jpg"
-                  width={50}
-                  height={50}
+                  src={preview || "/assets/images/avatar.jpg"}
+                  width={60}
+                  height={60}
                   alt="Avatar..."
-                  className="rounded-full"
+                  className="rounded-full w-[60px] h-[60px] object-cover"
                   priority
-                  draggable="false"
+                />
+
+                <input
+                  className="absolute top-0 text-transparent h-full w-full  file:hidden bg-transparent rounded-full"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleChangeImage}
                 />
               </div>
+
+              <button
+                type="submit"
+                className="bg-neutral-800 px-3 py-2 rounded-lg mt-5"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>

@@ -67,9 +67,10 @@ const ProfileSection = () => {
       <DropdownMenuContent className="w-[15rem] noPhone:w-[24rem] tablet:w-[17rem] desktop:w-[24rem] laptop:w-[19rem] laptop:mr-8">
         <DropdownMenuLabel>Task Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href={"/settings"}>Settings</Link>
-        </DropdownMenuItem>
+
+        <Link href={"/settings"}>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem>Invite members</DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/home")}>
           Home

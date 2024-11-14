@@ -1,4 +1,3 @@
-import { cn } from "@/src/lib/utils";
 import Image from "next/image";
 
 interface PropsType {
@@ -22,7 +21,10 @@ const UserAvatar = ({
 }: PropsType) => {
   return (
     <>
-      <div className="rounded-full h-fit  ">
+      <div
+        className="relative rounded-full bg-red-300"
+        style={{ width: imageSize || 50, height: imageSize || 50 }}
+      >
         <Image
           src={
             !preview
@@ -31,17 +33,14 @@ const UserAvatar = ({
                 : "/assets/images/avatar.jpg"
               : preview
           }
-          width={imageSize || 50}
-          height={imageSize || 50}
+          fill
           alt="Avatar..."
-          className={cn(
-            "rounded-full  object-cover",
-            `w-[${imageSize || 50}px] h-[${imageSize || 50}px]`
-          )}
+          className="rounded-full object-cover"
           priority
           draggable="false"
         />
       </div>
+
       {includeName && (
         <div className="flex flex-col justify-center text-left">
           <span className="font-bold">{profileData?.name}</span>

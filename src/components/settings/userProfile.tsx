@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { CgSpinner } from "react-icons/cg";
 import { toast } from "sonner";
 import { editProfileData, getUserProfileData } from "@/src/lib/api";
+import UserProfileSkeleton from "./userProfileSkeleton";
 
 export type ProfileData = {
   email: string;
@@ -26,6 +27,10 @@ const UserEditProfile = () => {
       }
     });
   }, []);
+
+  if (!profileData) {
+    return <UserProfileSkeleton />;
+  }
 
   const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,17 +99,15 @@ const UserEditProfile = () => {
         {/* Image Profile Picture */}
 
         <div className="relative flex flex-col justify-center items-center  gap-1.5 rounded-full h-fit ">
-          {profileData && (
-            <UserAvatar
-              profileData={profileData}
-              includeName={false}
-              preview={preview}
-              imageSize={60}
-            />
-          )}
+          <UserAvatar
+            profileData={profileData}
+            includeName={false}
+            preview={preview}
+            imageSize={60}
+          />
 
           <input
-            className="absolute top-0 text-transparent h-full w-full  file:hidden bg-transparent rounded-full"
+            className="absolute top-0 text-transparent h-full w-[60px] file:hidden bg-transparent rounded-full"
             type="file"
             accept="image/*"
             onChange={handleChangeImage}
@@ -112,7 +115,7 @@ const UserEditProfile = () => {
         </div>
 
         {/* username and email */}
-        <div className="grid grid-cols-2 gap-3 w-full mt-2">
+        <div className="grid grid-cols-2 gap-3 w-full mt-5">
           <div className="flex flex-col gap-1">
             <label htmlFor="username" className="font-semibold">
               Username

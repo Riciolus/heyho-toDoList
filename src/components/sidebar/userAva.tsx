@@ -1,4 +1,6 @@
+import { cn } from "@/src/lib/utils";
 import Image from "next/image";
+// import { useEffect useState } from "react";
 
 interface PropsType {
   profileData:
@@ -19,10 +21,12 @@ const UserAvatar = ({
   preview,
   imageSize,
 }: PropsType) => {
+  // useEffect(() => profileData && setIsLoading(false), [profileData]);
+
   return (
     <>
       <div
-        className="relative rounded-full bg-red-300"
+        className="relative rounded-full"
         style={{ width: imageSize || 50, height: imageSize || 50 }}
       >
         <Image
@@ -34,9 +38,10 @@ const UserAvatar = ({
               : preview
           }
           fill
+          sizes={`${imageSize}px`}
           alt="Avatar..."
-          className="rounded-full object-cover"
-          priority
+          className={cn("rounded-full object-cover")}
+          loading="lazy"
           draggable="false"
         />
       </div>

@@ -76,8 +76,6 @@ export default function MainPage() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {}, []);
-
   const renderActiveContent = () => {
     const staticContent: StaticContent = {
       today: <TodayContent />,

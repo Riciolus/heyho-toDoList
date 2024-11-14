@@ -2,7 +2,7 @@
 
 import UserEditProfile from "@/src/components/settings/userProfile";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaTachometerAlt, FaUserAstronaut } from "react-icons/fa";
 import { MdOutlineRoomPreferences } from "react-icons/md";
 
@@ -11,30 +11,33 @@ const staticGroupData = [
     title: "profile",
     label: "Profile",
     icon: <FaUserAstronaut size={24} className="p-0.5" />,
+    content: <UserEditProfile />,
   },
   {
     title: "themes",
     label: "Themes",
     icon: <FaTachometerAlt size={24} className="p-0.5" />,
+    content: <div>On Progress...</div>,
   },
   {
     title: "preferences",
     label: "Preferences",
     icon: <MdOutlineRoomPreferences size={24} className="p-0.5" />,
+    content: <div>On Progress...</div>,
   },
 ];
 
 const styles = {
   button:
-    "flex items-center hover:bg-onhover py-1 ps-2 rounded-lg transition-colors gap-3 cursor-pointer w-[90%] laptop:w-[62%]",
+    "flex items-center hover:bg-onhover py-1 ps-2 rounded-lg transition-colors gap-3 cursor-pointer w-[90%] ",
 };
 
 export default function MainPage() {
-  const [activeSection, setActiveSection] = useState("");
+  const [activePage, setActivePage] = useState("profile");
 
-  useEffect(() => {
-    setActiveSection("profile");
-  }, []);
+  const handleChangePage = (title: string) => {
+    setActivePage(title);
+  };
 
   return (
     <div>
@@ -57,9 +60,9 @@ export default function MainPage() {
                 {staticGroupData.map((group) => (
                   <button
                     key={group.title}
-                    // onClick={() => handleChangeContent(group.title)}
+                    onClick={() => handleChangePage(group.title)}
                     className={`${styles.button} ${
-                      activeSection === group.title && "bg-onhover"
+                      activePage === group.title && "bg-onhover"
                     }`}
                   >
                     {group.icon}
@@ -70,9 +73,12 @@ export default function MainPage() {
             </div>
           </nav>
 
-          {/* Settings */}
+          {/* Content */}
           <div className="px-16 py-8 w-full">
-            <UserEditProfile />
+            {
+              staticGroupData.find((group) => group.title === activePage)
+                ?.content
+            }
           </div>
         </div>
       </motion.div>

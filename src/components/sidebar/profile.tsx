@@ -13,6 +13,18 @@ import UserAvatar from "./userAva";
 import { useEffect, useState } from "react";
 import { ProfileData } from "../settings/userProfile";
 
+const UserAvatarSkeleton = () => {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="w-[50px] h-[50px] bg-neutral-800 rounded-full animate-pulse relative" />
+      <div className="flex flex-col gap-1">
+        <div className="relative w-36 h-4 bg-neutral-800 animate-pulse rounded-md" />
+        <div className="relative w-36 h-4 bg-neutral-800 animate-pulse rounded-md" />
+      </div>
+    </div>
+  );
+};
+
 const ProfileSection = () => {
   const [profileData, setProfileData] = useState<ProfileData>();
   const router = useRouter();
@@ -35,7 +47,11 @@ const ProfileSection = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none">
         <div className="flex gap-3 mb-1">
-          <UserAvatar includeName={true} profileData={profileData} />
+          {profileData ? (
+            <UserAvatar includeName={true} profileData={profileData} />
+          ) : (
+            <UserAvatarSkeleton />
+          )}
 
           <div className="h-fit w-fit"></div>
         </div>

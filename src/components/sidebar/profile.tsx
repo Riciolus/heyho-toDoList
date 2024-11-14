@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import UserAvatar from "./userAva";
 import { useEffect, useState } from "react";
-import { ProfileData } from "@/src/app/settings/page";
+import { ProfileData } from "../settings/userProfile";
 
 const ProfileSection = () => {
   const [profileData, setProfileData] = useState<ProfileData>();

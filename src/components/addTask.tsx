@@ -110,6 +110,7 @@ const AddTaskButton = ({
           autoComplete="off"
           className={`font-medium outline-none w-full py-5 px-3 place-self-center  bg-transparent  pl-9`}
         />
+
         {/* Assign To Button */}
         {pageType === "assignment" && (
           <AssignToButton setAssignTo={setAssignTo} assignTo={assignTo} />
@@ -122,6 +123,7 @@ const AddTaskButton = ({
             <DatePicker />
           </div>
         )}
+
         {/* Speech to text button */}
         <button
           type="button"

@@ -71,9 +71,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ status: true, data: createdTasks });
   } catch (error) {
-    return NextResponse.json({
-      status: false,
-      error,
-    });
+    return NextResponse.json(
+      {
+        status: false,
+        error,
+      },
+      { status: 401 }
+    );
   }
 }

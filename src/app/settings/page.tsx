@@ -1,12 +1,21 @@
 "use client";
 
-import { editProfileData } from "@/src/lib/api";
+import UserAvatar from "@/src/components/sidebar/userAva";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
+import { editProfileData, getUserProfileData } from "@/src/lib/api";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { CgSpinner } from "react-icons/cg";
 import { FaTachometerAlt, FaUserAstronaut } from "react-icons/fa";
 import { MdOutlineRoomPreferences } from "react-icons/md";
 import { toast } from "sonner";
+
+export type ProfileData = {
+  email: string;
+  name: string;
+  avatar: string;
+};
 
 const staticGroupData = [
   {
@@ -35,36 +44,81 @@ export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [profileData, setProfileData] = useState<ProfileData>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isReadingImage, setIsReadingImage] = useState(false);
 
   useEffect(() => {
     setActiveSection("profile");
   }, []);
 
+  useEffect(() => {
+    getUserProfileData().then((result) => {
+      if (result.status) {
+        setProfileData(result.userData);
+      }
+    });
+  }, []);
+
   const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!image) return toast("Image error, please try again.");
+    if (isReadingImage) {
+      toast("Please wait for the image to finish loading.");
+      return;
+    }
 
+    setIsLoading(true);
+
+    const form = e.target as HTMLFormElement;
     const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onloadend = async () => {
-      const base64data = reader.result;
 
-      const data = {
-        avatar: base64data as string,
+    if (image) {
+      setIsReadingImage(true); // Start reading the image
+      reader.readAsDataURL(image);
+
+      reader.onload = () => {
+        setIsReadingImage(false); // Image reading is complete
+
+        const data = {
+          name: form.username.value,
+          email: form.email.value,
+          avatar: typeof reader.result === "string" ? reader.result : undefined,
+        };
+
+        editProfileData(data).then(() => {
+          setIsLoading(false);
+          toast("Profile Changed!");
+        });
       };
 
-      editProfileData(data).then((result) => console.log(result.data));
-    };
+      reader.onerror = () => {
+        setIsReadingImage(false); // Stop loading on error
+        setIsLoading(false);
+        toast("Failed to read the image.");
+      };
+    } else {
+      // Handle form submission without an image
+      const data = {
+        name: form.username.value,
+        email: form.email.value,
+        avatar: undefined, // No image provided
+      };
+
+      editProfileData(data).then(() => {
+        setIsLoading(false);
+        toast("Profile Changed!");
+      });
+    }
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFileImage = e.target.files?.[0];
+
     if (newFileImage) {
       setImage(newFileImage);
       const objectUrl = URL.createObjectURL(newFileImage);
       setPreview(objectUrl);
-      console.log(newFileImage);
     }
   };
 
@@ -101,19 +155,22 @@ export default function MainPage() {
               </motion.div>
             </div>
           </nav>
-          <div className="p-3">
+
+          {/* Settings */}
+          <div className="px-16 py-8 w-full">
             {/* Edit Profile Form */}
-            <form onSubmit={handleEditProfile}>
+            <form onSubmit={handleEditProfile} className="flex flex-col gap-1 ">
               {/* Image Profile Picture */}
-              <div className="relative rounded-full h-full w-full">
-                <Image
-                  src={preview || "/assets/images/avatar.jpg"}
-                  width={60}
-                  height={60}
-                  alt="Avatar..."
-                  className="rounded-full w-[60px] h-[60px] object-cover"
-                  priority
-                />
+              <div className="relative flex flex-col justify-center items-center  gap-1.5 rounded-full h-fit ">
+                {/* <label className="font-semibold">Profile Picture</label> */}
+                {profileData && (
+                  <UserAvatar
+                    profileData={profileData}
+                    includeName={false}
+                    preview={preview}
+                    imageSize={60}
+                  />
+                )}
 
                 <input
                   className="absolute top-0 text-transparent h-full w-full  file:hidden bg-transparent rounded-full"
@@ -123,12 +180,45 @@ export default function MainPage() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="bg-neutral-800 px-3 py-2 rounded-lg mt-5"
-              >
-                Submit
-              </button>
+              {/* username and email */}
+              <div className="grid grid-cols-2 gap-3 w-full mt-2">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="username" className="font-semibold">
+                    Username
+                  </label>
+                  <Input
+                    id="username"
+                    type="text"
+                    className="bg-neutral-800 w-[19rem] noPhone:w-full border-line h-9"
+                    defaultValue={profileData?.name}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="email" className="font-semibold">
+                    Email
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    className="bg-neutral-800 w-[19rem] noPhone:w-full border-line h-9"
+                    defaultValue={profileData?.email}
+                  />
+                </div>
+              </div>
+              <div className=" flex justify-center mt-5">
+                <Button
+                  className="bg-neutral-700 text-neutral-50 hover:bg-onhover w-full h-8 border border-line"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <CgSpinner className="animate-spin" size={22} />
+                  ) : (
+                    <span>Submit</span>
+                  )}
+                </Button>
+              </div>
             </form>
           </div>
         </div>

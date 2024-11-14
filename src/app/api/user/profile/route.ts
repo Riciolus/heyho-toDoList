@@ -24,7 +24,7 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const userId = await getUserIdFromCookie();
-    const { avatar } = await req.json();
+    const { avatar, email, name } = await req.json();
 
     const changeUserData = await prisma.users.update({
       where: { id: userId },
@@ -35,6 +35,8 @@ export async function PATCH(req: NextRequest) {
       },
       data: {
         avatar,
+        name,
+        email,
       },
     });
 

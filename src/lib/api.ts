@@ -17,6 +17,7 @@ export const logoutAccount = async () => {
 export const editProfileData = async (data: {
   avatar?: string;
   name?: string;
+  email: string;
 }) => {
   const response = await axios.patch(`${BASE_URL}/user/profile`, data);
 

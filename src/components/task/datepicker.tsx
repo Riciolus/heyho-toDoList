@@ -6,7 +6,7 @@ import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
-export function DatePicker() {
+export function DatePicker({ type }: { type: "long" | "short" }) {
   const [date, setDate] = useState<Date>();
   return (
     <Popover>
@@ -20,7 +20,7 @@ export function DatePicker() {
           )}
         >
           <CalendarIcon className={cn(" h-4 w-4 flex", date && "mr-2")} />
-          {date ? format(date, "PP") : null}
+          {date ? format(date, "PP") : type === "long" ? "Now Date && " : null}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0 bg-neutral-900 text-neutral-50 border-line">

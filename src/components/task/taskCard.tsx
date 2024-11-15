@@ -63,6 +63,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
       <ContextMenuTrigger className="flex bg-neutral-800  hover:bg-onhover tablet:py-2 py-3.5 tablet:px-5 px-3 rounded-lg">
         <div className="flex justify-between items-center w-full">
           {/* Left Side Wrapper */}
+
           <div className="flex gap-1 tablet:gap-1.5 items-center">
             <Checkbox
               taskId={task.id}
@@ -100,6 +101,7 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
           </div>
 
           {/* Right side wrapper */}
+
           <div>
             <ImportantButton
               taskId={task.id}

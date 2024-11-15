@@ -120,7 +120,7 @@ const AddTaskButton = ({
         {pageType !== "today" && (
           <div>
             {pageType === "assignment"}
-            <DatePicker />
+            <DatePicker type="short" />
           </div>
         )}
 

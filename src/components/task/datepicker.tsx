@@ -35,7 +35,9 @@ export function DatePicker({
           {date
             ? format(date, "PP")
             : type === "long"
-            ? taskDate && format(taskDate, "PP")
+            ? taskDate
+              ? format(taskDate, "PP")
+              : format(new Date(), "PP")
             : null}
         </Button>
       </PopoverTrigger>

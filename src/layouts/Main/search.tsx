@@ -1,9 +1,15 @@
 import ZeroTask from "@/src/components/task/0task";
 import TaskList from "../TaskList";
 import { useEffect, useState } from "react";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 
-const SearchContent = ({ searchedTaskData }: { searchedTaskData: Task[] }) => {
+const SearchContent = ({
+  searchedTaskData,
+  userGroups,
+}: {
+  searchedTaskData: Task[];
+  userGroups: Group[];
+}) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -20,6 +26,7 @@ const SearchContent = ({ searchedTaskData }: { searchedTaskData: Task[] }) => {
           <ZeroTask pageType="search" />
         ) : (
           <TaskList
+            userGroups={userGroups}
             colorTheme="purple"
             isLoading={false}
             taskData={taskData}

@@ -82,7 +82,12 @@ export default function MainPage() {
       important: <ImportantContent userGroups={userGroups} />,
       assgToMe: <AssignedToMeContent userGroups={userGroups} />,
       tasks: <TasksContent userGroups={userGroups} />,
-      search: <SearchContent searchedTaskData={searchedTaskData} />,
+      search: (
+        <SearchContent
+          searchedTaskData={searchedTaskData}
+          userGroups={userGroups}
+        />
+      ),
     };
 
     const dynamicContent = dynamicSidebarGroup?.find(

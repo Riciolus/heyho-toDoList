@@ -41,7 +41,6 @@ const AddTaskButton = ({
 
   const stopVoiceInput = () => {
     stopListening();
-    console.log(transcript);
   };
 
   const handleAddTask = useCallback(

@@ -11,7 +11,7 @@ export function DatePicker({
   taskDate,
 }: {
   type: "long" | "short";
-  taskDate: string;
+  taskDate?: string;
 }) {
   const [date, setDate] = useState<Date>();
   return (
@@ -35,7 +35,7 @@ export function DatePicker({
           {date
             ? format(date, "PP")
             : type === "long"
-            ? format(taskDate, "PP")
+            ? taskDate && format(taskDate, "PP")
             : null}
         </Button>
       </PopoverTrigger>

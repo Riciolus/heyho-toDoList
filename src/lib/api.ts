@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { Task } from "../app/page";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -65,6 +66,19 @@ export const addNewTask = async (data: object) => {
   const response = await axios.post(`${BASE_URL}/tasks/create`, data);
 
   return response.data;
+};
+
+export const editTask = async (data: Task) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/tasks/edit/${data.id}`,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const deleteTask = async (taskId: string) => {
@@ -139,7 +153,7 @@ export const signUp = async (data: {
     const user = await axios.post(`${BASE_URL}/auth/register`, data);
     return user;
   } catch (error) {
-    console.log("An Error occured.");
+    console.error("An Error occured.");
   }
 };
 
@@ -149,6 +163,6 @@ export const signIn = async (data: { email: string; password: string }) => {
 
     return user;
   } catch (error) {
-    console.log("An Error occured.");
+    console.error("An Error occured.");
   }
 };

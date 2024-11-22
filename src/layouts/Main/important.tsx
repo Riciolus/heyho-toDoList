@@ -4,11 +4,11 @@ import Dropdown from "@/src/components/task/dropdown";
 import ZeroTask from "@/src/components/task/0task";
 import { useEffect, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import { getImportantTasks } from "@/src/lib/api";
 import { toast } from "sonner";
 
-const ImportantContent = () => {
+const ImportantContent = ({ userGroups }: { userGroups: Group[] }) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,6 +44,7 @@ const ImportantContent = () => {
         <ZeroTask pageType="important" />
       ) : (
         <TaskList
+          userGroups={userGroups}
           colorTheme="pink"
           isLoading={isLoading}
           taskData={taskData}

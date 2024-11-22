@@ -76,12 +76,12 @@ export default function MainPage() {
     setLoading(false);
   }, []);
 
-  const renderActiveContent = () => {
+  const renderActiveContent = (userGroups: Group[]) => {
     const staticContent: StaticContent = {
-      today: <TodayContent />,
-      important: <ImportantContent />,
-      assgToMe: <AssignedToMeContent />,
-      tasks: <TasksContent />,
+      today: <TodayContent userGroups={userGroups} />,
+      important: <ImportantContent userGroups={userGroups} />,
+      assgToMe: <AssignedToMeContent userGroups={userGroups} />,
+      tasks: <TasksContent userGroups={userGroups} />,
       search: <SearchContent searchedTaskData={searchedTaskData} />,
     };
 
@@ -90,7 +90,13 @@ export default function MainPage() {
     );
 
     if (dynamicContent) {
-      return <DynamicGroupContent data={dynamicContent} iconData={iconData} />;
+      return (
+        <DynamicGroupContent
+          data={dynamicContent}
+          iconData={iconData}
+          userGroups={userGroups}
+        />
+      );
     }
 
     return staticContent[activePage as keyof StaticContent];
@@ -134,7 +140,11 @@ export default function MainPage() {
 
         <div className="laptop:px-16 w-full tablet:px-8 px-5 tablet:py-10 py-3 tablet:w-[70%] ">
           {/* Render Page Dynamicly */}
-          {isLoading ? <LoadingPage /> : renderActiveContent()}
+          {isLoading ? (
+            <LoadingPage />
+          ) : (
+            renderActiveContent(dynamicSidebarGroup)
+          )}
 
           {/* <LoadingPage /> */}
         </div>

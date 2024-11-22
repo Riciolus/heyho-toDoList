@@ -3,12 +3,12 @@ import { TbSubtask } from "react-icons/tb";
 import AddTaskButton from "@/src/components/addTask";
 import { useEffect, useState } from "react";
 import { getAssignedTask } from "@/src/lib/api";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import ZeroTask from "@/src/components/task/0task";
 import { toast } from "sonner";
 import AssignmentTaskList from "../TaskList/assignment";
 
-const AssignedToMeContent = () => {
+const AssignedToMeContent = ({ userGroups }: { userGroups: Group[] }) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState("");
@@ -48,6 +48,7 @@ const AssignedToMeContent = () => {
         <ZeroTask pageType="assignment" />
       ) : (
         <AssignmentTaskList
+          userGroups={userGroups}
           isLoading={isLoading}
           taskData={taskData}
           setTaskData={setTaskData}

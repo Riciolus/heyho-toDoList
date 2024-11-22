@@ -15,6 +15,7 @@ import {
   ContextMenu,
   ContextMenuTrigger,
 } from "@/src/components/ui/context-menu";
+import useStore from "@/src/store/useGroupsStore";
 
 interface SidebarProps {
   setDynamicSidebarGroup: React.Dispatch<React.SetStateAction<Group[]>>;
@@ -61,6 +62,7 @@ const Sidebar = ({
   dynamicSidebarGroup,
   iconData,
 }: SidebarProps) => {
+  const setGlobalGroups = useStore((state) => state.setGlobalGroups);
   const [isEditingGroupLabel, setIsEditingGroupLabel] = useState<string>("");
   const [userInputEditGroup, setUserInputEditGroup] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -70,10 +72,11 @@ const Sidebar = ({
       const result = await getGroupByLabel();
       localStorage.setItem("group", JSON.stringify(result));
       setDynamicSidebarGroup(result);
+      setGlobalGroups;
     }
 
     getGroupData();
-  }, [setDynamicSidebarGroup]);
+  }, [setDynamicSidebarGroup, setGlobalGroups]);
 
   useEffect(() => {
     if (isEditingGroupLabel != "" && inputRef.current) {

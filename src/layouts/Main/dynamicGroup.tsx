@@ -8,9 +8,11 @@ import { Group, Task } from "@/src/app/page";
 import { toast } from "sonner";
 
 const DynamicGroupContent = ({
+  userGroups,
   data,
   iconData,
 }: {
+  userGroups: Group[];
   data: Group;
   iconData: object;
 }) => {
@@ -51,6 +53,7 @@ const DynamicGroupContent = ({
         <ZeroTask pageType="default" />
       ) : (
         <TaskList
+          userGroups={userGroups}
           colorTheme="purple"
           isLoading={isLoading}
           taskData={taskData}

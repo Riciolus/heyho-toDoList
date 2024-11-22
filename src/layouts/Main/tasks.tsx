@@ -4,11 +4,11 @@ import Dropdown from "@/src/components/task/dropdown";
 import ZeroTask from "@/src/components/task/0task";
 import { useEffect, useState } from "react";
 import { TbSubtask } from "react-icons/tb";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import { getTasksByGroup } from "@/src/lib/api";
 import { toast } from "sonner";
 
-const TasksContent = () => {
+const TasksContent = ({ userGroups }: { userGroups: Group[] }) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,6 +47,7 @@ const TasksContent = () => {
         <ZeroTask pageType="tasks" />
       ) : (
         <TaskList
+          userGroups={userGroups}
           colorTheme="blue"
           isLoading={isLoading}
           taskData={taskData}

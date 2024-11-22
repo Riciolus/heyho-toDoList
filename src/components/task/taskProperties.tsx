@@ -1,5 +1,5 @@
 import { deleteTask } from "@/src/lib/api";
-import { Task } from "../../app/page";
+import { Group, Task } from "@/src/app/page";
 import { ContextMenuContent, ContextMenuItem } from "../ui/context-menu";
 import {
   Sheet,
@@ -23,21 +23,24 @@ import {
   SelectValue,
 } from "../ui/select";
 import { DatePicker } from "./datepicker";
+import { FormEvent } from "react";
 
 type Propstype = {
-  taskId: string;
+  task: Task;
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
+  userGroups: Group[];
 };
 
-const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
-  const handleDeleteTask = async () => {
-    setTaskData((prevData) => prevData.filter((task) => task.id !== taskId));
-    toast("Task Deleted!");
-    await deleteTask(taskId);
+const Edit = ({ task, userGroups }: { task: Task; userGroups: Group[] }) => {
+  const handleUpdateTask = (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log("submit");
+    console.log(e.target);
   };
 
   return (
-    <ContextMenuContent>
+    <form onSubmit={handleUpdateTask}>
       <Sheet>
         <SheetTrigger className="w-full">
           <ContextMenuItem
@@ -48,7 +51,7 @@ const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
             Edit
           </ContextMenuItem>
         </SheetTrigger>
-        <SheetContent className="bg-neutral-950 w-1/4 border-line">
+        <SheetContent className="bg-neutral-950 w-full tablet:w-1/2 laptop:w-1/4 border-line">
           <SheetHeader>
             <SheetTitle className="text-neutral-50">Edit Task</SheetTitle>
             <SheetDescription>
@@ -62,7 +65,7 @@ const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
               </Label>
               <Input
                 id="name"
-                value="Pedro Duarte"
+                defaultValue={task.task}
                 className="col-span-3 border-line bg-neutral-800 h-9"
               />
             </div>
@@ -70,7 +73,7 @@ const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
               <Label htmlFor="username" className="text-right">
                 Due Date
               </Label>
-              <DatePicker type="long" />
+              <DatePicker type="long" taskDate={task.due_date} />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
@@ -78,12 +81,24 @@ const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
               </Label>
               <Select>
                 <SelectTrigger className="w-[130px] bg-neutral-800 border-line h-8">
-                  <SelectValue placeholder="Theme" />
+                  <SelectValue
+                    placeholder={
+                      userGroups.find((group) => group.label === task.groupId)
+                        ?.title || "Tasks"
+                    }
+                  />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                <SelectContent className="bg-neutral-800 text-neutral-50 border-line">
+                  <SelectItem value="tasks" className="">
+                    Tasks
+                  </SelectItem>
+                  {userGroups?.map((group) => {
+                    return (
+                      <SelectItem value={group.title} key={group.label}>
+                        {group.title}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -95,6 +110,22 @@ const TaskProperties = ({ setTaskData, taskId }: Propstype) => {
           </SheetFooter>
         </SheetContent>
       </Sheet>
+    </form>
+  );
+};
+
+const TaskProperties = ({ setTaskData, task, userGroups }: Propstype) => {
+  const handleDeleteTask = async () => {
+    setTaskData((prevData) =>
+      prevData.filter((filteredTask) => filteredTask.id !== task.id)
+    );
+    toast("Task Deleted!");
+    await deleteTask(task.id);
+  };
+
+  return (
+    <ContextMenuContent>
+      <Edit task={task} userGroups={userGroups} />
 
       <ContextMenuItem onClick={handleDeleteTask}>Delete</ContextMenuItem>
       <ContextMenuItem>Change Date</ContextMenuItem>

@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { ScrollArea } from "@/src/components/ui/scroll-area";
 import { useState } from "react";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import { cn } from "@/src/lib/utils";
 
 export type PageType =
@@ -16,12 +16,14 @@ export type PageType =
   | "search";
 
 const TaskList = ({
+  userGroups,
   setTaskData,
   isLoading,
   taskData,
   colorTheme,
   pageType,
 }: {
+  userGroups: Group[];
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   isLoading: boolean;
   taskData: Task[];
@@ -61,6 +63,7 @@ const TaskList = ({
                     transition={{ ease: "easeOut", duration: 0.3 }}
                   >
                     <TaskCard
+                      userGroups={userGroups}
                       task={task}
                       colorTheme={colorTheme}
                       pageType={pageType}
@@ -103,6 +106,7 @@ const TaskList = ({
                       transition={{ ease: "easeOut", duration: 0.3 }}
                     >
                       <TaskCard
+                        userGroups={userGroups}
                         colorTheme={colorTheme}
                         task={task}
                         pageType={pageType}

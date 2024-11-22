@@ -3,12 +3,12 @@ import TaskList from "../TaskList";
 import Dropdown from "@/src/components/task/dropdown";
 import ZeroTask from "@/src/components/task/0task";
 import { useEffect, useState } from "react";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import { getDateFormattedLong } from "@/src/lib/datetime";
 import { getTodayTasks } from "@/src/lib/api";
 import { toast } from "sonner";
 
-const TodayContent = () => {
+const TodayContent = ({ userGroups }: { userGroups: Group[] }) => {
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const date = getDateFormattedLong();
@@ -45,6 +45,7 @@ const TodayContent = () => {
         <ZeroTask pageType="today" />
       ) : (
         <TaskList
+          userGroups={userGroups}
           colorTheme="orange"
           isLoading={isLoading}
           taskData={taskData}

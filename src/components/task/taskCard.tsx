@@ -1,5 +1,5 @@
 import TodayBadge from "./todayBadge";
-import { Task } from "@/src/app/page";
+import { Group, Task } from "@/src/app/page";
 import TaskProperties from "./taskProperties";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Checkbox from "./checkbox";
@@ -14,6 +14,7 @@ type Propstype = {
   setTaskData: React.Dispatch<React.SetStateAction<Task[]>>;
   colorTheme: ColorTheme;
   pageType: PageType;
+  userGroups: Group[];
 };
 
 export type ColorClasses = {
@@ -28,7 +29,13 @@ export const checkboxColorClasses: ColorClasses = {
   purple: "checked:bg-purple-300",
 };
 
-const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
+const TaskCard = ({
+  task,
+  colorTheme,
+  setTaskData,
+  pageType,
+  userGroups,
+}: Propstype) => {
   const handleImportance = async (
     taskId: string,
     toImportantStatus: boolean
@@ -112,7 +119,11 @@ const TaskCard = ({ task, colorTheme, setTaskData, pageType }: Propstype) => {
           </div>
         </div>
       </ContextMenuTrigger>
-      <TaskProperties setTaskData={setTaskData} taskId={task.id} />
+      <TaskProperties
+        setTaskData={setTaskData}
+        task={task}
+        userGroups={userGroups}
+      />
     </ContextMenu>
   );
 };
